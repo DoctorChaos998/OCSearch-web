@@ -1,0 +1,12 @@
+.header {
+    padding: 0 40px 0 80px;
+    background: black;
+    display: flex;
+    justify-content: left;
+    align-items: center;
+}
+.logo {
+    font-size: 4em;
+    color: greenyellow;
+    user-select: none;
+}

@@ -1,0 +1,15 @@
+.navBarButton {
+    position: relative;
+    font-size: 1.1em;
+    color: #C5C6C7;
+    text-decoration: none;
+    font-weight: 500;
+    padding: 10px 24px;
+    background: transparent;
+    border-radius: 15px;
+    border: solid 4px;
+}
+
+.navBarButton:hover {
+    color: #66FCF1;
+}

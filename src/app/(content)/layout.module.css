@@ -1,0 +1,7 @@
+.mainContainer {
+    background: #22252E;
+    flex: 1;
+}
+.flexContainerWithContent {
+    display: flex;
+}

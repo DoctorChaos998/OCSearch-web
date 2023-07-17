@@ -1,0 +1,54 @@
+.button {
+    cursor: pointer;
+    transition: all ease-out 120ms;
+    display: inline-block;
+    width: 100%;
+    padding: 28px 0;
+}
+
+
+.iconColor {
+    color: greenyellow;
+    pointer-events: none
+}
+
+.button:hover {
+    background-color: #22252E;
+}
+.button:hover + .tooltip {
+    visibility: visible;
+    opacity: 1;
+}
+.button:hover .unActive {
+    color: #f92056;
+}
+
+.active {
+    color: #66FCF1
+}
+.tooltip {
+    transition: all ease-out 120ms;
+    color: white;
+    display: inline-block;
+    position: absolute;
+    background-color: #000000;
+    padding: 8px 15px;
+    border-radius: 3px;
+    margin-top: 26px;
+    left: 90px;
+    opacity: 0;
+    visibility: hidden;
+    font-size: 13px;
+    letter-spacing: 1px;
+}
+.tooltip:before {
+    content: '';
+    display: block;
+    position: absolute;
+    left: -4px;
+    top: 10px;
+    transform: rotate(45deg);
+    width: 10px;
+    height: 10px;
+    background-color: inherit;
+}

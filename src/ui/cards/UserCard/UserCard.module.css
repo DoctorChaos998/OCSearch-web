@@ -1,0 +1,17 @@
+.userCardContainer {
+    margin-top: 50px;
+    display: flex;
+    align-items: center;
+    user-select: none;
+    align-self: start;
+    margin-left: 50px;
+}
+
+.userNickname {
+    color: #66FCF1;
+}
+.verified {
+    margin-left: 10px;
+    color: #f92056;
+    pointer-events: none
+}
