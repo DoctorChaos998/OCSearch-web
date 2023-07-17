@@ -5,15 +5,15 @@ import {searchOptions} from "@/entites/search/searchInput";
 interface ISearchDropdownProps {
     onChange: (event: React.ChangeEvent<HTMLSelectElement>) => void
     value: string
+    isActive: boolean
 }
 
-const SearchDropdown: FC<ISearchDropdownProps> = ({onChange, value}) => {
-    console.log(searchOptions)
+const SearchDropdown: FC<ISearchDropdownProps> = ({onChange, value, isActive}) => {
     return (
         <div>
-            <select value={value} onChange={onChange} disabled={false}>
+            <select value={value} onChange={onChange} disabled={!isActive}>
                 {searchOptions.map((searchDropdownValue) =>
-                    <option value={searchDropdownValue.value}>{searchDropdownValue.name}</option>
+                    <option value={searchDropdownValue.value} key={searchDropdownValue.value}>{searchDropdownValue.name}</option>
                 )}
             </select>
         </div>

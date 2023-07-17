@@ -1,6 +1,5 @@
 import React, {FC} from "react";
 import {useAppDispatch, useAppSelector} from "@/store/hooks";
-import {ISearchDropdownValue} from "@/entites/search/searchInput";
 import SearchInput from "@/ui/inputs/SearchInput/SearchInput";
 import {
     addSearchLine,
@@ -19,7 +18,7 @@ const SearchFieldsList: FC = () => {
                 {searchFields.map((searchField)=>
                     <li key={searchField.id} style={{listStyle: "none"}}>
                         <SearchInput value={searchField.searchStringValue} onChange={(e: React.ChangeEvent<HTMLInputElement>) => {dispatch(changeSearchString({...searchField, searchStringValue: e.target.value}))}}></SearchInput>
-                        <SearchDropdown onChange={(e: React.ChangeEvent<HTMLSelectElement>) => {dispatch(changeSearchDropdown({...searchField, searchDropdownValue: e.target.value}))}} value={searchField.searchDropdownValue}></SearchDropdown>
+                        <SearchDropdown onChange={(e: React.ChangeEvent<HTMLSelectElement>) => {dispatch(changeSearchDropdown({...searchField, searchDropdown: {...searchField.searchDropdown, currentOption: e.target.value}}))}} value={searchField.searchDropdown.currentOption} isActive={searchField.searchDropdown.isActive}></SearchDropdown>
                     </li>
                 )}
             </div>

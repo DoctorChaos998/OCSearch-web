@@ -1,18 +1,22 @@
-export interface ISearchDropdownValue {
-    name: string,
-    value: searchDropdownValues
+export interface ISearchDropdown {
+    isActive: boolean
+    currentOption: string
 }
 export enum searchDropdownValues {
     NONE = 'Пусто',
     TELEPHONE = 'Телефон',
     EMAIL = 'Email'
 }
-export const searchDropdown = Object.values(searchDropdownValues)
-export const searchOptions: ISearchDropdownValue[] = Object.keys(searchDropdownValues).map((value, index) => {
-    return {name: value, value: searchDropdown[index]}
+interface ISearchDropDownOption {
+    name: searchDropdownValues,
+    value: string,
+}
+const searchDropdown = Object.values(searchDropdownValues)
+export const searchOptions: ISearchDropDownOption[] = Object.keys(searchDropdownValues).map((value, index) => {
+    return {name: searchDropdown[index], value:value }
 })
 export interface ISearchField {
     id: number
     searchStringValue: string
-    searchDropdownValue: searchDropdownValues
+    searchDropdown: ISearchDropdown
 }

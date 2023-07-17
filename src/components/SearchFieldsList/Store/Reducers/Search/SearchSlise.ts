@@ -9,7 +9,7 @@ interface ISearchState {
 
 const initialState: ISearchState = {
     nextId: 1,
-    searchFields: [{id: 0, searchStringValue: '', searchDropdownValue: searchDropdownValues.NONE}]
+    searchFields: [{id: 0, searchStringValue: '', searchDropdown: { isActive: false, currentOption: 'NONE'}}]
 }
 
 export const searchSlice = createSlice({
@@ -31,7 +31,7 @@ export const searchSlice = createSlice({
             }})
         },
         addSearchLine(state) {
-            state.searchFields.push({id: state.nextId++, searchStringValue: '', searchDropdownValue: searchDropdownValues.NONE})
+            state.searchFields.push({id: state.nextId++, searchStringValue: '', searchDropdown: { isActive: false, currentOption: 'NONE'}})
         }
     }
 
