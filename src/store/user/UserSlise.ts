@@ -1,6 +1,13 @@
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {IUser} from "@/entites/user/user";
+import {IAuthResponse} from "@/entites/dtos/authResponse";
+import api from "@/http/axiosConfig";
+import {InternalAxiosRequestConfig} from "axios";
 
+const createSetAccessInterceptor = (accessToken:string) => (config:InternalAxiosRequestConfig<any>) => {
+    config.headers.Authorization = `Bearer ${accessToken}`
+    return config
+}
 
 interface IUserState {
     user: IUser
@@ -8,6 +15,7 @@ interface IUserState {
     error: string
     isAuth: boolean
     loginError: string
+    accessToken: string
 }
 
 const initialState: IUserState = {
@@ -15,7 +23,8 @@ const initialState: IUserState = {
     isLoading: true,
     error: '',
     isAuth: false,
-    loginError: ''
+    loginError: '',
+    accessToken: ''
 }
 
 export const userSlice = createSlice({
@@ -25,11 +34,15 @@ export const userSlice = createSlice({
         userLogin(state){
             state.isLoading = false
         },
-        userLoginSuccess(state, action:PayloadAction<IUser>){
+        userLoginSuccess(state, action:PayloadAction<IAuthResponse>){
             state.isLoading = false
             state.loginError = ''
-            state.user = action.payload
+            state.user = action.payload.user
             state.isAuth = true
+            state.accessToken = action.payload.accessToken
+            const setAuthInterceptor = createSetAccessInterceptor(state.accessToken)
+            api.interceptors.request.use(setAuthInterceptor)
+
         },
         userLoginError(state, action:PayloadAction<string>){
             state.isLoading = false
@@ -43,6 +56,8 @@ export const userSlice = createSlice({
             state.error = ''
             state.user = {} as IUser
             state.isAuth = false
+            api.interceptors.response.clear()
+            api.interceptors.request.clear()
         },
         userLogoutError(state, action:PayloadAction<string>){
             state.isLoading = false
@@ -51,19 +66,25 @@ export const userSlice = createSlice({
         userCheckAuth(state){
             state.isLoading = true
         },
-        userCheckAuthSuccess(state, action:PayloadAction<IUser>){
+        userCheckAuthSuccess(state, action:PayloadAction<IAuthResponse>){
             state.isLoading = false
             state.error = ''
-            state.user = action.payload
+            state.user = action.payload.user
+            state.accessToken = action.payload.accessToken
             state.isAuth = true
+            const setAuthInterceptor = createSetAccessInterceptor(state.accessToken)
+            api.interceptors.request.use(setAuthInterceptor)
         },
         userCheckAuthError(state, action:PayloadAction<string>){
             state.isLoading = false
             state.error = action.payload
         },
-        isLoadingFalse(state) {
-            state.isLoading = false
-        }
+        setAccessToken(state, action: PayloadAction<string>) {
+            state.accessToken = action.payload
+            api.interceptors.request.clear()
+            const setAuthInterceptor = createSetAccessInterceptor(state.accessToken)
+            api.interceptors.request.use(setAuthInterceptor)
+        },
     }
 })
 

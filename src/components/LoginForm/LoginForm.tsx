@@ -5,8 +5,7 @@ import {useAppDispatch, useAppSelector} from "@/store/hooks";
 import LoginInput from "@/ui/inputs/LoginInput/LoginInput";
 import LoginButton from "@/ui/buttons/LoginButton/LoginButton";
 import LoginCheckBox from "@/ui/checkboxs/LoginCheckBox/LoginCheckBox";
-import {login} from "@/components/LoginForm/store/reducers/ActionsCreators";
-
+import {login} from "@/store/user/ActionCreators";
 
 
 

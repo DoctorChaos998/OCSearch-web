@@ -1,21 +1,19 @@
 'use client'
 import React, {FC, PropsWithChildren, useEffect} from 'react';
 import {useAppDispatch, useAppSelector} from "@/store/hooks";
-import {checkAuth, setLoadingFalse} from "@/components/Auth/store/reducers/ActionCreators";
+import {checkAuth} from "@/store/user/ActionCreators";
+import LoaderForCheckAuth from "@/ui/loaders/LoaderForCheckAuth/LoaderForCheckAuth";
 
 const Auth: FC<PropsWithChildren> = ({children}) => {
     const dispatch = useAppDispatch()
     const {isLoading} = useAppSelector(state => state.userReducer)
-    //useHook(router)
     useEffect(() => {
-        if (localStorage.getItem('token')) {
-            dispatch(checkAuth())
-        } else dispatch(setLoadingFalse())
+        dispatch(checkAuth())
     }, [])
     return (
         <>
             {isLoading?
-                <div>Loading</div>
+                <LoaderForCheckAuth/>
             :
                 children
             }

@@ -10,7 +10,7 @@ const LoginsList: FC = () => {
             const response = await LoginsService.getLogins()
             setUserLogins(response.data)
         } catch (e: any) {
-            console.log(e.response?.data?.message)
+            console.log(e)
         }
     }
     useEffect(() => {

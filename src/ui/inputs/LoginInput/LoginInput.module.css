@@ -16,6 +16,7 @@
     height: 70px;
     border-bottom: 2px solid greenyellow;
 }
+
 .customInput::placeholder {
     opacity: 0.5;
     color: greenyellow;

@@ -1,0 +1,4 @@
+.searchFieldContainer {
+    display: flex;
+    flex-direction: row;
+}

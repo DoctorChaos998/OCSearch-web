@@ -3,8 +3,8 @@ import React, {FC} from 'react';
 import classes from "./SideBar.module.css";
 import {useAppDispatch} from "@/store/hooks";
 import {RouteNames} from "@/entites/routes/routes";
-import {logout} from "@/components/SideBar/store/reducers/ActionCreators";
 import SideBarButton from "@/ui/buttons/SidebarButton/SideBarButton";
+import {logout} from "@/store/user/ActionCreators";
 
 
 const SideBar: FC = () => {

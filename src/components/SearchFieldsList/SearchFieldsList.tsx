@@ -7,6 +7,7 @@ import {
     changeSearchString
 } from "@/components/SearchFieldsList/Store/Reducers/Search/SearchAction";
 import SearchDropdown from "@/ui/dropdowns/SearchDropdown/SearchDropdown";
+import classes from "./SearchFieldsList.module.css";
 
 
 const SearchFieldsList: FC = () => {
@@ -17,8 +18,10 @@ const SearchFieldsList: FC = () => {
             <div>
                 {searchFields.map((searchField)=>
                     <li key={searchField.id} style={{listStyle: "none"}}>
-                        <SearchInput value={searchField.searchStringValue} onChange={(e: React.ChangeEvent<HTMLInputElement>) => {dispatch(changeSearchString({...searchField, searchStringValue: e.target.value}))}}></SearchInput>
-                        <SearchDropdown onChange={(e: React.ChangeEvent<HTMLSelectElement>) => {dispatch(changeSearchDropdown({...searchField, searchDropdown: {...searchField.searchDropdown, currentOption: e.target.value}}))}} value={searchField.searchDropdown.currentOption} isActive={searchField.searchDropdown.isActive}></SearchDropdown>
+                        <div className={classes.searchFieldContainer}>
+                            <SearchInput value={searchField.searchStringValue} onChange={(e: React.ChangeEvent<HTMLInputElement>) => {dispatch(changeSearchString({...searchField, searchStringValue: e.target.value}))}}></SearchInput>
+                            <SearchDropdown onChange={(e: React.ChangeEvent<HTMLSelectElement>) => {dispatch(changeSearchDropdown({...searchField, searchDropdown: {...searchField.searchDropdown, currentOption: e.target.value}}))}} value={searchField.searchDropdown.currentOption} isActive={searchField.searchDropdown.isActive}></SearchDropdown>
+                        </div>
                     </li>
                 )}
             </div>

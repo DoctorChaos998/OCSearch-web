@@ -1,6 +1,6 @@
 'use client'
 import {TypedUseSelectorHook, useDispatch, useSelector} from "react-redux";
-import {AppDispatch, RootState} from "../index";
+import {AppDispatch, RootState} from "@/store";
 
 
 export const useAppDispatch = () => useDispatch<AppDispatch>()

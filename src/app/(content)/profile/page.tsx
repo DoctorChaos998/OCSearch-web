@@ -6,8 +6,10 @@ import UserCard from "@/ui/cards/UserCard/UserCard";
 import {LoginsList} from "@/components/LoginsList";
 
 
+
 const Profile: FC = () => {
     const {user} = useAppSelector(state => state.userReducer)
+    //console.log(user,isAuth,loginError,isLoading,accessToken)
     return (
         <div className={classes.contentOnProfilePage}>
             <UserCard nickname={user.nickname}></UserCard>

@@ -1,5 +1,5 @@
 import {combineReducers, configureStore} from "@reduxjs/toolkit";
-import userReducer from "@/components/Auth/store/reducers/UserSlise"
+import userReducer from "@/store/user/UserSlise"
 import searchReducer from "@/components/SearchFieldsList/Store/Reducers/Search/SearchSlise"
 
 const rootReducer = combineReducers({
@@ -9,7 +9,9 @@ const rootReducer = combineReducers({
 
 export const setupStore = () => {
     return configureStore({
-        reducer: rootReducer
+        reducer: rootReducer,
+        middleware: (getDefaultMiddleware) => getDefaultMiddleware(),
+        devTools: process.env.NODE_ENV !== 'production'
     })
 }
 export const store = setupStore()
