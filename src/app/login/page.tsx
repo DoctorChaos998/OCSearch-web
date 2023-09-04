@@ -1,5 +1,5 @@
 'use client'
-import React, {FC} from 'react';
+import {FC} from 'react';
 import LoginForm from "../../components/LoginForm/LoginForm";
 import classes from "./LoginPage.module.css";
 import {useAppSelector} from "@/store/hooks";

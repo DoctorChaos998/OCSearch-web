@@ -36,7 +36,7 @@ const LoginForm: FC = () => {
 
     return (
         <div className={classes.blo}>
-            <div className={classes.alert} style={{visibility: errorAlert ? "visible" : "hidden", display: errorAlert ? "inline-block" : "none"}}>
+            <div className={classes.alert} style={{opacity: errorAlert ? "1" : "0"}}>
                 <label className="label" id="label">{errorAlert}</label>
             </div>
             <div className={classes.wrapper}>
@@ -53,5 +53,5 @@ const LoginForm: FC = () => {
         </div>
     );
 };
-
+//, display: errorAlert ? "inline-block" : "none"}}>
 export default LoginForm;

@@ -1,21 +1,21 @@
 import {combineReducers, configureStore} from "@reduxjs/toolkit";
 import userReducer from "@/store/user/UserSlise"
 import searchReducer from "@/components/SearchFieldsList/Store/Reducers/Search/SearchSlise"
+import fileSystemReducer from "@/app/(content)/files/Store/FileSystem/FileSystemSlise"
+import notificationReducer from "@/components/Notification/store/NotificationSlice"
 
 const rootReducer = combineReducers({
     userReducer,
-    searchReducer
+    searchReducer,
+    fileSystemReducer,
+    notificationReducer
 })
 
-export const setupStore = () => {
-    return configureStore({
+export const store = configureStore({
         reducer: rootReducer,
         middleware: (getDefaultMiddleware) => getDefaultMiddleware(),
         devTools: process.env.NODE_ENV !== 'production'
     })
-}
-export const store = setupStore()
 
 export type RootState = ReturnType<typeof rootReducer>
-export type AppStore = ReturnType<typeof setupStore>
-export type AppDispatch = AppStore['dispatch']
+export type AppDispatch = typeof store.dispatch

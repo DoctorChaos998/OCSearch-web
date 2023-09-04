@@ -4,7 +4,7 @@ import {IAuthResponse} from "@/entites/dtos/authResponse";
 import api from "@/http/axiosConfig";
 import {InternalAxiosRequestConfig} from "axios";
 
-const createSetAccessInterceptor = (accessToken:string) => (config:InternalAxiosRequestConfig<any>) => {
+const createSetRequestInterceptor = (accessToken:string) => (config:InternalAxiosRequestConfig<any>) => {
     config.headers.Authorization = `Bearer ${accessToken}`
     return config
 }
@@ -40,9 +40,8 @@ export const userSlice = createSlice({
             state.user = action.payload.user
             state.isAuth = true
             state.accessToken = action.payload.accessToken
-            const setAuthInterceptor = createSetAccessInterceptor(state.accessToken)
+            const setAuthInterceptor = createSetRequestInterceptor(state.accessToken)
             api.interceptors.request.use(setAuthInterceptor)
-
         },
         userLoginError(state, action:PayloadAction<string>){
             state.isLoading = false
@@ -52,15 +51,13 @@ export const userSlice = createSlice({
             state.isLoading = true
         },
         userLogoutSuccess(state){
-            state.isLoading = false
-            state.error = ''
-            state.user = {} as IUser
-            state.isAuth = false
             api.interceptors.response.clear()
             api.interceptors.request.clear()
+            return {...initialState, isLoading: false}
         },
         userLogoutError(state, action:PayloadAction<string>){
             state.isLoading = false
+            console.log(action.payload)
             state.error = action.payload
         },
         userCheckAuth(state){
@@ -72,20 +69,22 @@ export const userSlice = createSlice({
             state.user = action.payload.user
             state.accessToken = action.payload.accessToken
             state.isAuth = true
-            const setAuthInterceptor = createSetAccessInterceptor(state.accessToken)
+            const setAuthInterceptor = createSetRequestInterceptor(state.accessToken)
             api.interceptors.request.use(setAuthInterceptor)
         },
         userCheckAuthError(state, action:PayloadAction<string>){
             state.isLoading = false
+            api.interceptors.response.clear()
+            api.interceptors.request.clear()
             state.error = action.payload
         },
         setAccessToken(state, action: PayloadAction<string>) {
             state.accessToken = action.payload
             api.interceptors.request.clear()
-            const setAuthInterceptor = createSetAccessInterceptor(state.accessToken)
+            const setAuthInterceptor = createSetRequestInterceptor(state.accessToken)
             api.interceptors.request.use(setAuthInterceptor)
         },
     }
 })
-
-export default userSlice.reducer
+const {reducer} = userSlice
+export default reducer

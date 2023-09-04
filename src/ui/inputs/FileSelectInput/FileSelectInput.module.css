@@ -1,0 +1,15 @@
+.selectFileLabel{
+    margin-top: 20px;
+    height: 50px;
+    width: 100px;
+    border: #C5C6C7 solid 1px;
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.selectFileInput{
+    display: none;
+    visibility: hidden;
+    opacity: 0;
+}

@@ -21,7 +21,7 @@ const SideBarButton: FC<ISideBarButtonProps> = ({link,onClick,toolTip,icon}) => 
             </Link>
             <span className={classes.tooltip}>
                 {toolTip}
-        </span>
+            </span>
         </>
     );
 };

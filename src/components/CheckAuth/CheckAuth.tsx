@@ -1,21 +1,21 @@
 'use client'
-import React, {FC, useEffect} from 'react';
+import React, {FC, PropsWithChildren, useEffect} from 'react';
 import {useAppDispatch, useAppSelector} from "@/store/hooks";
 import Router from "@/components/Router/Router";
 import {RouteNames} from "@/entites/routes/routes";
-import {setAccess} from "@/store/user/ActionCreators";
+import {setResponseInterceptor} from "@/store/user/ActionCreators";
  
-const CheckAuth: FC = () => {
+const CheckAuth: FC<PropsWithChildren> = ({children}) => {
     const {isAuth} = useAppSelector(state => state.userReducer)
     const dispatch = useAppDispatch()
     useEffect(()=> {
         if (isAuth){
-            dispatch(setAccess())
+            dispatch(setResponseInterceptor())
         }
     },[])
     return (
         <>
-            {!isAuth? <Router toUrl={RouteNames.LOGIN}/> : null}
+            {!isAuth? <Router toUrl={RouteNames.LOGIN}/> : children}
         </>
     )
 };

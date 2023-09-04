@@ -1,0 +1,31 @@
+.folderCardContainer{
+    display: flex;
+    flex-direction: column;
+    width: 150px;
+    height: 200px;
+    border-radius: 15px;
+    padding: 10px;
+    justify-content: center;
+    align-items: center;
+    margin: 5px;
+    cursor: pointer;
+    user-select: none;
+}
+.folderCardContainerActive{
+    background: rgba(63, 94, 251, 0.2);
+}
+.folderName{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1em;
+    text-align: center;
+
+}
+.folderIcon{
+    color: #ffedaf;
+    font-size: 6em;
+}
+.folderCardContainer:hover{
+    background: rgba(63, 94, 251, 0.4);
+}

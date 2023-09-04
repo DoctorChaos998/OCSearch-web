@@ -1,12 +1,13 @@
 .header {
     padding: 0 40px 0 80px;
-    background: black;
+    background: rgb(30, 30, 33);
     display: flex;
     justify-content: left;
     align-items: center;
 }
 .logo {
     font-size: 4em;
-    color: greenyellow;
+    color: #adff2f;
     user-select: none;
+    text-shadow: 0 0 30px rgba(173, 255, 47, 0.5);
 }

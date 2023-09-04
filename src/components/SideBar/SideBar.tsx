@@ -17,6 +17,7 @@ const SideBar: FC = () => {
                         <SideBarButton link={RouteNames.PROFILE} toolTip='Профиль' icon='account_circle'></SideBarButton>
                         <SideBarButton link={RouteNames.SEARCH} toolTip='Поиск' icon='search'></SideBarButton>
                         <SideBarButton link={RouteNames.DATABASES} toolTip='Базы' icon='storage'></SideBarButton>
+                        <SideBarButton link={RouteNames.FILES} toolTip={'Файлы'} icon={'folder_open'}></SideBarButton>
                     </ul>
                 </nav>
                 <nav className={classes.bottomNav}>

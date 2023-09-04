@@ -1,6 +1,7 @@
 import {AxiosResponse} from "axios";
-import {IUserLoginInfoResponse} from "./Responce";
 import api from "@/http/axiosConfig";
+import {IUserLoginInfoResponse} from "@/components/LoginsList/Api/Responce";
+
 
 
 export default class LoginsService{

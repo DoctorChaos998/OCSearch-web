@@ -5,13 +5,14 @@
 .navbarContainer {
     display: flex;
     height: 100vh;
-    position: sticky;
-    top: 0;
     background-color: #313443;
     width: 80px;
+    position: sticky;
+    top: 0;
 }
 
 .navbarItems {
+    top: 0;
     display: flex;
     flex-direction: column;
     width: 100vw;

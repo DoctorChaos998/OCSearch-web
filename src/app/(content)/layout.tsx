@@ -16,17 +16,18 @@ export default function ContentLayout({children,}: {
 }) {
     return (
         <>
-            <CheckAuth></CheckAuth>
-            <Header></Header>
-            <main>
-                <div className={classes.flexContainerWithContent}>
-                    <SideBar></SideBar>
-                    <div className={classes.mainContainer}>
-                        {children}
+            <CheckAuth>
+                <Header></Header>
+                <main>
+                    <div className={classes.flexContainerWithContent}>
+                        <SideBar></SideBar>
+                        <div className={classes.mainContainer}>
+                            {children}
+                        </div>
                     </div>
-                </div>
-            </main>
-            <Footer></Footer>
+                </main>
+                {/*<Footer></Footer>*/}
+            </CheckAuth>
         </>
     )
 }

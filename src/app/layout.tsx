@@ -4,6 +4,7 @@ import { Poppins } from 'next/font/google'
 import React from "react";
 import StoreProvider from "@/store/StoreProvider";
 import Auth from "@/components/Auth/Auth";
+import Notification from "@/components/Notification/Notification";
 
 const inter = Poppins({ weight: '400', display: 'swap', subsets: ['latin'] })
 
@@ -22,6 +23,7 @@ export default function RootLayout({
       <body className={inter.className}>
         <StoreProvider>
             <Auth>
+                <Notification></Notification>
                 {children}
             </Auth>
         </StoreProvider>

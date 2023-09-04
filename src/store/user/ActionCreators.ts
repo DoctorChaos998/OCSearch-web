@@ -24,17 +24,6 @@ export const logout = () => async (dispatch: AppDispatch) =>{
         dispatch(userSlice.actions.userLogoutError(e.response?.data?.message))
     }
 }
-// export const registration = (nickname:string, password: string) => async (dispatch: AppDispatch) =>{
-//     try {
-//         dispatch(userSlice.actions.userRegistration())
-//         const response = await AuthService.registration(nickname, password)
-//         localStorage.setItem('token', response.data.accessToken)
-//         dispatch(userSlice.actions.userRegistrationSuccess(response.data.user))
-//     } catch (e: any) {
-//         dispatch(userSlice.actions.userRegistrationError(e.response?.data?.message))
-//     }
-// }
-
 export const checkAuth = () => async (dispatch: AppDispatch) =>{
     try {
         dispatch(userSlice.actions.userCheckAuth())
@@ -46,7 +35,7 @@ export const checkAuth = () => async (dispatch: AppDispatch) =>{
     }
 }
 
-export const setAccess = () => (dispatch: AppDispatch) => {
+export const setResponseInterceptor = () => (dispatch: AppDispatch) => {
     const createSetRetryInterceptor = () => async (error: any) => {
         const originalRequest = error.config
         if (error.response.status === 401 && error.config && !error.config._isRetry) {
@@ -59,7 +48,7 @@ export const setAccess = () => (dispatch: AppDispatch) => {
                 dispatch(userSlice.actions.userLogoutSuccess())
             }
         }
-        throw error
+        //throw error
     }
     const setRetryInterceptor = createSetRetryInterceptor()
     api.interceptors.response.use((config) => {
