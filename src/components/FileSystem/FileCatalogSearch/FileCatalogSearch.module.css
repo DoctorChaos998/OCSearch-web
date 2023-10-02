@@ -1,0 +1,38 @@
+.fileCatalogSearchInput{
+    height: 100%;
+    width: 250px;
+    background: transparent;
+    color: white;
+    border: none;
+    outline: none;
+    font-size: 1.1em;
+    padding-left: 10px;
+}
+.fileCatalogSearchInput::placeholder{
+    opacity: 0.5;
+}
+.fileCatalogSearchIcon{
+    position: absolute;
+    right: 10px;
+    top: -14px;
+    font-size: 1.8em;
+    color: greenyellow;
+    line-height: 70px;
+    user-select: none;
+}
+.fileCatalogSearchContainer{
+    height: 40px;
+    width: 300px;
+    background: #151515;
+    border-radius: 16px;
+    position: relative;
+    justify-content: center;
+    transition: box-shadow 0.5s ease-out;
+}
+.fileCatalogSearchContainer:hover{
+    background: black;
+}
+.fileCatalogSearchContainer:focus-within{
+    background: black;
+    box-shadow: 0 0 10px 2px #66FCF1;
+}

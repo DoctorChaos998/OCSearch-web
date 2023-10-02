@@ -1,0 +1,50 @@
+.modalContainer{
+    border-radius: 50px;
+    height: 30vh;
+    width: 40vw;
+    border: #833ab4 3px solid;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #22252E;
+    box-shadow: 0 0 30px rgba(131, 58, 180, 0.5);
+    flex-direction: column;
+}
+.modalButtonContainer{
+    height: 5vh;
+    width: 30vw;
+    margin-top: 40px;
+    display: flex;
+    flex-direction: row;
+}
+.modalCanselButton{
+    font-size: 1.2em;
+    font-weight: bold;
+    height: 100%;
+    width: 50%;
+    background: rgba(249, 32, 86, 0.7);
+    transition: background-color 0.5s ease-out;
+    border: none;
+}
+.modalCanselButton:hover{
+    background: #f92056;
+    border: black 2px solid;
+}
+.modalAcceptButton{
+    font-weight: bold;
+    font-size: 1.2em;
+    height: 100%;
+    width: 50%;
+    transition: background-color 0.5s ease-out;
+    background: rgba(173, 255, 47, 0.7);
+    border: none;
+}
+.modalAcceptButton:hover{
+    border: black 2px solid;
+    background: greenyellow;
+
+}
+.modalSpan{
+    font-size: 1.5em;
+    color: white;
+}

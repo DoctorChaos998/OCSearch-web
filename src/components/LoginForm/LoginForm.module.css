@@ -1,4 +1,4 @@
-.wrapper {
+.loginFormWrapper {
     width: 600px;
     background: transparent;
     border: 2px solid greenyellow;
@@ -17,38 +17,21 @@
     padding: 0 40px 40px 40px;
 }
 
-.alert {
-    box-shadow: 0 0 30px rgba(0, 0, 0, .5);
-    opacity: 0;
-    padding: 10px 24px;
-    background-color: transparent;
-    margin-bottom: 20px;
-    color: white;
-    border-radius: 20px;
-    border: solid greenyellow;
-    transition: opacity 0.5s ease-in-out;
-}
-
-.headerLoginForm{
+.loginFormHeader{
     color: greenyellow;
     text-align: center;
     margin-top: 20px;
 }
 
-/*.wrapper::after {*/
-/*    position: absolute;*/
-/*    !*background: linear-gradient(20deg, #f92056 38%, #00deff 65%);*!*/
-/*    background: radial-gradient(circle, rgba(238,174,202,1) 0%, rgba(148,187,233,1) 100%);*/
-/*    content: '';*/
-/*    z-index: -1;*/
-/*    border-radius: 20px;*/
-/*    top: -4px; bottom: -4px;*/
-/*    left: -4px; right: -4px;*/
-/*}*/
-
-.blo {
+.loginFormContainer {
     flex-direction: column;
     display: flex;
     align-items: center;
     justify-content: center;
+}
+.loginForm{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
 }

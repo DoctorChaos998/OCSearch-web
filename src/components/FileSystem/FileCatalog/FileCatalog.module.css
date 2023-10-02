@@ -1,0 +1,47 @@
+.fileCatalogContainer{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 100%;
+}
+.fileCatalogHelperContainer{
+    height: 60px;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.leftFileCatalogHelper{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: row;
+    margin-left: 5%;
+}
+.rightFileCatalogHelper{
+    margin-right: 5%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: row;
+}
+.fileCatalogExitButton{
+    margin-left: 10px;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    border: none;
+    background: #f92056;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+}
+.fileCatalogLine{
+    border: none;
+    background-color: #833ab4;
+    height: 1px;
+    color: #833ab4;
+    box-shadow: 0 0 40px 10px rgba(131, 58, 180, 0.5);
+    width: 100%;
+}

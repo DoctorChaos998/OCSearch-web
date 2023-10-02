@@ -1,27 +1,34 @@
 'use client'
 import classes from "./files.module.css";
-import FileSelectArea from "@/components/FileSelectArea/FileSelectArea";
-import FileCatalog from "@/components/FileCatalog/FileCatalog";
+import FileSelectArea from "@/components/FileSystem/FileSelectArea/FileSelectArea";
+import FileCatalog from "@/components/FileSystem/FileCatalog/FileCatalog";
 import {useAppDispatch, useAppSelector} from "@/store/hooks";
 import {notificationSlice} from "@/components/Notification/store/NotificationSlice";
+import React, {useEffect} from "react";
+import {loadingFolderList} from "@/app/(content)/files/Store/FileSystem/FileSystemActions";
+import {fileSystemSlice} from "@/app/(content)/files/Store/FileSystem/FileSystemSlise";
 
 const Files = () => {
     const dispatch = useAppDispatch()
-    const {notifications} = useAppSelector(state => state.notificationReducer)
+    const {isFirstLoading, selectedFileSystemObjectIds} = useAppSelector(state => state.fileSystemReducer)
+    useEffect(() => {
+        if(isFirstLoading){
+            dispatch(loadingFolderList()).then()
+        }
+    },[])
+    const onClick = (event: React.MouseEvent<HTMLDivElement>) => {
+        if(selectedFileSystemObjectIds.length !== 0)
+            dispatch(fileSystemSlice.actions.dropSelectedFiles())
+    }
+    const dragEnterHandler = (event: React.DragEvent<HTMLDivElement>) => {
+        event.preventDefault()
+        dispatch(fileSystemSlice.actions.setIsModalForDragAndDropAreaVisible(true))
+    }
     return (
-        <div className={classes.contentOnProfilePage}>
-            {/*<FileSelectArea></FileSelectArea>*/}
-            {/*<FileCatalog></FileCatalog>*/}
-            <button onClick={() => {
-                dispatch(notificationSlice.actions.createNotificationWithTimer("что то fgjdfgjfdgjfgjfgggggggggggggggggggggggg"))
-            }} style={{marginTop: 300}}>sdgdsgsg</button>
-            <button onClick={() => {
-                dispatch(notificationSlice.actions.triggerNotification(0))
-            }}>triger</button>
-            <button onClick={() => console.log(10,notifications)}>log</button>
-            <button onClick={() => {
-                dispatch(notificationSlice.actions.createNotification("что то fgjdfgjfdgjfgjfgggggggggggggggggggggggg"))
-            }} style={{marginTop: 300}}>withoutTimer</button>
+        <div className={classes.eventListenerFilePage} onClick={onClick} onDragEnter={dragEnterHandler} onDrop={(event) => console.log("dropnet")}>
+            <div className={classes.contentOnProfilePage}>
+                <FileCatalog></FileCatalog>
+            </div>
         </div>
     );
 };

@@ -1,17 +1,16 @@
 import React, {FC} from 'react';
 import classes from "./LoginCheckBox.module.css";
 
-interface LoginCheckBoxProps {
-    onChange: (e: React.ChangeEvent<HTMLInputElement>) => void,
-    checked: boolean,
-    type: string,
-    content: string
+interface ILoginCheckBoxProps {
+    onChangeLoginCheckBoxHandler: (e: React.ChangeEvent<HTMLInputElement>) => void,
+    loginCheckBoxChecked: boolean,
+    loginCheckBoxInscription: string
 }
-const LoginCheckBox:FC<LoginCheckBoxProps> = ({onChange, checked, type, content}) => {
+const LoginCheckBox:FC<ILoginCheckBoxProps> = ({onChangeLoginCheckBoxHandler, loginCheckBoxInscription, loginCheckBoxChecked}) => {
     return (
-        <div className={classes.checkBoxWrapper}>
-            <input type={type} checked={checked} onChange={onChange}/>
-            <span>{content}</span>
+        <div className={classes.loginCheckBoxContainer}>
+            <input type="checkbox" checked={loginCheckBoxChecked} onChange={onChangeLoginCheckBoxHandler}/>
+            <span>{loginCheckBoxInscription}</span>
         </div>
     );
 };

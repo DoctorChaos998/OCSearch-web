@@ -5,7 +5,7 @@
     justify-content: left;
     align-items: center;
 }
-.logo {
+.headerLogo {
     font-size: 4em;
     color: #adff2f;
     user-select: none;

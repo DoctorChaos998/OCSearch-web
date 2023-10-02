@@ -1,5 +1,5 @@
 import React from "react";
-import CheckAuth from "@/components/CheckAuth/CheckAuth";
+import CheckAuth from "@/components/AuthModule/CheckAuth/CheckAuth";
 import Header from "@/components/Header/Header";
 import Footer from "@/components/Footer/Footer";
 import classes from "./layout.module.css";

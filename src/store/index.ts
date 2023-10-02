@@ -1,5 +1,5 @@
 import {combineReducers, configureStore} from "@reduxjs/toolkit";
-import userReducer from "@/store/user/UserSlise"
+import userReducer from "@/components/AuthModule/UserStore/UserSlise"
 import searchReducer from "@/components/SearchFieldsList/Store/Reducers/Search/SearchSlise"
 import fileSystemReducer from "@/app/(content)/files/Store/FileSystem/FileSystemSlise"
 import notificationReducer from "@/components/Notification/store/NotificationSlice"

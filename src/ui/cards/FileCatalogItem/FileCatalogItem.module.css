@@ -1,0 +1,36 @@
+.folderCardContainer{
+    display: flex;
+    flex-direction: column;
+    width: 200px;
+    height: 200px;
+    border-radius: 15px;
+    padding: 10px;
+    justify-content: center;
+    align-items: center;
+    margin: 5px;
+    cursor: pointer;
+    user-select: none;
+    flex-shrink: 0;
+}
+.folderCardContainerActive{
+    background: rgba(63, 94, 251, 0.2);
+}
+.FileCatalogItemName{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1em;
+    text-align: center;
+    color: white;
+}
+.folderIcon{
+    color: #ffedaf;
+    font-size: 10em;
+}
+.fileIcon{
+    color: white;
+    font-size: 10em;
+}
+.folderCardContainer:hover{
+    background: rgba(63, 94, 251, 0.4);
+}

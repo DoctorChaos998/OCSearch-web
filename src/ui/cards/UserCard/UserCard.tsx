@@ -1,14 +1,14 @@
 import React, {FC} from 'react';
 import classes from "./UserCard.module.css";
-interface IUserCard {
-    nickname: string
+interface IUserCardProps {
+    userCardNickname: string
 }
 
-const UserCard: FC<IUserCard> = ({nickname}) => {
+const UserCard: FC<IUserCardProps> = ({userCardNickname}) => {
     return (
         <div className={classes.userCardContainer}>
-            <h1 className={classes.userNickname}>Вечер в хату, {nickname}</h1>
-            <span className={`material-icons ${classes.verified}`}>
+            <h1 className={classes.userCardNickname}>Вечер в хату, {userCardNickname}</h1>
+            <span className={`material-icons ${classes.userCardVerifiedIcon}`}>
                 verified
             </span>
         </div>

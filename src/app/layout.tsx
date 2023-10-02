@@ -3,7 +3,7 @@ import type { Metadata } from 'next'
 import { Poppins } from 'next/font/google'
 import React from "react";
 import StoreProvider from "@/store/StoreProvider";
-import Auth from "@/components/Auth/Auth";
+import Auth from "@/components/AuthModule/Auth/Auth";
 import Notification from "@/components/Notification/Notification";
 
 const inter = Poppins({ weight: '400', display: 'swap', subsets: ['latin'] })

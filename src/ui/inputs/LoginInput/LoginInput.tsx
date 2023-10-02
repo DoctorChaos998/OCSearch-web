@@ -1,20 +1,19 @@
 import React, {FC, PropsWithChildren} from 'react';
 import classes from "./LoginInput.module.css";
-interface LoginInputProps {
-    placeholder: string,
-    onChange: (e: React.ChangeEvent<HTMLInputElement>) => void,
-    value: string,
-    type: string,
-    icon: string
+interface ILoginInputProps {
+    loginInputPlaceholder: string,
+    onChangeLoginInputHandler: (e: React.ChangeEvent<HTMLInputElement>) => void,
+    loginInputValue: string,
+    loginInputType: string,
+    loginInputIcon: string
 }
-const LoginInput: FC<PropsWithChildren<LoginInputProps>> = ({children, onChange, value, placeholder, type, icon}) => {
+const LoginInput: FC<ILoginInputProps> = ({onChangeLoginInputHandler, loginInputPlaceholder, loginInputValue, loginInputType, loginInputIcon}) => {
     return (
-        <div className={classes.inputBox}>
-            <span className={`${classes.icon} material-icons`}>
-                    {icon}
+        <div className={classes.loginInputContainer}>
+            <span className={`${classes.loginInputIcon} material-icons`}>
+                    {loginInputIcon}
             </span>
-            <input onChange={onChange} placeholder={placeholder} value={value} type={type} className={classes.customInput}>
-                {children}
+            <input onChange={onChangeLoginInputHandler} placeholder={loginInputPlaceholder} value={loginInputValue} type={loginInputType} className={classes.loginInput}>
             </input>
         </div>
     );

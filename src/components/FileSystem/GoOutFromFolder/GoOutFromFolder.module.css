@@ -1,0 +1,22 @@
+.goOutFromFolderButton{
+    border-radius: 5px;
+    height: 30px;
+    width: 40px;
+    border: none;
+    background: white;
+    user-select: none;
+    color: red;
+    margin-left: 15px;
+    transition: transform 0.1s linear, opacity 0.1s linear, box-shadow 0.5s ease-out;
+    opacity: 0;
+    transform: translateY(-100%);
+}
+.goOutFromFolderButton:hover{
+    border: #f92056 2px solid;
+    box-shadow: 0 0 40px 10px #f92056;
+    color: #f92056;
+}
+.buttonShow{
+    opacity: 1;
+    transform: translateY(0);
+}

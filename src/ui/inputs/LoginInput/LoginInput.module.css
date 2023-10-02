@@ -1,4 +1,4 @@
-.customInput {
+.loginInput {
     width: 100%;
     height: 100%;
     background: transparent;
@@ -10,19 +10,19 @@
     color: greenyellow;
 }
 
-.inputBox {
+.loginInputContainer {
     position: relative;
     width: 100%;
     height: 70px;
     border-bottom: 2px solid greenyellow;
 }
 
-.customInput::placeholder {
+.loginInput::placeholder {
     opacity: 0.5;
     color: greenyellow;
 }
 
-.icon {
+.loginInputIcon {
     position: absolute;
     right: 8px;
     font-size: 1.5em;

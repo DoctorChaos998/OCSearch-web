@@ -1,13 +1,13 @@
-import React, {FC, PropsWithChildren} from 'react';
+import React, {FC} from 'react';
 import classes from "./LoginButton.module.css";
 
-interface LoginButtonProps {
-    onClick: (e: React.MouseEvent<HTMLButtonElement>) => void,
+interface ILoginButtonProps {
+    onClickLoginButtonHandler: (e: React.MouseEvent<HTMLButtonElement>) => void,
 }
-const LoginButton: FC<PropsWithChildren<LoginButtonProps>> = ({children, onClick}) => {
+const LoginButton: FC<ILoginButtonProps> = ({onClickLoginButtonHandler}) => {
     return (
-        <button type={'submit'} onClick={onClick} className={classes.loginButton}>
-            {children}
+        <button type={'submit'} onClick={onClickLoginButtonHandler} className={classes.loginButton}>
+            Войти
         </button>
     );
 };

@@ -15,7 +15,11 @@ const Notification = () => {
                     <CSSTransition key={notification.id}
                                    in={notification.isVisible}
                                    unmountOnExit={true}
-                                   timeout={5000}
+                                   timeout={{
+                                       appear: 5000,
+                                       enter: 5000,
+                                       exit:200
+                                   }}
                                    classNames={{
                                        enterActive: classes.notificationShow,
                                        enterDone: !notification.withTimer?classes.notificationShow:undefined,

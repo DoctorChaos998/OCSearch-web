@@ -7,10 +7,10 @@
     margin-left: 50px;
 }
 
-.userNickname {
+.userCardNickname {
     color: #66FCF1;
 }
-.verified {
+.userCardVerifiedIcon {
     margin-left: 10px;
     color: #f92056;
     pointer-events: none

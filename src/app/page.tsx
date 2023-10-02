@@ -1,5 +1,5 @@
 'use client'
-import Router from "@/components/Router/Router";
+import Router from "@/components/AuthModule/Router/Router";
 import {useAppSelector} from "@/store/hooks";
 import {RouteNames} from "@/entites/routes/routes";
 

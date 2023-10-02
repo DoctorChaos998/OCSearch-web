@@ -1,0 +1,21 @@
+.dragAndDropFilesAreaContainer{
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0,0,0,0.5);
+    left: 0;
+    top: 0;
+    z-index: 2;
+    border: #f92056 5px dashed;
+    padding: 50px;
+    color: #f92056;
+    font-size: 2em;
+}
+.dragAndDropFilesArea{
+    height: 70vh;
+    width: 70vw;
+    border: #f92056 5px dashed;
+}

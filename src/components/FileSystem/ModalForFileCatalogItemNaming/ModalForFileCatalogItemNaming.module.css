@@ -1,0 +1,49 @@
+
+.modalContainer{
+    border-radius: 50px;
+    height: 30vh;
+    width: 40vw;
+    border: #833ab4 3px solid;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #22252E;
+    box-shadow: 0 0 30px rgba(131, 58, 180, 0.5);
+}
+.modalForm{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+    flex-direction: column;
+}
+.modalInput {
+    width: 100%;
+    height: 100%;
+    background: transparent;
+    border: none;
+    outline: none;
+    font-size: 1em;
+    font-weight: 400;
+    color: #833ab4;
+}
+
+.inputBox {
+    position: relative;
+    width: 80%;
+    height: 50px;
+    border-bottom: 2px solid #833ab4;
+    transition: border-bottom-color 0.3s ease-in-out;
+}
+.modalInput::placeholder{
+    opacity: 0.5;
+    color: #833ab4;
+}
+.inputBoxError {
+    position: relative;
+    width: 80%;
+    height: 50px;
+    border-bottom: 2px solid red;
+    transition: border-bottom-color 0.3s ease-in-out;
+}

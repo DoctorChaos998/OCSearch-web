@@ -1,0 +1,23 @@
+.deleteButton{
+    height: 30px;
+    color: #f92056;
+    margin-right: 15px;
+    transform: translateY(-100%);
+    width: 30px;
+    transition: transform 0.1s linear, opacity 0.1s linear, box-shadow 0.5s ease-out;
+    opacity: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 5px;
+    border: none;
+}
+.buttonShow{
+    transform: translateY(0);
+    opacity: 1;
+}
+.deleteButton:hover{
+    border: #f92056 2px solid;
+    box-shadow: 0 0 40px 10px #f92056;
+    color: #f92056;
+}

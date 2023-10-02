@@ -12,7 +12,7 @@ const Profile: FC = () => {
     //console.log(user,isAuth,loginError,isLoading,accessToken)
     return (
         <div className={classes.contentOnProfilePage}>
-            <UserCard nickname={user.nickname}></UserCard>
+            <UserCard userCardNickname={user.nickname}></UserCard>
             <LoginsList></LoginsList>
         </div>
     );
