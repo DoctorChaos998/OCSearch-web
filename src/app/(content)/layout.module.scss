@@ -1,0 +1,9 @@
+@import "../../assets/stylesheets/abstracts/variables";
+
+.mainContainer {
+  background: $colorMainContentBg;
+  flex: 1;
+}
+.flexContainerWithContent {
+  display: flex;
+}

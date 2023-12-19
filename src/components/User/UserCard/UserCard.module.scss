@@ -1,0 +1,19 @@
+@import "../../../assets/stylesheets/abstracts/variables";
+
+.userCardContainer {
+    margin-top: 50px;
+    display: flex;
+    align-items: center;
+    user-select: none;
+    align-self: start;
+    margin-left: 50px;
+}
+
+.userCardNickname {
+    color: $colorAquamarine;
+}
+.userCardVerifiedIcon {
+    margin-left: 10px;
+    color: $colorRed;
+    pointer-events: none
+}

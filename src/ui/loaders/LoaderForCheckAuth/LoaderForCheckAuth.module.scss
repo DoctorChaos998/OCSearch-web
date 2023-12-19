@@ -1,0 +1,24 @@
+@import "../../../assets/stylesheets/abstracts/variables";
+
+.checkAuthLoaderContainer {
+  background: #22252E;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+}
+.checkAuthLoader {
+  border: 10px solid transparent;
+  border-top-color: $colorGreen;
+  border-bottom-color: $colorRed;
+  border-radius: 50%;
+  width: 120px;
+  height: 120px;
+  animation: loaderSpin 1s ease-out infinite;
+}
+
+@keyframes loaderSpin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}

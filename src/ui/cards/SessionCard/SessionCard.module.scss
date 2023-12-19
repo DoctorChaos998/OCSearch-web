@@ -1,0 +1,27 @@
+@import "../../../assets/stylesheets/abstracts/variables";
+@import "../../../assets/stylesheets/abstracts/mixins";
+
+.currentSessionContainer {
+  @include sessionContainer($colorAquamarine)
+}
+.currentSessionIcon{
+  @include sessionIcon($colorAquamarine)
+}
+.activeSessionContainer {
+  @include sessionContainer($colorGreen)
+}
+.activeSessionIcon{
+  @include sessionIcon($colorGreen)
+}
+.inactiveSessionContainer{
+  @include sessionContainer($colorRed);
+}
+.inactiveSessionIcon{
+  @include sessionIcon($colorRed)
+}
+
+.sessionInfoContainer{
+  margin-left: 15px;
+  display: flex;
+  flex-direction: column;
+}

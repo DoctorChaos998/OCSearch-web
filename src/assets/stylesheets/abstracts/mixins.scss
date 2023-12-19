@@ -1,0 +1,127 @@
+@import "variables";
+
+@mixin sessionContainer($borderColor){
+  margin-top: 15px;
+  display: flex;
+  flex-direction: row;
+  border-radius: 40px;
+  border: $borderColor 2px solid;
+  color: $colorWhite;
+  padding: 12px;
+  width: 550px;
+  box-shadow: 10px 10px 40px 0 $colorBlack;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+  font-size: 1.15em;
+
+  &:hover{
+    background-color: $colorBlackGray;
+    box-shadow: 0 0 40px 0 $borderColor;
+  }
+}
+
+@mixin sessionIcon($iconColor){
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: $iconColor;
+  font-size: 2em;
+  margin: 0 15px;
+}
+
+@mixin modalContainer{
+  border-radius: 5px;
+  height: 30vh;
+  width: 40vw;
+  min-height: 300px;
+  min-width: 300px;
+  border: $colorLilac 1px solid;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: $colorBlackGray;
+  box-shadow: 0 0 30px rgba($colorLilac, 0.5);
+  flex-direction: column;
+  padding: 30px;
+}
+
+@mixin notification($color){
+  background: $colorBlackGray;
+  color: $colorWhite;
+  border: $color 2px solid;
+  border-radius: 5px;
+  transform: translateY(-120%);
+  transition: transform 0.15s ease-in, opacity 0.2s ease-in, width 0.2s linear;
+  opacity: 0;
+  margin-top: 1vh;
+  padding: 20px;
+  pointer-events: all;
+  width: 40px;
+  //width: 400px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: row;
+  box-shadow: 0 0 10px $color;
+  position: relative;
+  &::before{
+    content: '';
+    position: absolute;
+    width: 5px;
+    height: 80%;
+    border-bottom-right-radius: 3px;
+    border-top-right-radius: 3px;
+    background-color: $color;
+    left: 0;
+  }
+  &::after{
+    content: '';
+    position: absolute;
+    width: 5px;
+    height: 80%;
+    border-bottom-left-radius: 3px;
+    border-top-left-radius: 3px;
+    background-color: $color;
+    right: 0;
+  }
+}
+
+@mixin fileSystemItemContainer{
+  display: flex;
+  flex-direction: column;
+  width: 200px;
+  height: 200px;
+  border-radius: 15px;
+  padding: 10px;
+  justify-content: center;
+  align-items: center;
+  margin: 5px;
+  cursor: pointer;
+  user-select: none;
+  flex-shrink: 0;
+  position: relative;
+
+  &:hover{
+    background: $hoveredFileSystemItemColor;
+  }
+}
+@mixin fileSystemItemTooltipContainer{
+  transition: all ease-out 120ms;
+  color: $colorBlack;
+  padding: 8px 15px;
+  border-radius: 13px;
+  opacity: 0;
+  visibility: hidden;
+  font-size: 14px;
+  letter-spacing: 1px;
+  //width: 300px;
+  position: fixed;
+  border: $colorOrange 2px solid;
+  background-color: $colorIvory;
+  //height: 100px;
+}
+@mixin fileSystemItemTooltipContainerActive{
+  z-index: 1000;
+  visibility: visible;
+  opacity: 1;
+}

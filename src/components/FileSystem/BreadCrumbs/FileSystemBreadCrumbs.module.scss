@@ -1,0 +1,21 @@
+@import "../../../assets/stylesheets/abstracts/variables";
+
+.container{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 20px;
+  margin-left: 50px;
+}
+.header{
+  display: flex;
+  width: 200px;
+  height: 40px;
+  color: $colorWhite;
+  cursor: help;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  justify-content: center;
+  align-items: center;
+}

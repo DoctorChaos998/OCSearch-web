@@ -1,0 +1,28 @@
+@import "../../../assets/stylesheets/abstracts/variables";
+@import "../../../assets/stylesheets/abstracts/mixins";
+
+.container{
+  @include fileSystemItemContainer
+}
+.containerActive{
+  background: $selectedFileSystemItemColor;
+}
+.fileName{
+  font-size: 1em;
+  text-align: center;
+  color: $colorWhite;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 100%;
+}
+.fileIcon{
+  color: $fileIconColor;
+  font-size: 10em;
+}
+.fileTooltip{
+  @include fileSystemItemTooltipContainer
+}
+.fileTooltipActive{
+  @include fileSystemItemTooltipContainerActive
+}

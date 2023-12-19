@@ -1,0 +1,80 @@
+@import "../../../assets/stylesheets/abstracts/variables";
+
+.closeAllSessionButton{
+  margin-top: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 300px;
+  border-radius: 40px;
+  font-size: 1.2em;
+  background: linear-gradient(50deg, $colorPink 0%, $colorOrange 50%, $colorAquamarine 100%);
+  background-size: 400% 400%;
+  animation: gradient 15s ease infinite;
+  height: 40px;
+  color: $colorBlack;
+  border: none;
+
+  &:hover{
+    border: $colorBlack 2px solid;
+  }
+}
+
+@keyframes gradient {
+  0% {
+    background-position: 0 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0 50%;
+  }
+}
+
+.canselButton{
+  width: 150px;
+  height: 40px;
+  border-radius: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2em;
+  background-color: rgba($colorRed, 0.7);
+  border: none;
+  transition: background-color 0.5s ease-out;
+  margin-right: 20px;
+  font-weight: bold;
+
+  &:hover{
+    background: $colorRed;
+    border: $colorBlack 2px solid;
+  }
+}
+
+.confirmButton{
+  width: 150px;
+  height: 40px;
+  border-radius: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2em;
+  border: none;
+  font-weight: bold;
+  transition: background-color 0.5s ease-out;
+  background: rgba($colorGreen, 0.7);
+
+  &:hover{
+    border: $colorBlack 2px solid;
+    background: $colorGreen;
+  }
+}
+
+.confirmButtonsContainer{
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+}

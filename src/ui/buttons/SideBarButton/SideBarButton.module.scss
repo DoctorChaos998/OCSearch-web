@@ -1,0 +1,66 @@
+@import "../../../assets/stylesheets/abstracts/variables";
+
+.sideBarButton {
+    cursor: pointer;
+    transition: background-color ease-in-out 0.1s;
+    display: inline-block;
+    width: 100%;
+    padding: 28px 0;
+    user-select: none;
+
+    &:hover{
+        background-color: $colorMainContentBg;
+    }
+
+    &:hover + .tooltip{
+        z-index: 1000;
+        visibility: visible;
+        opacity: 1;
+    }
+    &:hover .sideBarButtonUnActive{
+        color: $colorRed;
+    }
+}
+
+.sideBarButtonIcon {
+    color: $colorGreen;
+    pointer-events: none;
+    font-size: 1.7em;
+}
+
+.sideBarButtonUnActive{
+    transition: color 0.1s ease-in-out;
+}
+
+.sideBarButtonActive {
+    color: $colorAquamarine
+}
+.tooltip {
+    transition: opacity ease-out 0.1s;
+    color: $colorWhite;
+    display: inline-block;
+    position: absolute;
+    background-color: $colorBlack;
+    padding: 8px 15px;
+    border-radius: 3px;
+    margin-top: 26px;
+    left: 90px;
+    opacity: 0;
+    visibility: hidden;
+    font-size: 1em;
+
+    &:before{
+        content: '';
+        display: block;
+        position: absolute;
+        left: -4px;
+        top: 10px;
+        transform: rotate(45deg);
+        width: 10px;
+        height: 10px;
+        background-color: inherit;
+    }
+
+
+}
+

@@ -1,0 +1,23 @@
+@import "../../../assets/stylesheets/abstracts/variables";
+
+.loginButton {
+    margin-top: 40px;
+    width: 100%;
+    height: 45px;
+    background: $colorBlack;
+    border: 4px solid $colorIvory;
+    outline: none;
+    border-radius: 15px;
+    cursor: pointer;
+    font-size: 1.2em;
+    color: $colorWhite;
+    font-weight: 500;
+    margin-bottom: 15px;
+    transition: border-color 0.2s ease-in-out, color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+
+    &:hover{
+        color: $colorLilac;
+        border-color: $colorLilac;
+        box-shadow: 0 0 10px $colorLilac;
+    }
+}

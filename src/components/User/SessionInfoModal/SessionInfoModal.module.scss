@@ -1,0 +1,44 @@
+.sessionInfoContainer{
+    width: 400px;
+    height: 500px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: #22252E;
+    color: white;
+    border-radius: 50px;
+    box-shadow: 0 0 40px 1px white;
+    border: white 2px solid;
+    padding: 0 20px;
+}
+.sessionInfoIcon{
+    display: flex;
+    font-size: 5em;
+    margin-bottom: 40px;
+}
+.sessionInfoLine{
+    border: none;
+    background-color: #474A51;
+    color: #474A51;
+    height: 1px;
+    margin: 20px 0;
+    width: 100%;
+}
+.sessionInfoButton{
+    background-color: #f92056;
+    border: none;
+    text-align: center;
+    border-radius: 5px;
+    padding: 5px 20px;
+    font-size: 1.1em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: box-shadow 0.5s ease-in-out, background-color 0.5s ease-in-out;
+    cursor: pointer;
+}
+.sessionInfoButton:hover{
+    box-shadow: 0 0 40px 10px #f92056;
+    background: linear-gradient(90deg, rgba(63,94,251,1) 0%, rgba(252,70,107,1) 100%);
+}

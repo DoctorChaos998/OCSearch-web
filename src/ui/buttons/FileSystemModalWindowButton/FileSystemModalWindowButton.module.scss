@@ -1,0 +1,32 @@
+@import "../../../assets/stylesheets/abstracts/variables";
+
+.button {
+    //width: 100px;
+    //height: 50px;
+    background: $colorLightGray;
+    border: 2px solid $colorLilac;
+    outline: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 1em;
+    color: $colorWhite;
+    margin-top: 40px;
+    transition: box-shadow 0.5s ease-in-out, color 0.5s ease-in-out;
+    padding: 10px;
+    text-align: center;
+
+    &:hover{
+        color: $colorLilac;
+        box-shadow: 0 0 40px 10px $colorLilac;
+    }
+}
+.buttonIsDisabled{
+    font-size: 1em;
+    border: 2px solid $colorIvory;
+    background: $colorIvory;
+    outline: none;
+    border-radius: 10px;
+    padding: 10px;
+    text-align: center;
+    margin-top: 40px;
+}

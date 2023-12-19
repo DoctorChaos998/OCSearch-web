@@ -1,0 +1,66 @@
+@import "../../assets/stylesheets/abstracts/variables";
+
+.loginFormContainer{
+    display: flex;
+    position: relative;
+    overflow: hidden;
+    width: 600px;
+    height: 400px;
+    justify-content: center;
+    align-items: center;
+    border-radius: 20px;
+    box-shadow: 0 0 40px $colorLilac;
+
+    &::after{
+        position: absolute;
+        content: '';
+        height: 1000px;
+        width: 800px;
+        background-image: conic-gradient(transparent, transparent, transparent, $colorPink);
+        animation: borderRotate 16s linear infinite;
+        animation-delay: -8s;
+    }
+    &::before{
+        position: absolute;
+        content: '';
+        height: 1000px;
+        width: 800px;
+        background-image: conic-gradient(transparent, transparent, transparent, $colorAquamarine);
+        animation: borderRotate 16s linear infinite;
+    }
+}
+
+@keyframes borderRotate {
+    from{
+        transform: rotate(0);
+    }
+    to{
+        transform: rotate(360deg);
+    }
+}
+
+.loginFormContentContainer{
+    position: absolute;
+    inset: 5px;
+    z-index: 2;
+    background-color: $colorMainContentBg;
+    //background: #22252E;
+    border-radius: 16px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.loginFormHeader{
+    color: $colorLilac;
+    font-size: 2em;
+}
+.loginForm{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    height: 80%;
+    width: 85%;
+}

@@ -1,0 +1,49 @@
+@import "../../../assets/stylesheets/abstracts/variables";
+@import "../../../assets/stylesheets/abstracts/mixins";
+
+.container{
+  @include fileSystemItemContainer
+}
+.containerActive{
+  background: $selectedFileSystemItemColor;
+}
+.folderName{
+  font-size: 1em;
+  text-align: center;
+  color: $colorWhite;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 100%;
+}
+.folderIcon{
+  color: $folderIconColor;
+  font-size: 10em;
+}
+.folderTooltip{
+  @include fileSystemItemTooltipContainer
+}
+.folderTooltipActive{
+  @include fileSystemItemTooltipContainerActive
+}
+//.tooltip{
+//  transition: all ease-out 120ms;
+//  color: $colorBlack;
+//  padding: 8px 15px;
+//  border-radius: 13px;
+//  opacity: 0;
+//  visibility: hidden;
+//  font-size: 14px;
+//  letter-spacing: 1px;
+//  width: 300px;
+//  position: fixed;
+//  border: $colorOrange 2px solid;
+//  background-color: $colorIvory;
+//  height: 100px;
+//}
+//
+//.tooltipVisible{
+//  z-index: 1000;
+//  visibility: visible;
+//  opacity: 1;
+//}

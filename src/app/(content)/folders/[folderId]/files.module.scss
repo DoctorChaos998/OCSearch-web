@@ -1,0 +1,10 @@
+.filesContainer{
+  display: grid;
+  grid-gap: 10px;
+  grid-template-columns: repeat(8, 1fr);
+  justify-content: center;
+  justify-items: center;
+  align-items: center;
+  outline: none;
+  padding: 20px 20px;
+}

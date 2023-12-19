@@ -1,0 +1,31 @@
+@import "../../assets/stylesheets/abstracts/variables";
+
+.sideBarItemsList {
+    text-align: center;
+}
+
+.sideBarContainer {
+    display: flex;
+    height: 100vh;
+    background-color: $colorSideBarBg;
+    width: 80px;
+    position: sticky;
+    top: 0;
+    z-index: 2;
+    @media (max-width: 480px) {
+        min-height: 100vh;
+    }
+}
+
+.sideBarItems {
+    top: 0;
+    display: flex;
+    flex-direction: column;
+    width: 100vw;
+    justify-content: space-between;
+}
+
+.sideBarBottom {
+    position: sticky;
+    bottom: 0;
+}
