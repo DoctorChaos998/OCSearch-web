@@ -38,16 +38,14 @@ export const setResponseInterceptor = () => (dispatch: AppDispatch) => {
     const createSetRetryInterceptor = () => async (error: any) => {
         const originalRequest = error.config;
         if (error.response.status === 401 && error.config && !error.config._isRetry) {
-            try {
                 originalRequest._isRetry = true;
-                //const response = await axios.get<IAuthResponse>(`${API_URL}/refresh`, {withCredentials: true})
-                const response = await UserService.refreshTokens();
-                dispatch(userActions.setAccessToken(response.accessToken));
-                return api.request(originalRequest);
-            } catch (e: any) {
-                dispatch(notificationActions.createNotification({notificationMessage:e.response?.data?.message, notificationType:'error'}));
-                dispatch(userActions.userLogoutSuccess());
-            }
+                await UserService.refreshTokens().then(value => {
+                    dispatch(userActions.setAccessToken(value.accessToken));
+                    return api.request(originalRequest);
+                }).catch((reason: {error: string, status: number}) => {
+                    dispatch(notificationActions.createNotification({notificationMessage:reason.error, notificationType:'error'}));
+                    dispatch(userActions.userLogoutSuccess());
+                });
         }
         if (error.response.status >= 500) {
             dispatch(notificationActions.createNotification({notificationMessage:error.response.data.error, notificationType:'error'}));

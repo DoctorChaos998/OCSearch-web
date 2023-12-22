@@ -20,9 +20,18 @@ const ChangePasswordModal = () => {
 
     const submitFormHandler = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
+        if(!currentPasswordValue){
+            setCurrentPasswordError('Invalid current password');
+            return;
+        }
+        setCurrentPasswordError('');
+        if(currentPasswordValue === newPasswordValue){
+            setNewPasswordError('Old and new passwords are the same');
+            return;
+        }
+        setNewPasswordError('');
         const reg = RegExp(/(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[,/|@#$_&\-+()\[\]{}*"'`~=:;!?])[0-9a-zA-Z.,/|@#$_&\-+()\[\]{}*"'`~=:;!?]{8,32}/);
         if(newPasswordValue.match(reg) === null){
-            console.log(newPasswordValue.match(reg))
             setNewPasswordError('Invalid new password format');
             return;
         }

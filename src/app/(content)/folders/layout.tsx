@@ -2,7 +2,6 @@ import React from "react";
 import {Metadata} from "next";
 import classes from "./folders.module.scss";
 import FileSystemHelper from "@/components/FileSystem/Helper/FileSystemHelper";
-import Link from "next/link";
 import FileSystemBreadCrumbs from "@/components/FileSystem/BreadCrumbs/FileSystemBreadCrumbs";
 import DragAndDropFilesArea from "@/components/FileSystem/DragAndDropFilesArea/DragAndDropFilesArea";
 import CreateFolderModalWindow from "@/components/FileSystem/CreateFolderModalWindow/CreateFolderModalWindow";
