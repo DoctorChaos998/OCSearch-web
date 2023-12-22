@@ -20,11 +20,6 @@ const ChangePasswordModal = () => {
 
     const submitFormHandler = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        if(!currentPasswordValue){
-            setCurrentPasswordError('Invalid current password');
-            return;
-        }
-        setCurrentPasswordError('');
         if(currentPasswordValue === newPasswordValue){
             setNewPasswordError('Old and new passwords are the same');
             return;
@@ -58,7 +53,7 @@ const ChangePasswordModal = () => {
                             <ChangePasswordInput value={currentPasswordValue} onChange={(event) => setCurrentPasswordValue(event.target.value)} placeholder={'Current password'} passwordInputError={currentPasswordError}/>
                             <ChangePasswordInput value={newPasswordValue} onChange={(event) => setNewPasswordValue(event.target.value)} placeholder={'New password'}  passwordInputError={newPasswordError}/>
                             <ChangePasswordInput value={repeatNewPasswordValue} onChange={(event) => setRepeatNewPasswordValue(event.target.value)} placeholder={'Repeat new password'}  passwordInputError={repeatNewPasswordError} onPaste={(event) => event.preventDefault()}/>
-                            <button type='submit' className={classes.changePasswordModalFormButton}>Change password</button>
+                            <button type='submit' disabled={!(currentPasswordValue&&newPasswordValue&&repeatNewPasswordValue)} className={currentPasswordValue&&newPasswordValue&&repeatNewPasswordValue?classes.changePasswordModalFormButtonActive:classes.changePasswordModalFormButtonInactive}>Change password</button>
                         </form>
                     </div>
                 </ModalWindow>, document.getElementById('modalsContainer')!):null

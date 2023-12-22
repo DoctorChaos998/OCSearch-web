@@ -3,7 +3,7 @@ export interface session{
     loginDate: string,
     userAgent: string,
     ip: string,
-    lastSeen: string
+    lastSeenDate: string
 }
 
 export interface inactiveSession{

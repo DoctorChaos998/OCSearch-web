@@ -68,14 +68,14 @@ export const loadingAllSessions = () => async (dispatch: AppDispatch) => {
 export const closeAllSessions = () => async (dispatch: AppDispatch) => {
     await UserService.closeAllSession().then(() => {
         dispatch(userActions.closeAllSessions());
-        dispatch(notificationActions.createNotificationWithTimer({notificationMessage: 'Sessions has been successful close', notificationType: "info"}));
+        dispatch(notificationActions.createNotificationWithTimer({notificationMessage: 'Sessions have been successfully closed', notificationType: "info"}));
     }).catch();
 }
 
 export const closeSession = (sessionId: number) => async (dispatch: AppDispatch) => {
     await UserService.closeSession(sessionId).then(() => {
         dispatch(userActions.closeSession(sessionId));
-        dispatch(notificationActions.createNotificationWithTimer({notificationMessage: 'Sessions has been successful close', notificationType: "info"}));
+        dispatch(notificationActions.createNotificationWithTimer({notificationMessage: 'Session has been successfully closed', notificationType: "info"}));
         dispatch(userActions.closeSessionModalWindow());
     }).catch((reason: {error: string, status: number}) => {
         dispatch(notificationActions.createNotificationWithTimer({notificationMessage: reason.error, notificationType: "info"}));

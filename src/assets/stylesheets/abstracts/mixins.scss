@@ -9,6 +9,7 @@
   color: $colorWhite;
   padding: 12px;
   width: 550px;
+  min-height: 120px;
   box-shadow: 10px 10px 40px 0 $colorBlack;
   cursor: pointer;
   transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;

@@ -17,16 +17,17 @@ const SessionInfoModal = () => {
                 <ModalWindow onModalWindowClickHandler={() => dispatch(userActions.closeSessionModalWindow())}>
                     <div className={classes.sessionInfoContainer} onClick={(event) => event.stopPropagation()}>
                         <span className={`material-icons ${classes.sessionInfoIcon}`}>
-                            {userAgentParsed.os.name === 'Windows' || userAgentParsed.os.name === 'Ubuntu'?'desktop_windows':'phone_android'}
+                            {userAgentParsed.os.name === 'Windows' || userAgentParsed.os.name === 'Ubuntu' || userAgentParsed.os.name === 'Linux' || !userAgentParsed.os.name?'desktop_windows':'phone_android'}
                         </span>
-                        {sessionModalWindow.sessionType === 'inactiveSession'?
-                            <span>{`Logout date: ${"logoutDate" in sessionModalWindow.session ? sessionModalWindow.session.logoutDate :''}`}</span>:
-                            <span>{`Last seen: ${"lastSeen" in sessionModalWindow.session ? sessionModalWindow.session.lastSeen:''}`}</span>
+                        {'logoutDate' in sessionModalWindow.session?
+                            <span>{`Logout date: ${sessionModalWindow.session.logoutDate}`}</span>
+                            :
+                            <span>{`Last seen: ${sessionModalWindow.session.lastSeenDate}`}</span>
                         }
                         {userAgentParsed.device.vendor&&<span>{`Device: ${userAgentParsed.device.type} ${userAgentParsed.device.model} ${userAgentParsed.device.vendor}`}</span>}
                         <hr className={classes.sessionInfoLine}/>
-                        <span>{`OS: ${userAgentParsed.os.name} ${userAgentParsed.os.version}`}</span>
-                        <span>{`Browser: ${userAgentParsed.browser.name} ${userAgentParsed.browser.version}`}</span>
+                        {userAgentParsed.os.name&&<span>{`OS: ${userAgentParsed.os.name} ${userAgentParsed.os.version?userAgentParsed.os.version:''}`}</span>}
+                        {userAgentParsed.browser.name&&<span>{`Browser: ${userAgentParsed.browser.name} ${userAgentParsed.browser.version?userAgentParsed.browser.version:''}`}</span>}
                         <span>{`IP: ${sessionModalWindow.session.ip}`}</span>
                         <span>{`Login date: ${sessionModalWindow.session.loginDate}`}</span>
                         <hr className={classes.sessionInfoLine}/>
@@ -39,7 +40,7 @@ const SessionInfoModal = () => {
                                 Closed session
                             </span>:
                         <button className={classes.sessionInfoButton} onClick={() => {
-                            if('lastSeen' in sessionModalWindow.session){
+                            if('lastSeenDate' in sessionModalWindow.session){
                                 dispatch(closeSession(sessionModalWindow.session.id));
                             }
                         }}>
