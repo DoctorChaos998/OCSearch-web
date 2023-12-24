@@ -12,7 +12,7 @@ const CheckAuth: FC<PropsWithChildren> = ({children}) => {
     useEffect(() => {
         if(isAuth) dispatch(setResponseInterceptor());
         else router.push('/login');
-    }, []);
+    }, [isAuth]);
     return (
         !isAuth?
             <LoaderForCheckAuth/>:

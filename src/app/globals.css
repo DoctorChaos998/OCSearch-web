@@ -30,8 +30,8 @@
   background-color: rgb(128, 128, 128);
 }
 ::selection {
-  background-color: rgba(#807dde, 0.5);
+  background-color: rgba(128, 125, 222, 0.5);
 }
 ::-moz-selection {
-  background-color: rgba(#807dde, 0.5);
+  background-color: rgba(128, 125, 222, 0.5);
 }

@@ -123,7 +123,7 @@ const userSlice = createSlice({
         },
         closeSession(state, action: PayloadAction<number>){
             const closeableSession = state.sessions.sessionsInfo.otherActiveSessions.find(session => session.id= action.payload)!;
-            state.sessions.sessionsInfo.inactiveSessions.push({id: closeableSession.id, ip: closeableSession.ip, userAgent: closeableSession.userAgent, loginDate: closeableSession.loginDate, logoutDate: 'Now'});
+            state.sessions.sessionsInfo.inactiveSessions.unshift({id: closeableSession.id, ip: closeableSession.ip, userAgent: closeableSession.userAgent, loginDate: closeableSession.loginDate, logoutDate: 'Now'});
             state.sessions.sessionsInfo.otherActiveSessions = state.sessions.sessionsInfo.otherActiveSessions.filter(session => session.id!==action.payload);
         },
         openChangePasswordModalWindow(state){

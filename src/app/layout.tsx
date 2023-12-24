@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
-import './globals.scss'
+import './globals.css'
 import React from "react";
 import {Providers} from "@/store/providers";
 import Auth from "@/components/User/Auth/Auth";
