@@ -46,7 +46,7 @@ export const setResponseInterceptor = () => (dispatch: AppDispatch) => {
                 dispatch(userActions.setAccessToken(response.accessToken));
                 return api.request(originalRequest);
             } catch (error: any) {
-                dispatch(notificationActions.createNotification({notificationMessage:error.response?.data?.error, notificationType:'error'}));
+                dispatch(notificationActions.createNotification({notificationMessage: 'Token is dead(', notificationType:'error'}));
                 dispatch(userActions.userLogoutSuccess());
             }
         }

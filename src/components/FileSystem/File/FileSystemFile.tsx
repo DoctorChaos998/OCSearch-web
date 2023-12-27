@@ -1,4 +1,4 @@
-import React, {FC, useRef, useState} from 'react';
+import React, {FC, useMemo, useRef, useState} from 'react';
 import {type IFile} from "@/entities/fileSystem";
 import classes from "./FileSystemFile.module.scss";
 import {useAppSelector} from "@/hooks";
@@ -16,6 +16,14 @@ const FileSystemFile: FC<IFileSystemFileProps> = ({file, onClickHandler, onDoubl
     const [mousePosition, setMousePosition] = useState({ top: 0, left: 0 });
     const selectedFileIds = useAppSelector(state => state.fileSystemReducer.selectedFileSystemItemIds);
     const ref = useRef<HTMLSpanElement>(null);
+
+    const fileSize: string = useMemo(() => {
+        if(file.size === null) return '';
+        if(file.size<1024) return file.size + " B";
+        else if(file.size<1024*1024) return (file.size/1024).toFixed(2) + " KB";
+        else if(file.size<1024*1024*1024) return (file.size/1024/1024).toFixed(2) + " MB";
+        return (file.size/1024/1024/1024).toFixed(2) + " GB";
+    }, [file.size])
     const onMouseEnterHandler = (event: React.MouseEvent<HTMLDivElement>) => {
         setInfoIsVisible(true);
         setMousePosition({
@@ -50,10 +58,18 @@ const FileSystemFile: FC<IFileSystemFileProps> = ({file, onClickHandler, onDoubl
                     {`Name: ${file.name}`}
                     <br/>
                     {`Uploaded by: ${file.uploadedBy}`}
-                    <br/>
-                    {`Upload date: ${file.uploadDate}`}
-                    <br/>
-                    {`Size: ${file.size}`}
+                    {file.uploadDate&&
+                        <>
+                            <br/>
+                            {`Upload date: ${file.uploadDate}`}
+                        </>
+                    }
+                    {file.size&&
+                        <>
+                            <br/>
+                            {`Size: ${fileSize}`}
+                        </>
+                    }
                     <br/>
                     {`Status: ${file.status}`}
                 </span>

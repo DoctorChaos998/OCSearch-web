@@ -162,4 +162,21 @@ export default class FileSystemService{
             throw error
         }
     }
+    static async getFileLength(fileId: number): Promise<number>{
+        try {
+            const response = await api.get<number>(`${FileSystemService.serviceUrl}/files/length/${fileId}`);
+            return Promise.resolve(response.data);
+        } catch (error){
+            if(axios.isAxiosError<{error: string}>(error)){
+                const responseError: AxiosError<{error: string}> = error;
+                if(responseError.response){
+                    return Promise.reject({
+                        status: responseError.response.status,
+                        error: responseError.response.data.error
+                    });
+                }
+            }
+            throw error
+        }
+    }
 }

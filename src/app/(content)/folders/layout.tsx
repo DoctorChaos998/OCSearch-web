@@ -8,6 +8,7 @@ import CreateFolderModalWindow from "@/components/FileSystem/CreateFolderModalWi
 import RenameModalWindow from "@/components/FileSystem/RenameModalWindow/RenameModalWindow";
 import FileProvider from "@/components/FileSystem/FileContext/FileContext";
 import DeleteModalWindow from "@/components/FileSystem/DeleteModalWindow/DeleteModalWindow";
+import PreviewContainer from "@/components/FileSystem/PreviewContainer/PreviewContainer";
 
 
 export const metadata: Metadata = {
@@ -19,14 +20,15 @@ export default function ContentLayout({children,}: {
     return (
         <FileProvider>
             <div className={classes.container}>
-                <FileSystemHelper></FileSystemHelper>
+                <FileSystemHelper/>
                 <hr className={classes.separatingLine}/>
-                <FileSystemBreadCrumbs></FileSystemBreadCrumbs>
+                <FileSystemBreadCrumbs/>
                 {children}
-                <DragAndDropFilesArea></DragAndDropFilesArea>
-                <CreateFolderModalWindow></CreateFolderModalWindow>
-                <RenameModalWindow></RenameModalWindow>
-                <DeleteModalWindow></DeleteModalWindow>
+                <DragAndDropFilesArea/>
+                <CreateFolderModalWindow/>
+                <RenameModalWindow/>
+                <DeleteModalWindow/>
+                <PreviewContainer/>
             </div>
         </FileProvider>
     )

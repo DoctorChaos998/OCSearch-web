@@ -19,7 +19,11 @@ const SessionCard: FC<ISessionCard> = ({session, sessionType, ...props}) => {
                     :
                     <span>{`Last seen: ${session.lastSeenDate}`}</span>
                 }
-                {parser.getOS().name&&<span>{`OS: ${parser.getOS().name} ${parser.getOS().version?parser.getOS().version:''}`}</span>}
+                {parser.getOS().name?
+                    <span>{`OS: ${parser.getOS().name} ${parser.getOS().version?parser.getOS().version:''}`}</span>
+                :
+                    <span>OS: unknown</span>
+                }
                 <span>{`IP: ${session.ip}`}</span>
                 <span>{`Login date: ${session.loginDate}`}</span>
             </div>

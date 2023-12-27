@@ -122,8 +122,8 @@ const userSlice = createSlice({
             state.sessionModalWindow = {isVisible: false, sessionType: 'currentSession', session: {} as session};
         },
         closeSession(state, action: PayloadAction<number>){
-            const closeableSession = state.sessions.sessionsInfo.otherActiveSessions.find(session => session.id= action.payload)!;
-            state.sessions.sessionsInfo.inactiveSessions.unshift({id: closeableSession.id, ip: closeableSession.ip, userAgent: closeableSession.userAgent, loginDate: closeableSession.loginDate, logoutDate: 'Now'});
+            const closeableSession: Omit<session, 'lastSeenDate'> = state.sessions.sessionsInfo.otherActiveSessions.find(session => session.id === action.payload)!;
+            state.sessions.sessionsInfo.inactiveSessions.unshift({...closeableSession, logoutDate: 'Now'});
             state.sessions.sessionsInfo.otherActiveSessions = state.sessions.sessionsInfo.otherActiveSessions.filter(session => session.id!==action.payload);
         },
         openChangePasswordModalWindow(state){

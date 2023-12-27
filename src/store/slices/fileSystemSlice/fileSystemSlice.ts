@@ -32,6 +32,11 @@ interface IFileSystemSlice{
         isVisible: boolean,
         deleteItem: 'folder'|'file'
     },
+    previewModalWindow: {
+        isVisible: boolean,
+        fileExtension: 'txt'|'csv'|'xlsx'|'sql'|null,
+        fileId: number
+    },
     sorter: {
         order: fileSystemSortingOrder,
         target: fileSystemSortingTarget
@@ -61,6 +66,11 @@ const initialState: IFileSystemSlice = {
     deleteModalWindow: {
         isVisible: false,
         deleteItem: "folder"
+    },
+    previewModalWindow: {
+        isVisible: false,
+        fileExtension: null,
+        fileId: 0
     },
     sorter: {
         order: 'byDescending',
@@ -188,6 +198,12 @@ const fileSystemSlice = createSlice({
         },
         closeDeleteModalWindow: (state) => {
             state.deleteModalWindow = {deleteItem: 'folder', isVisible: false};
+        },
+        openPreviewModalWindow: (state, action: PayloadAction<{fileExtension: 'txt'|'csv'|'xlsx'|'sql', fileId: number}>) => {
+            state.previewModalWindow = {isVisible: true, fileId: action.payload.fileId, fileExtension: action.payload.fileExtension};
+        },
+        closePreviewModalWindow: (state) => {
+            state.previewModalWindow = {isVisible: false, fileExtension: null, fileId: 0};
         }
     }
 })
