@@ -1,14 +1,18 @@
+@import "../../../assets/stylesheets/abstracts/variables";
+
 .container{
   display: flex;
   align-items: center;
   justify-content: center;
-  position: absolute;
+  position: fixed;
   left: 0;
   top: 0;
   height: 100vh;
   width: 100%;
   user-select: none;
-  font-size: 2em;
-  backdrop-filter: blur(1px);
+  font-size: 3em;
+  backdrop-filter: blur(3px);
   border: #9e4efc 4px dashed;
+  z-index: 2000;
+  color: #9e4efc;
 }

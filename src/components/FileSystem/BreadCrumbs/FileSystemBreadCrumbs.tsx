@@ -18,10 +18,15 @@ const FileSystemBreadCrumbs = () => {
                     {status !== 'success'?
                         <Skeleton width={200} height={38} baseColor="#202020" highlightColor="#833ab4" borderRadius={20}></Skeleton>
                     :
-                        <h2 title={folderName} className={classes.header}>{folderName}</h2>}
+                        <div className={classes.headerContainer}>
+                            <h2 title={folderName} className={classes.header}>{folderName}</h2>
+                        </div>}
             </div>
             :
-            <h2 title={folderName} style={{marginLeft:50}} className={classes.header}>All folders</h2>
+            <div className={classes.headerContainer}>
+                <h2 title={folderName} style={{marginLeft:50}} className={classes.header}>All folders</h2>
+            </div>
+
     );
 };
 

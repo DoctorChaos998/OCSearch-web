@@ -1,5 +1,5 @@
 export type fileCatalogItemType = 'file'|'folder'
-export const validFileExtensions  = ['txt', 'csv', 'zip', 'xlsx']
+export const validFileExtensions  = ['txt', 'csv', 'zip', 'xlsx', 'rar']
 export type fileStatus = 'uploading'|'uploaded'|'unzipping'|'recoding'|'ready_for_parsing'|'parsing'
 export interface IFile extends IFileSystemItem{
     size: number|null,

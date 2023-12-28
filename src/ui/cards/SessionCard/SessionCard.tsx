@@ -7,11 +7,11 @@ interface ISessionCard extends HTMLAttributes<HTMLDivElement>{
     sessionType: sessionType
 }
 const SessionCard: FC<ISessionCard> = ({session, sessionType, ...props}) => {
-    const parser = new UAParser(session.userAgent);
+    const parser = new UAParser(session.userAgent).getResult();
     return (
         <div className={sessionType==='inactiveSession'?classes.inactiveSessionContainer:sessionType==='activeSession'?classes.activeSessionContainer:classes.currentSessionContainer} {...props}>
             <span className={`material-icons ${sessionType==='inactiveSession'?classes.inactiveSessionIcon:sessionType==='activeSession'?classes.activeSessionIcon:classes.currentSessionIcon}`}>
-                {parser.getOS().name === 'Windows' || parser.getOS().name === 'Ubuntu' || parser.getOS().name === 'Linux' || !parser.getOS().name?'desktop_windows':'phone_android'}
+                {parser.os.name === 'Windows' || parser.os.name === 'Ubuntu' || parser.os.name === 'Linux' || !parser.os.name?'desktop_windows':'phone_android'}
             </span>
             <div className={classes.sessionInfoContainer}>
                 {'logoutDate' in session?
@@ -19,11 +19,7 @@ const SessionCard: FC<ISessionCard> = ({session, sessionType, ...props}) => {
                     :
                     <span>{`Last seen: ${session.lastSeenDate}`}</span>
                 }
-                {parser.getOS().name?
-                    <span>{`OS: ${parser.getOS().name} ${parser.getOS().version?parser.getOS().version:''}`}</span>
-                :
-                    <span>OS: unknown</span>
-                }
+                <span>{`OS: ${parser.os.name ?? 'Unknown'} ${parser.os.version ?? ''}`}</span>
                 <span>{`IP: ${session.ip}`}</span>
                 <span>{`Login date: ${session.loginDate}`}</span>
             </div>

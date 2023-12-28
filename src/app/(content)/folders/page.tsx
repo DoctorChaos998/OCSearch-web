@@ -30,8 +30,8 @@ const FoldersPage = () => {
                 if(firstFolderItem.filesNumber < secondFolderItem.filesNumber) return sorter.order === 'byAscending'?-1:1;
                 return 0;
             case 'uploadDate':
-                if(firstFolderItem.lastUploadDate === null) return sorter.order === 'byAscending'?-1:1;
-                if(secondFolderItem.lastUploadDate === null) return sorter.order === 'byAscending'?1:-1;
+                if(firstFolderItem.lastUploadDate === null) return sorter.order === 'byAscending'?1:-1;
+                if(secondFolderItem.lastUploadDate === null) return sorter.order === 'byAscending'?-1:1;
                 return sorter.order === 'byAscending'?firstFolderItem.lastUploadDate.localeCompare(secondFolderItem.lastUploadDate):-firstFolderItem.lastUploadDate.localeCompare(secondFolderItem.lastUploadDate);
             default: return 0;
         }

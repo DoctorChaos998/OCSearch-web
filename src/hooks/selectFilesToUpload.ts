@@ -7,6 +7,7 @@ import {
 } from "@/store/slices/fileSystemSlice/fileSystemActions";
 import {useAppDispatch, useAppSelector} from "@/hooks/index";
 import {useParams} from "next/navigation";
+import {notificationActions} from "@/store/slices/notificationSlice/notificationSlice";
 
 export function useSelectFilesToUpload() {
     const userName = useAppSelector(state => state.userReducer.nickname);
@@ -14,7 +15,8 @@ export function useSelectFilesToUpload() {
     const dispatch = useAppDispatch();
     const params = useParams<{folderId: string}>();
     const selectFilesToUpload = (fileList: FileList) => {
-        if(fileList.length>0 && checkFilesExtension(fileList)){
+        const filesExtension = checkFilesExtension(fileList);
+        if(fileList.length>0 && !filesExtension){
             if(!params.folderId){
                 currentSelectedFiles.current = fileList;
                 dispatch(fileSystemActions.openCreateFolderModalWindow(fileList[0].name.slice(0, fileList[0].name.lastIndexOf('.'))));
@@ -22,6 +24,9 @@ export function useSelectFilesToUpload() {
             else {
                 dispatch(uploadFilesInFolder(fileList, +params.folderId, userName));
             }
+        }
+        else {
+            dispatch(notificationActions.createNotification({notificationMessage: `File ${filesExtension?.name} has invalid extension`, notificationType: 'warning'}));
         }
     }
     const getCurrentSelectedFiles = (): FileList => {

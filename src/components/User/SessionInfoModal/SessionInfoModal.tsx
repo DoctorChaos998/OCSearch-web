@@ -26,15 +26,8 @@ const SessionInfoModal = () => {
                         }
                         {userAgentParsed.device.vendor&&<span>{`Device: ${userAgentParsed.device.type} ${userAgentParsed.device.model} ${userAgentParsed.device.vendor}`}</span>}
                         <hr className={classes.sessionInfoLine}/>
-                        {userAgentParsed.os.name?
-                            <span>{`OS: ${userAgentParsed.os.name} ${userAgentParsed.os.version?userAgentParsed.os.version:''}`}</span>
-                            :
-                            <span>OS: unknown</span>}
-                        {userAgentParsed.browser.name?
-                            <span>{`Browser: ${userAgentParsed.browser.name} ${userAgentParsed.browser.version?userAgentParsed.browser.version:''}`}</span>
-                            :
-                            <span>Browser: unknown</span>
-                        }
+                        <span>{`OS: ${userAgentParsed.os.name ?? 'Unknown'} ${userAgentParsed.os.version ?? ''}`}</span>
+                        <span>{`Browser: ${userAgentParsed.browser.name ?? 'Unknown'} ${userAgentParsed.browser.version ?? ''}`}</span>
                         <span>{`IP: ${sessionModalWindow.session.ip}`}</span>
                         <span>{`Login date: ${sessionModalWindow.session.loginDate}`}</span>
                         <hr className={classes.sessionInfoLine}/>

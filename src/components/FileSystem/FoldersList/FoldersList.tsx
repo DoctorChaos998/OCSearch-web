@@ -3,6 +3,7 @@ import {IFolder} from "@/entities/fileSystem";
 import FileSystemFolder from "@/components/FileSystem/Folder/FileSystemFolder";
 import {useSelectFileSystemItems} from "@/hooks/selectFileSystemItems";
 import {useRouter} from "next/navigation";
+import classes from "./FoldersList.module.scss";
 
 interface IFoldersList{
     folderList: IFolder[]
@@ -12,7 +13,7 @@ const FoldersList: FC<IFoldersList> = ({folderList}) => {
     const onFolderClickHandler = useSelectFileSystemItems(folderList);
     return (
         folderList.length===0?
-            <h1>
+            <h1 className={classes.header}>
                 Folders not exist
             </h1>
             :

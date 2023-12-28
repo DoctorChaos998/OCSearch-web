@@ -133,7 +133,12 @@ const fileSystemSlice = createSlice({
         },
         addSelectItem: (state, action: PayloadAction<number>) => {
             //state.fileSystemItems[state.fileSystemItems.findIndex((item) => item.id === action.payload)].isSelected = true;
-            state.selectedFileSystemItemIds.push(action.payload);
+            if(state.selectedFileSystemItemIds.find(id => id === action.payload)){
+                state.selectedFileSystemItemIds = state.selectedFileSystemItemIds.filter(id => id !== action.payload);
+            }
+            else {
+                state.selectedFileSystemItemIds.push(action.payload);
+            }
         },
         selectItemOnce: (state, action: PayloadAction<number>) => {
             state.selectedFileSystemItemIds = [action.payload];
@@ -159,9 +164,11 @@ const fileSystemSlice = createSlice({
         },
         createFolder: (state, action: PayloadAction<IFolder>) => {
             state.fileSystemItems.folders.push(action.payload);
+            state.selectedFileSystemItemIds.push(action.payload.id);
         },
         createFile: (state, action: PayloadAction<IFile>) => {
             state.fileSystemItems.files.push(action.payload);
+            state.selectedFileSystemItemIds.push(action.payload.id);
         },
         openRenameModalWindow: (state, action: PayloadAction<{itemType: 'folder'|'file', itemId: number}>) => {
             state.renameModalWindow = {isVisible: true,

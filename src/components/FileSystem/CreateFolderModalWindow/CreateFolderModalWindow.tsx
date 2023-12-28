@@ -1,5 +1,5 @@
 'use client'
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import ModalWindow from "@/ui/modals/ModalWindow/ModalWindow";
 import {useAppDispatch, useAppSelector} from "@/hooks";
 import {createPortal} from "react-dom";
@@ -14,18 +14,24 @@ const CreateFolderModalWindow = () => {
     const [folderName, setFolderName] = useState(createFolderModalWindow.initialName);
     const [buttonIsDisabled, setButtonIsDisabled] = useState(true);
     const {uploadFilesInNewFolder} = useFileContext();
+    const ref = useRef<HTMLInputElement>(null);
     useEffect(() => {
         setFolderName(createFolderModalWindow.initialName);
-        if(!createFolderModalWindow.initialName.trim() && createFolderModalWindow.initialName.length<3){
+        if(!createFolderModalWindow.initialName.trim() || createFolderModalWindow.initialName.trim().length<3){
             setButtonIsDisabled(true);
         }
         else {
             setButtonIsDisabled(false);
         }
+        if(ref.current){
+            setTimeout(() => {
+                ref.current?.select();
+            },0);
+        }
     }, [createFolderModalWindow.initialName]);
     const onFormSubmitHandler = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        uploadFilesInNewFolder(folderName);
+        uploadFilesInNewFolder(folderName.trim());
     }
     return (
         createFolderModalWindow.isVisible?
@@ -36,16 +42,15 @@ const CreateFolderModalWindow = () => {
                             Create folder
                         </h2>
                         <label className={`${classes.inputLabel} ${createFolderModalWindow.status==='error'?classes.inputLabelError:''}`}>
-                            <input value={folderName} className={classes.input} maxLength={64}
+                            <input value={folderName} className={classes.input} maxLength={64} ref={ref}
                                    onChange={(event) => {
-                                       if(!event.target.value.trim() && event.target.value.length<3){
+                                       if(!event.target.value.trim() || event.target.value.trim().length<3){
                                            setButtonIsDisabled(true);
-                                           setFolderName(event.target.value);
                                        }
                                        else {
                                            setButtonIsDisabled(false);
-                                           setFolderName(event.target.value);
                                        }
+                                       setFolderName(event.target.value);
                                    }}
                                 autoFocus={true} onFocus={(event: React.FocusEvent<HTMLInputElement>) => {event.target.select()}}
                             />

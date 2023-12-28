@@ -60,12 +60,8 @@ const FileSystemFolder: FC<IFileSystemFolder> = ({folder, onClickHandler, onDoub
                     <br/>
                     {`Created by: ${folder.createdBy}`}
                     <br/>
-                    {folder.lastUploadDate&&
-                        <>
-                            {`Upload date: ${folder.lastUploadDate}`}
-                            <br/>
-                        </>
-                    }
+                    {`Upload date: ${folder.lastUploadDate ?? 'Undefined'}`}
+                    <br/>
                     {`Files number: ${folder.filesNumber}`}
                 </span>
             </CSSTransition>

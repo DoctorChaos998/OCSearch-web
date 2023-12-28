@@ -45,8 +45,8 @@ const Page = () => {
                 if(firstFileItem.size! < secondFileItem.size!) return sorter.order === 'byAscending'?-1:1;
                 return 0;
             case 'uploadDate':
-                if(firstFileItem.uploadDate === null) return sorter.order === 'byAscending'?-1:1;
-                if(secondFileItem.uploadDate === null) return sorter.order === 'byAscending'?1:-1;
+                if(firstFileItem.uploadDate === null) return sorter.order === 'byAscending'?1:-1;
+                if(secondFileItem.uploadDate === null) return sorter.order === 'byAscending'?-1:1;
                 return sorter.order === 'byAscending'?firstFileItem.uploadDate.localeCompare(secondFileItem.uploadDate):-firstFileItem.uploadDate.localeCompare(secondFileItem.uploadDate);
             default: return 0;
         }

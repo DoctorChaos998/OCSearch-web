@@ -4,7 +4,7 @@ import FileSystemFile from "@/components/FileSystem/File/FileSystemFile";
 import {useSelectFileSystemItems} from "@/hooks/selectFileSystemItems";
 import {useAppDispatch} from "@/hooks";
 import {fileSystemActions} from "@/store/slices/fileSystemSlice/fileSystemSlice";
-
+import classes from "./FileList.module.scss";
 interface IFileListProps{
     fileList: IFile[]
 }
@@ -13,7 +13,7 @@ const FilesList: FC<IFileListProps> = ({fileList}) => {
     const dispatch = useAppDispatch();
     return (
         fileList.length===0?
-            <h1>
+            <h1 className={classes.header}>
                 Files not exist
             </h1>
             :

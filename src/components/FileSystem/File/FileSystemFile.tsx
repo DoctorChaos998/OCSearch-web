@@ -18,7 +18,7 @@ const FileSystemFile: FC<IFileSystemFileProps> = ({file, onClickHandler, onDoubl
     const ref = useRef<HTMLSpanElement>(null);
 
     const fileSize: string = useMemo(() => {
-        if(file.size === null) return '';
+        if(file.size === null) return 'Undefined';
         if(file.size<1024) return file.size + " B";
         else if(file.size<1024*1024) return (file.size/1024).toFixed(2) + " KB";
         else if(file.size<1024*1024*1024) return (file.size/1024/1024).toFixed(2) + " MB";
@@ -58,18 +58,10 @@ const FileSystemFile: FC<IFileSystemFileProps> = ({file, onClickHandler, onDoubl
                     {`Name: ${file.name}`}
                     <br/>
                     {`Uploaded by: ${file.uploadedBy}`}
-                    {file.uploadDate&&
-                        <>
-                            <br/>
-                            {`Upload date: ${file.uploadDate}`}
-                        </>
-                    }
-                    {file.size&&
-                        <>
-                            <br/>
-                            {`Size: ${fileSize}`}
-                        </>
-                    }
+                    <br/>
+                    {`Upload date: ${file.uploadDate ?? 'Undefined'}`}
+                    <br/>
+                    {`Size: ${fileSize}`}
                     <br/>
                     {`Status: ${file.status}`}
                 </span>

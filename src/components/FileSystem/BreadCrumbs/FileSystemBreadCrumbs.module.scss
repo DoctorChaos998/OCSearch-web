@@ -8,14 +8,15 @@
   margin-left: 50px;
 }
 .header{
-  display: flex;
-  width: 200px;
-  height: 40px;
   color: $colorWhite;
   cursor: help;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  justify-content: center;
+}
+.headerContainer{
+  display: flex;
   align-items: center;
+  width: 200px;
+  height: 40px;
 }

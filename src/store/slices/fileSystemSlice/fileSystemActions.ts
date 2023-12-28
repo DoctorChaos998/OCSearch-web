@@ -27,12 +27,13 @@ export const uploadFiles = (fileList: FileList, folderName: string) => async (di
     await FileSystemService.createFolder(folderName).then(async value => {
         dispatch(fileSystemActions.createFolder(value));
         dispatch(fileSystemActions.closeCreateFolderModalWindow());
+        dispatch(notificationActions.createNotificationWithTimer({notificationMessage: 'Uploading has been started', notificationType: "info"}));
         const formData = new FormData();
         Array.prototype.forEach.call(fileList, (file: File) => {
             formData.append(file.name, file);
         });
         await FileSystemService.uploadFiles(formData, value.id).then(() => {
-            dispatch(notificationActions.createNotification({notificationMessage: 'Files successful upload', notificationType: "info"}));
+            dispatch(notificationActions.createNotification({notificationMessage: 'Files have been successfully uploaded', notificationType: "info"}));
         }).catch((reason: {error: string, status: number}) => {
             dispatch(notificationActions.createNotification({notificationMessage: reason.error, notificationType: "error"}));
         });
@@ -47,8 +48,9 @@ export const uploadFilesInFolder = (fileList: FileList, folderId: number, userNa
         formData.append(file.name, file);
     });
     dispatch(fileSystemActions.createFile({id: Date.now(), uploadedBy: userName, status: 'uploading', uploadDate: null, name: fileList[0].name, size: null}));
+    dispatch(notificationActions.createNotificationWithTimer({notificationMessage: 'Uploading has been started', notificationType: "info"}));
     await FileSystemService.uploadFiles(formData, folderId).then(() => {
-        dispatch(notificationActions.createNotification({notificationMessage: 'Files successful upload', notificationType: "info"}));
+        dispatch(notificationActions.createNotification({notificationMessage: 'Files have been successfully uploaded', notificationType: "info"}));
     }).catch((reason: {error: string, status: number}) => {
         dispatch(notificationActions.createNotification({notificationMessage: reason.error, notificationType: "error"}));
     });
@@ -91,6 +93,7 @@ export const renameFile = (fileId: number, newFileName: string) => async (dispat
 export const deleteFolders = (folderIds: number[]) => async (dispatch: AppDispatch) => {
     await FileSystemService.deleteFolders(folderIds).then(() => {
         dispatch(fileSystemActions.deleteFolders(folderIds));
+        dispatch(notificationActions.createNotificationWithTimer({notificationMessage: 'Folders have been successfully deleted', notificationType: 'info'}));
     }).catch((reason: {status: number, error: string, deletedFolderIds: number[]}) => {
         if(reason.status === 422){
             dispatch(fileSystemActions.deleteFolders(reason.deletedFolderIds));
@@ -102,6 +105,7 @@ export const deleteFolders = (folderIds: number[]) => async (dispatch: AppDispat
 export const deleteFiles = (fileIds: number[]) => async (dispatch: AppDispatch) => {
     await FileSystemService.deleteFiles(fileIds).then(() => {
         dispatch(fileSystemActions.deleteFiles(fileIds));
+        dispatch(notificationActions.createNotificationWithTimer({notificationMessage: 'Files have been successfully deleted', notificationType: 'info'}));
     }).catch((reason: {status: number, error: string, deletedFileIds: number[]}) => {
         if(reason.status === 422){
             dispatch(fileSystemActions.deleteFiles(reason.deletedFileIds));
