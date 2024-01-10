@@ -2,7 +2,7 @@
 
 .sideBarButton {
     cursor: pointer;
-    transition: background-color ease-in-out 0.1s;
+    transition: background-color ease-in-out 0.05s;
     display: inline-block;
     width: 100%;
     padding: 28px 0;
@@ -29,14 +29,14 @@
 }
 
 .sideBarButtonUnActive{
-    transition: color 0.1s ease-in-out;
+    transition: color 0.05s ease-in-out;
 }
 
 .sideBarButtonActive {
     color: $colorAquamarine
 }
 .tooltip {
-    transition: opacity ease-out 0.1s;
+    transition: opacity ease-out 0.05s;
     color: $colorWhite;
     display: inline-block;
     position: absolute;
@@ -60,7 +60,14 @@
         height: 10px;
         background-color: inherit;
     }
+}
 
-
+@media (max-width: 767px) {
+    .sideBarButton{
+        padding: 24px 0;
+    }
+    .tooltip{
+        display: none;
+    }
 }
 

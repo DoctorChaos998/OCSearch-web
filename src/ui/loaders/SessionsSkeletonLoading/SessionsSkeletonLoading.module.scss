@@ -1,0 +1,8 @@
+.loader{
+  margin-top: 12px;
+  height: 116px;
+  width: 550px;
+  @media (max-width: 767px) {
+    width: 90vw;
+  }
+}

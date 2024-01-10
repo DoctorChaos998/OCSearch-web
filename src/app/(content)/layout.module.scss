@@ -7,3 +7,9 @@
 .flexContainerWithContent {
   display: flex;
 }
+
+@media (max-width: 767px) {
+  .flexContainerWithContent{
+    flex-direction: column-reverse;
+  }
+}
