@@ -24,3 +24,9 @@
   transform: translateY(0);
   opacity: 1;
 }
+
+@media (max-width: 767px) {
+  .deleteButton{
+    display: none;
+  }
+}

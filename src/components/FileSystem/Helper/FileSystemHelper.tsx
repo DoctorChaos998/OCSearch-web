@@ -6,19 +6,21 @@ import FileSystemSorter from "@/components/FileSystem/Sorter/FileSystemSorter";
 import FileSystemReloadingButton from "@/components/FileSystem/ReloadingButton/FileSystemReloadingButton";
 import FileSystemRenameButton from "@/components/FileSystem/RenameButton/FileSystemRenameButton";
 import FileSystemDeleteButton from "@/components/FileSystem/DeleteButton/FileSystemDeleteButton";
+import MobileHelper from "@/components/FileSystem/MobileHelper/MobileHelper";
 const FileSystemHelper = () => {
     return (
         <div className={classes.container}>
             <div className={classes.leftHelperContainer}>
-                <FileSystemSearcher></FileSystemSearcher>
-                <UploadFileButton></UploadFileButton>
+                <FileSystemSearcher/>
+                <UploadFileButton/>
             </div>
             <div className={classes.rightHelperContainer}>
-                <FileSystemRenameButton></FileSystemRenameButton>
-                <FileSystemDeleteButton></FileSystemDeleteButton>
-                <FileSystemReloadingButton></FileSystemReloadingButton>
-                <FileSystemSorter></FileSystemSorter>
+                <FileSystemRenameButton/>
+                <FileSystemDeleteButton/>
+                <FileSystemReloadingButton/>
+                <FileSystemSorter/>
             </div>
+            <MobileHelper/>
         </div>
     );
 };

@@ -26,3 +26,9 @@
 .fileTooltipActive{
   @include fileSystemItemTooltipContainerActive
 }
+
+@media (max-width: 767px) {
+  .fileIcon{
+    font-size: 5em;
+  }
+}

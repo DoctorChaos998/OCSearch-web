@@ -9,6 +9,11 @@
     margin-left: 50px;
 }
 
+@media (max-width: 767px) {
+    .userCardContainer{
+        margin: 20px 0 0 20px;
+    }
+}
 .userCardNickname {
     color: $colorAquamarine;
 }

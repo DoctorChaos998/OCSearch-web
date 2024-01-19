@@ -7,6 +7,12 @@
   padding: 10px 80px;
 }
 
+@media (max-width: 767px) {
+  .container{
+    padding: 5px 20px;
+  }
+}
+
 .leftHelperContainer{
   display: flex;
   flex-direction: row;
@@ -20,4 +26,11 @@
   justify-content: center;
   align-items: center;
   gap: 10px;
+}
+
+@media (max-width: 767px) {
+  //.rightHelperContainer:nth-child(1),
+  //.rightHelperContainer:nth-child(2){
+  //  display: none;
+  //}
 }

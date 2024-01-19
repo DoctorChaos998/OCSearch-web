@@ -24,10 +24,10 @@
 @media (max-width: 767px) {
     .sideBarContainer {
         height: 80px;
-        width: 100%; /* Занимает всю ширину экрана */
+        width: 100%;
         position: sticky;
         bottom: 0;
-        top: auto; /* Убираем top для фиксированной позиции снизу */
+        top: auto;
         flex-direction: row;
         //justify-content: space-around;
     }

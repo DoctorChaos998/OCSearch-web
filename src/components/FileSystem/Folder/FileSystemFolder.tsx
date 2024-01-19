@@ -1,12 +1,13 @@
-import React, {FC, useRef, useState} from 'react';
+import React, {FC, useEffect, useRef, useState} from 'react';
 import {IFolder} from "@/entities/fileSystem";
-import {useAppSelector} from "@/hooks";
+import {useAppDispatch, useAppSelector} from "@/hooks";
 import classes from "./FileSystemFolder.module.scss";
 import {CSSTransition} from "react-transition-group";
+import {fileSystemActions} from "@/store/slices/fileSystemSlice/fileSystemSlice";
 
 interface IFileSystemFolder{
     folder: IFolder
-    onClickHandler: (event: React.MouseEvent<HTMLDivElement>, fileId: number, fileIndex: number) => void,
+    onClickHandler: (event: React.MouseEvent<HTMLDivElement>|React.TouchEvent<HTMLDivElement>, fileId: number, fileIndex: number) => void,
     onDoubleClickHandler: () => void,
     index: number
 }
@@ -16,12 +17,10 @@ const FileSystemFolder: FC<IFileSystemFolder> = ({folder, onClickHandler, onDoub
     const [mousePosition, setMousePosition] = useState({ top: 0, left: 0 });
     const selectedFileIds = useAppSelector(state => state.fileSystemReducer.selectedFileSystemItemIds);
     const ref = useRef<HTMLSpanElement>(null);
+    const [touchDebounce, setTouchDebounce] = useState(false);
+    const dispatch = useAppDispatch();
     const onMouseEnterHandler = (event: React.MouseEvent<HTMLDivElement>) => {
         setInfoIsVisible(true);
-        // setPosition({
-        //     top: window.innerHeight - event.clientY<100?window.innerHeight-105:event.clientY,
-        //     left: window.innerWidth - event.clientX<300?window.innerWidth-320:event.clientX
-        // });
         setMousePosition({
             top: event.clientY,
             left: event.clientX
@@ -36,10 +35,29 @@ const FileSystemFolder: FC<IFileSystemFolder> = ({folder, onClickHandler, onDoub
             });
         }
     }
+
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            if(touchDebounce){
+                dispatch(fileSystemActions.openMobileHelper());
+            }
+        }, 700)
+        return () => clearTimeout(timer);
+    }, [touchDebounce]);
+
     return (
         <div onDoubleClick={onDoubleClickHandler}
              className={`${classes.container} ${selectedFileIds.findIndex((id) => folder.id === id)!==-1? classes.containerActive: ''}`}
-             onClick={(event) => onClickHandler(event, folder.id, index)}
+             onClick={(event) => {
+                 event.stopPropagation();
+                 if(window.innerWidth > 767) {
+                 onClickHandler(event, folder.id, index);
+             }}}
+             onTouchStart={(event) => {
+                 setTouchDebounce(true);
+                 onClickHandler(event, folder.id, index);
+             }}
+             onTouchEnd={() => setTouchDebounce(false)}
              onMouseEnter={onMouseEnterHandler}
              onMouseLeave={() => setInfoIsVisible(false)}>
                 <span className={`material-icons ${classes.folderIcon}`}>

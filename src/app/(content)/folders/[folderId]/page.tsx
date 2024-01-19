@@ -56,7 +56,7 @@ const Page = () => {
     },[sorter.order, sorter.target, fileSystemItems])
 
     const sortedAndFilteredFiles: IFile[] = useMemo(() => {
-        return sortedFiles.filter((value) => value.name.includes(searchQuery));
+        return sortedFiles.filter((value) => value.name.toLowerCase().includes(searchQuery.toLowerCase()));
     }, [sortedFiles, searchQuery])
     return (
         (status==='loading'||status==='initial')?

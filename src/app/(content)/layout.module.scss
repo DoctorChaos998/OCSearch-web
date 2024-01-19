@@ -2,6 +2,7 @@
 
 .mainContainer {
   background: $colorMainContentBg;
+  min-height: 100vh;
   flex: 1;
 }
 .flexContainerWithContent {

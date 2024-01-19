@@ -52,6 +52,13 @@
   box-shadow: 0 0 30px rgba($colorLilac, 0.5);
   flex-direction: column;
   padding: 30px;
+
+  @media (max-width: 767px) {
+    min-height: auto;
+    width: 80vw;
+    height: 30vh;
+    padding: 10px;
+  }
 }
 
 @mixin notification($color){
@@ -106,11 +113,17 @@
   margin: 5px;
   cursor: pointer;
   user-select: none;
-  flex-shrink: 0;
   position: relative;
+  @media (min-width: 767px) {
+    &:hover{
+      background: $hoveredFileSystemItemColor;
+    }
+  }
 
-  &:hover{
-    background: $hoveredFileSystemItemColor;
+  @media (max-width: 767px) {
+    width: 150px;
+    height: 150px;
+
   }
 }
 @mixin fileSystemItemTooltipContainer{

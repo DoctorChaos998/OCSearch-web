@@ -41,7 +41,7 @@ const FoldersPage = () => {
     },[sorter.order, sorter.target, fileSystemItems])
 
     const sortedAndFilteredFolders: IFolder[] = useMemo(() => {
-        return sortedFolders.filter((value) => value.name.includes(searchQuery));
+        return sortedFolders.filter((value) => value.name.toLowerCase().includes(searchQuery.toLowerCase()));
     }, [sortedFolders, searchQuery])
     return (
         (status==='loading'||status==='initial')?

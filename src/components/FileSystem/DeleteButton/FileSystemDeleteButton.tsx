@@ -26,7 +26,7 @@ const FileSystemDeleteButton = () => {
             exit:500
         }} classNames={{
             enterDone:  classes.buttonShow,
-        }}>
+        }} unmountOnExit={true}>
             <button onClick={onDeleteButtonClick} className={classes.deleteButton} ref={ref}>
                 <span className="material-icons">
                     delete

@@ -5,9 +5,10 @@ import {IFile, IFolder} from "@/entities/fileSystem";
 
 export function useSelectFileSystemItems(fileSystemItemsList: (IFile|IFolder)[]){
     const selectedFileSystemItemIds = useAppSelector(state => state.fileSystemReducer.selectedFileSystemItemIds);
+    const mobileHelperIsActive = useAppSelector(state => state.fileSystemReducer.mobileHelper.isActive);
     const dispatch = useAppDispatch();
     const selectedFileIndex = useRef<number>(0);
-    return (event: React.MouseEvent<HTMLDivElement>, fileSystemItemId: number, fileSystemItemIndex: number) => {
+    return (event: React.MouseEvent<HTMLDivElement>|React.TouchEvent<HTMLDivElement>, fileSystemItemId: number, fileSystemItemIndex: number) => {
         event.stopPropagation();
         if(selectedFileSystemItemIds.length === 0){
             selectedFileIndex.current = 0;
@@ -32,8 +33,14 @@ export function useSelectFileSystemItems(fileSystemItemsList: (IFile|IFolder)[])
             dispatch(fileSystemActions.selectItems(tempArray));
         }
         else {
-            selectedFileIndex.current = fileSystemItemIndex;
-            dispatch(fileSystemActions.selectItemOnce(fileSystemItemId));
+            if(mobileHelperIsActive){
+                selectedFileIndex.current = fileSystemItemIndex;
+                dispatch(fileSystemActions.addSelectItem(fileSystemItemId));
+            }
+            else {
+                selectedFileIndex.current = fileSystemItemIndex;
+                dispatch(fileSystemActions.selectItemOnce(fileSystemItemId));
+            }
         }
     }
 }

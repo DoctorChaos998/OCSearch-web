@@ -30,3 +30,9 @@
         color: $colorGreen;
     }
 }
+
+@media (max-width: 767px) {
+    .uploadFileButton{
+        display: none;
+    }
+}

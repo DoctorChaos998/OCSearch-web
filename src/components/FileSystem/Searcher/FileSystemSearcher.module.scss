@@ -42,3 +42,13 @@
     }
 }
 
+@media (max-width: 767px) {
+    .fileCatalogSearchContainer{
+        width: 150px;
+        font-size: 1em;
+    }
+    .fileCatalogSearchInput{
+        width: 100px;
+    }
+}
+

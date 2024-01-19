@@ -21,7 +21,7 @@ const FileSystemSearcher = () => {
 
     return (
         <label className={classes.fileCatalogSearchContainer}>
-            <input className={classes.fileCatalogSearchInput} value={searchQueryOver} onChange={(event) => setSearchQuery(event.target.value)} placeholder={"Search in FileBrowser"}/>
+            <input className={classes.fileCatalogSearchInput} value={searchQueryOver} onChange={(event) => setSearchQuery(event.target.value)} placeholder={window.innerWidth <= 767?"Search":"Search in FileBrowser"}/>
             <span className={`material-icons ${classes.fileCatalogSearchIcon}`}>
                 find_in_page
             </span>

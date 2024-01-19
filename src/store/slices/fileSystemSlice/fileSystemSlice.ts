@@ -41,7 +41,10 @@ interface IFileSystemSlice{
         order: fileSystemSortingOrder,
         target: fileSystemSortingTarget
     },
-    searchQuery: string
+    searchQuery: string,
+    mobileHelper: {
+        isActive: boolean
+    }
 }
 const initialState: IFileSystemSlice = {
     status: "initial",
@@ -77,6 +80,9 @@ const initialState: IFileSystemSlice = {
         target: 'uploadDate',
     },
     searchQuery: '',
+    mobileHelper: {
+        isActive: false
+    }
 }
 
 const fileSystemSlice = createSlice({
@@ -154,6 +160,7 @@ const fileSystemSlice = createSlice({
         },
         deselectAllItems: (state) => {
             state.selectedFileSystemItemIds = [];
+            state.mobileHelper.isActive = false;
             //state.fileSystemItems.forEach((item) => item.isSelected = false);
         },
         resetFilters: (state) => {
@@ -161,6 +168,7 @@ const fileSystemSlice = createSlice({
             state.searchQuery = '';
             state.selectedFileSystemItemIds = [];
             state.fileSystemItems = {files: [], folders: []};
+            state.mobileHelper.isActive = false;
         },
         createFolder: (state, action: PayloadAction<IFolder>) => {
             state.fileSystemItems.folders.push(action.payload);
@@ -190,7 +198,10 @@ const fileSystemSlice = createSlice({
             if(action.payload.itemType === 'folder'){
                 state.fileSystemItems.folders.find((folder) => folder.id === action.payload.itemId)!.name = action.payload.newItemName;
             }
-            else state.fileSystemItems.files.find((file) => file.id === action.payload.itemId)!.name = action.payload.newItemName;
+            else{
+                const file = state.fileSystemItems.files.find((file) => file.id === action.payload.itemId);
+                file!.name = action.payload.newItemName + file!.name.slice(file!.name.lastIndexOf('.'));
+            }
         },
         deleteFolders: (state, action: PayloadAction<number[]>) => {
             state.fileSystemItems.folders = state.fileSystemItems.folders.filter((folder) => !action.payload.includes(folder.id));
@@ -211,6 +222,9 @@ const fileSystemSlice = createSlice({
         },
         closePreviewModalWindow: (state) => {
             state.previewModalWindow = {isVisible: false, fileExtension: null, fileId: 0};
+        },
+        openMobileHelper: (state) => {
+            state.mobileHelper.isActive = true;
         }
     }
 })

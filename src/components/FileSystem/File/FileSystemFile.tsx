@@ -1,12 +1,13 @@
-import React, {FC, useMemo, useRef, useState} from 'react';
+import React, {FC, useEffect, useMemo, useRef, useState} from 'react';
 import {type IFile} from "@/entities/fileSystem";
 import classes from "./FileSystemFile.module.scss";
-import {useAppSelector} from "@/hooks";
+import {useAppDispatch, useAppSelector} from "@/hooks";
 import {CSSTransition} from "react-transition-group";
+import {fileSystemActions} from "@/store/slices/fileSystemSlice/fileSystemSlice";
 
 interface IFileSystemFileProps{
     file: IFile,
-    onClickHandler: (event: React.MouseEvent<HTMLDivElement>, fileId: number, fileIndex: number) => void,
+    onClickHandler: (event: React.MouseEvent<HTMLDivElement>| React.TouchEvent<HTMLDivElement>, fileId: number, fileIndex: number) => void,
     onDoubleClickHandler: () => void,
     index: number
 }
@@ -16,6 +17,8 @@ const FileSystemFile: FC<IFileSystemFileProps> = ({file, onClickHandler, onDoubl
     const [mousePosition, setMousePosition] = useState({ top: 0, left: 0 });
     const selectedFileIds = useAppSelector(state => state.fileSystemReducer.selectedFileSystemItemIds);
     const ref = useRef<HTMLSpanElement>(null);
+    const [touchDebounce, setTouchDebounce] = useState(false);
+    const dispatch = useAppDispatch();
 
     const fileSize: string = useMemo(() => {
         if(file.size === null) return 'Undefined';
@@ -40,10 +43,29 @@ const FileSystemFile: FC<IFileSystemFileProps> = ({file, onClickHandler, onDoubl
             });
         }
     }
+
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            if(touchDebounce){
+                dispatch(fileSystemActions.openMobileHelper());
+            }
+        }, 700)
+        return () => clearTimeout(timer);
+    }, [touchDebounce]);
+
     return (
         <div onDoubleClick={onDoubleClickHandler} onMouseEnter={onMouseEnterHandler} onMouseLeave={() => setInfoIsVisible(false)}
              className={`${classes.container} ${selectedFileIds.findIndex((id) => file.id === id)!==-1? classes.containerActive: ''}`}
-             onClick={(event) => onClickHandler(event, file.id, index)}>
+             onClick={(event) => {
+                 event.stopPropagation();
+                 if(window.innerWidth > 767) {
+                     onClickHandler(event, file.id, index);
+                 }}}
+             onTouchStart={(event) => {
+                 setTouchDebounce(true);
+                 onClickHandler(event, file.id, index);
+             }}
+             onTouchEnd={() => setTouchDebounce(false)}>
                 <span className={`material-icons ${classes.fileIcon}`}>
                     contact_page
                 </span>
