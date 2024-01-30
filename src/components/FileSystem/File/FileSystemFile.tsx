@@ -1,13 +1,12 @@
 import React, {FC, useEffect, useMemo, useRef, useState} from 'react';
-import {type IFile} from "@/entities/fileSystem";
+import type { IFile, keyForSelect} from "@/entities/fileSystem";
 import classes from "./FileSystemFile.module.scss";
 import {useAppDispatch, useAppSelector} from "@/hooks";
 import {CSSTransition} from "react-transition-group";
 import {fileSystemActions} from "@/store/slices/fileSystemSlice/fileSystemSlice";
-
 interface IFileSystemFileProps{
     file: IFile,
-    onClickHandler: (event: React.MouseEvent<HTMLDivElement>| React.TouchEvent<HTMLDivElement>, fileId: number, fileIndex: number) => void,
+    onClickHandler: (keyForSelect: keyForSelect, fileId: number, fileIndex: number) => void,
     onDoubleClickHandler: () => void,
     index: number
 }
@@ -15,9 +14,12 @@ const FileSystemFile: FC<IFileSystemFileProps> = ({file, onClickHandler, onDoubl
     const [infoIsVisible, setInfoIsVisible] = useState(false);
     const [position, setPosition] = useState({ top: 0, left: 0 });
     const [mousePosition, setMousePosition] = useState({ top: 0, left: 0 });
-    const selectedFileIds = useAppSelector(state => state.fileSystemReducer.selectedFileSystemItemIds);
-    const ref = useRef<HTMLSpanElement>(null);
+    const [isScroll, setIsScroll] = useState<boolean>(false);
     const [touchDebounce, setTouchDebounce] = useState(false);
+    const [firstSelect, setFirstSelect] = useState<boolean>(true);
+    const selectedFileIds = useAppSelector(state => state.fileSystemReducer.selectedFileSystemItemIds);
+    const isActive = useAppSelector(state => state.fileSystemReducer.mobileHelper.isActive);
+    const ref = useRef<HTMLSpanElement>(null);
     const dispatch = useAppDispatch();
 
     const fileSize: string = useMemo(() => {
@@ -46,8 +48,10 @@ const FileSystemFile: FC<IFileSystemFileProps> = ({file, onClickHandler, onDoubl
 
     useEffect(() => {
         const timer = setTimeout(() => {
-            if(touchDebounce){
+            if(touchDebounce && !isScroll){
                 dispatch(fileSystemActions.openMobileHelper());
+                onClickHandler(null, file.id, index);
+                setFirstSelect(false);
             }
         }, 700)
         return () => clearTimeout(timer);
@@ -59,13 +63,32 @@ const FileSystemFile: FC<IFileSystemFileProps> = ({file, onClickHandler, onDoubl
              onClick={(event) => {
                  event.stopPropagation();
                  if(window.innerWidth > 767) {
-                     onClickHandler(event, file.id, index);
-                 }}}
-             onTouchStart={(event) => {
-                 setTouchDebounce(true);
-                 onClickHandler(event, file.id, index);
+                     const keyForSelect: keyForSelect = event.shiftKey?'shift':event.ctrlKey?'ctrl':null;
+                     onClickHandler(keyForSelect, file.id, index);
+                 }
              }}
-             onTouchEnd={() => setTouchDebounce(false)}>
+             onTouchStart={() => {
+                 setTouchDebounce(true);
+             }}
+             onScroll={(event) => event.stopPropagation()}
+             onTouchMove={(event) => {
+                 setIsScroll(true);
+                 setTouchDebounce(false);
+                 event.stopPropagation();
+             }}
+             onTouchEnd={() => {
+                 setTouchDebounce(false);
+                 if(isScroll) setIsScroll(false)
+                 else {
+                     if (isActive) {
+                         if(firstSelect) {
+                             onClickHandler(null, file.id, index);
+                         }
+                     }
+                     else onDoubleClickHandler()
+                     setFirstSelect(true);
+                 }
+             }}>
                 <span className={`material-icons ${classes.fileIcon}`}>
                     contact_page
                 </span>

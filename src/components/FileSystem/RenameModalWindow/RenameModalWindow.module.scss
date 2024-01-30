@@ -55,3 +55,9 @@
   right: -30px;
   top: 0;
 }
+
+@media (max-width: 767px) {
+  .form{
+    width: 70%;
+  }
+}

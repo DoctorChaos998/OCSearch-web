@@ -1,23 +1,22 @@
 import React, {useRef} from "react";
 import {useAppDispatch, useAppSelector} from "@/hooks/index";
 import {fileSystemActions} from "@/store/slices/fileSystemSlice/fileSystemSlice";
-import {IFile, IFolder} from "@/entities/fileSystem";
+import type {IFile, IFolder, keyForSelect} from "@/entities/fileSystem";
 
 export function useSelectFileSystemItems(fileSystemItemsList: (IFile|IFolder)[]){
     const selectedFileSystemItemIds = useAppSelector(state => state.fileSystemReducer.selectedFileSystemItemIds);
     const mobileHelperIsActive = useAppSelector(state => state.fileSystemReducer.mobileHelper.isActive);
     const dispatch = useAppDispatch();
     const selectedFileIndex = useRef<number>(0);
-    return (event: React.MouseEvent<HTMLDivElement>|React.TouchEvent<HTMLDivElement>, fileSystemItemId: number, fileSystemItemIndex: number) => {
-        event.stopPropagation();
+    return (keyForSelect: keyForSelect, fileSystemItemId: number, fileSystemItemIndex: number) => {
         if(selectedFileSystemItemIds.length === 0){
             selectedFileIndex.current = 0;
         }
-        if(event.ctrlKey){
+        if(keyForSelect === 'ctrl'){
             selectedFileIndex.current = fileSystemItemIndex;
             dispatch(fileSystemActions.addSelectItem(fileSystemItemId));
         }
-        else if(event.shiftKey){
+        else if(keyForSelect === 'shift'){
             const tempArray: number[] = [];
             if(fileSystemItemIndex > selectedFileIndex.current){
                 for(let i: number = selectedFileIndex.current;i<=fileSystemItemIndex;i++){

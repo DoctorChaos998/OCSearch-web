@@ -22,9 +22,9 @@ const FileSystemSorter = () => {
         const handler = () => {
             setSorterIsOpen(false)
         }
-        window.addEventListener('click', handler, false)
+        window.addEventListener('click', handler, false);
         return () => {
-            window.removeEventListener('click', handler, false)
+            window.removeEventListener('click', handler, false);
         }
     })
     const onClickDropDownButton = (event: React.MouseEvent<HTMLButtonElement>) => {

@@ -9,18 +9,21 @@ import FileSystemDeleteButton from "@/components/FileSystem/DeleteButton/FileSys
 import MobileHelper from "@/components/FileSystem/MobileHelper/MobileHelper";
 const FileSystemHelper = () => {
     return (
-        <div className={classes.container}>
-            <div className={classes.leftHelperContainer}>
-                <FileSystemSearcher/>
-                <UploadFileButton/>
+        <div className={classes.mainContainer}>
+            <div className={classes.container}>
+                <div className={classes.leftHelperContainer}>
+                    <FileSystemSearcher/>
+                    <UploadFileButton/>
+                </div>
+                <div className={classes.rightHelperContainer}>
+                    <FileSystemRenameButton/>
+                    <FileSystemDeleteButton/>
+                    <FileSystemReloadingButton/>
+                    <FileSystemSorter/>
+                </div>
+                <MobileHelper/>
             </div>
-            <div className={classes.rightHelperContainer}>
-                <FileSystemRenameButton/>
-                <FileSystemDeleteButton/>
-                <FileSystemReloadingButton/>
-                <FileSystemSorter/>
-            </div>
-            <MobileHelper/>
+            <hr className={classes.separatingLine}/>
         </div>
     );
 };

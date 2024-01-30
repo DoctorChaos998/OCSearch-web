@@ -45,6 +45,11 @@ interface IFileSystemSlice{
     mobileHelper: {
         isActive: boolean
     }
+    itemInfoModalWindow: {
+        isVisible: boolean,
+        item: IFile|IFolder|null,
+        itemType: 'folder'|'file'|null
+    }
 }
 const initialState: IFileSystemSlice = {
     status: "initial",
@@ -82,6 +87,11 @@ const initialState: IFileSystemSlice = {
     searchQuery: '',
     mobileHelper: {
         isActive: false
+    },
+    itemInfoModalWindow: {
+        isVisible: false,
+        item: null,
+        itemType: null
     }
 }
 
@@ -130,7 +140,6 @@ const fileSystemSlice = createSlice({
             state.sorter.target = action.payload;
         },
         selectAllItems: (state,action: PayloadAction<'files'|'folders'>) => {
-            //state.fileSystemItems.forEach((item) => item.isSelected = true);
             if(action.payload === 'files'){
                 state.selectedFileSystemItemIds = state.fileSystemItems.files.map((item) => item.id);
             }
@@ -138,7 +147,6 @@ const fileSystemSlice = createSlice({
 
         },
         addSelectItem: (state, action: PayloadAction<number>) => {
-            //state.fileSystemItems[state.fileSystemItems.findIndex((item) => item.id === action.payload)].isSelected = true;
             if(state.selectedFileSystemItemIds.find(id => id === action.payload)){
                 state.selectedFileSystemItemIds = state.selectedFileSystemItemIds.filter(id => id !== action.payload);
             }
@@ -148,20 +156,13 @@ const fileSystemSlice = createSlice({
         },
         selectItemOnce: (state, action: PayloadAction<number>) => {
             state.selectedFileSystemItemIds = [action.payload];
-            // state.fileSystemItems.forEach((item) => {
-            //     item.isSelected = item.id === action.payload;
-            // })
         },
         selectItems: (state, action: PayloadAction<number[]>) => {
             state.selectedFileSystemItemIds = action.payload;
-            // state.fileSystemItems.forEach((item) => {
-            //     item.isSelected = action.payload.findIndex((id) => item.id === id) !== -1;
-            // })
         },
         deselectAllItems: (state) => {
             state.selectedFileSystemItemIds = [];
             state.mobileHelper.isActive = false;
-            //state.fileSystemItems.forEach((item) => item.isSelected = false);
         },
         resetFilters: (state) => {
             state.sorter = {order: 'byDescending', target: 'uploadDate'};
@@ -225,6 +226,15 @@ const fileSystemSlice = createSlice({
         },
         openMobileHelper: (state) => {
             state.mobileHelper.isActive = true;
+        },
+        openItemInfoModalWindow: (state, action: PayloadAction<{itemType: 'folder'|'file', itemId: number}>) => {
+            state.itemInfoModalWindow = {isVisible: true, itemType: action.payload.itemType,
+                item: action.payload.itemType === 'folder'?state.fileSystemItems.folders.find(folder => folder.id === action.payload.itemId)!:
+                    state.fileSystemItems.files.find(file => file.id === action.payload.itemId)!
+            };
+        },
+        closeItemInfoModalWindow: (state) => {
+            state.itemInfoModalWindow = {isVisible: false, item: null, itemType: null};
         }
     }
 })

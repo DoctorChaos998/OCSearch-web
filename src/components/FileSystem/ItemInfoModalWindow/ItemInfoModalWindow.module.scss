@@ -1,0 +1,15 @@
+@import "../../../assets/stylesheets/abstracts/variables";
+@import "../../../assets/stylesheets/abstracts/mixins";
+
+.container{
+  @include modalContainer;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+.header{
+  margin-bottom: 20px;
+}

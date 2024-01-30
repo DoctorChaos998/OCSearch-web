@@ -1,5 +1,5 @@
 import React, {FC, useEffect, useRef, useState} from 'react';
-import {IFolder} from "@/entities/fileSystem";
+import type {IFolder, keyForSelect} from "@/entities/fileSystem";
 import {useAppDispatch, useAppSelector} from "@/hooks";
 import classes from "./FileSystemFolder.module.scss";
 import {CSSTransition} from "react-transition-group";
@@ -7,7 +7,7 @@ import {fileSystemActions} from "@/store/slices/fileSystemSlice/fileSystemSlice"
 
 interface IFileSystemFolder{
     folder: IFolder
-    onClickHandler: (event: React.MouseEvent<HTMLDivElement>|React.TouchEvent<HTMLDivElement>, fileId: number, fileIndex: number) => void,
+    onClickHandler: (keyForSelect: keyForSelect, folderId: number, folderIndex: number) => void,
     onDoubleClickHandler: () => void,
     index: number
 }
@@ -15,9 +15,12 @@ const FileSystemFolder: FC<IFileSystemFolder> = ({folder, onClickHandler, onDoub
     const [infoIsVisible, setInfoIsVisible] = useState(false);
     const [position, setPosition] = useState({ top: 0, left: 0 });
     const [mousePosition, setMousePosition] = useState({ top: 0, left: 0 });
-    const selectedFileIds = useAppSelector(state => state.fileSystemReducer.selectedFileSystemItemIds);
-    const ref = useRef<HTMLSpanElement>(null);
+    const [isScroll, setIsScroll] = useState<boolean>(false);
     const [touchDebounce, setTouchDebounce] = useState(false);
+    const [firstSelect, setFirstSelect] = useState<boolean>(true);
+    const selectedFileIds = useAppSelector(state => state.fileSystemReducer.selectedFileSystemItemIds);
+    const isActive = useAppSelector(state => state.fileSystemReducer.mobileHelper.isActive);
+    const ref = useRef<HTMLSpanElement>(null);
     const dispatch = useAppDispatch();
     const onMouseEnterHandler = (event: React.MouseEvent<HTMLDivElement>) => {
         setInfoIsVisible(true);
@@ -40,6 +43,8 @@ const FileSystemFolder: FC<IFileSystemFolder> = ({folder, onClickHandler, onDoub
         const timer = setTimeout(() => {
             if(touchDebounce){
                 dispatch(fileSystemActions.openMobileHelper());
+                onClickHandler(null, folder.id, index);
+                setFirstSelect(false);
             }
         }, 700)
         return () => clearTimeout(timer);
@@ -51,13 +56,31 @@ const FileSystemFolder: FC<IFileSystemFolder> = ({folder, onClickHandler, onDoub
              onClick={(event) => {
                  event.stopPropagation();
                  if(window.innerWidth > 767) {
-                 onClickHandler(event, folder.id, index);
-             }}}
-             onTouchStart={(event) => {
-                 setTouchDebounce(true);
-                 onClickHandler(event, folder.id, index);
+                     const keyForSelect: keyForSelect = event.shiftKey?'shift':event.ctrlKey?'ctrl':null;
+                     onClickHandler(keyForSelect, folder.id, index);
+                 }
              }}
-             onTouchEnd={() => setTouchDebounce(false)}
+             onTouchStart={() => {
+                 setTouchDebounce(true);
+             }}
+             onTouchMove={(event) => {
+                 setIsScroll(true);
+                 setTouchDebounce(false);
+                 event.stopPropagation();
+             }}
+             onTouchEnd={() => {
+                 setTouchDebounce(false);
+                 if(isScroll) setIsScroll(false)
+                 else {
+                     if (isActive) {
+                         if(firstSelect) {
+                             onClickHandler(null, folder.id, index);
+                         }
+                     }
+                     else onDoubleClickHandler()
+                     setFirstSelect(true);
+                 }
+             }}
              onMouseEnter={onMouseEnterHandler}
              onMouseLeave={() => setInfoIsVisible(false)}>
                 <span className={`material-icons ${classes.folderIcon}`}>

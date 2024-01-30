@@ -12,7 +12,7 @@ import FileSystemLoader from "@/components/FileSystem/FileSystemLoader/FileSyste
 const Page = () => {
     const params: {folderId: string} = useParams();
     const dispatch = useAppDispatch();
-    const {status, sorter, fileSystemItems, searchQuery} = useAppSelector(state => state.fileSystemReducer);
+    const {status, sorter, fileSystemItems, searchQuery, selectedFileSystemItemIds} = useAppSelector(state => state.fileSystemReducer);
     const router = useRouter();
     useLayoutEffect(() => {
         dispatch(fileSystemActions.resetFilters());
@@ -32,6 +32,9 @@ const Page = () => {
         event.preventDefault();
         if(event.ctrlKey && event.code === 'KeyA'){
             dispatch(fileSystemActions.selectAllItems('files'));
+        }
+        if(event.code === 'Delete' && selectedFileSystemItemIds.length>0){
+            dispatch(fileSystemActions.openDeleteModalWindow('file'));
         }
     }
     const sortingFiles = (firstFileItem: IFile, secondFileItem: IFile): number => {

@@ -45,5 +45,9 @@
 }
 .button{
   height: 40px;
-
+}
+@media (max-width: 767px) {
+  .form{
+    width: 70%;
+  }
 }

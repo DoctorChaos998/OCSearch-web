@@ -16,7 +16,7 @@
   font-size: 1.15em;
   @media (max-width: 767px) {
     width: 90%;
-    font-size: 1em;
+    //font-size: 1em;
   }
 
   &:hover{
@@ -33,7 +33,7 @@
   font-size: 2em;
   margin: 0 15px;
   @media (max-width: 767px) {
-    font-size: 1.5em;
+    //font-size: 1.5em;
     margin: 0 5px;
   }
 }
@@ -55,7 +55,7 @@
 
   @media (max-width: 767px) {
     min-height: auto;
-    width: 80vw;
+    width: 90vw;
     height: 30vh;
     padding: 10px;
   }
@@ -135,11 +135,12 @@
   visibility: hidden;
   font-size: 14px;
   letter-spacing: 1px;
-  //width: 300px;
   position: fixed;
   border: $colorOrange 2px solid;
   background-color: $colorIvory;
-  //height: 100px;
+  @media (max-width: 767px) {
+    display: none;
+  }
 }
 @mixin fileSystemItemTooltipContainerActive{
   z-index: 1000;

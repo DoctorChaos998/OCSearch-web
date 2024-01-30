@@ -25,7 +25,14 @@ const MobileHelper = () => {
             enterDone: classes.containerShow
         }} unmountOnExit={true}>
             <div className={classes.container} ref={ref} onClick={(event) => {event.stopPropagation()}}>
-                <span className={classes.selectedItemsNumber}>{`Items number: ${selectedFileSystemItemIds.length}`}</span>
+                {selectedFileSystemItemIds.length === 1?
+                    <button className={classes.button} onClick={() => dispatch(fileSystemActions.openItemInfoModalWindow({itemType: params.folderId?'file':'folder', itemId: selectedFileSystemItemIds[0]}))}>
+                        <span className={`material-icons ${classes.icon}`}>
+                            info
+                        </span>
+                    </button>:
+                    <span className={classes.selectedItemsNumber}>{`Selected items: ${selectedFileSystemItemIds.length}`}</span>
+                }
                 <div className={classes.rightContainer}>
                     {selectedFileSystemItemIds.length === 1 &&
                         <button className={classes.button} onClick={(event) => {

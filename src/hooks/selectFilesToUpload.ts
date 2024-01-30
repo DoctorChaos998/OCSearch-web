@@ -16,17 +16,19 @@ export function useSelectFilesToUpload() {
     const params = useParams<{folderId: string}>();
     const selectFilesToUpload = (fileList: FileList) => {
         const filesExtension = checkFilesExtension(fileList);
-        if(fileList.length>0 && !filesExtension){
-            if(!params.folderId){
-                currentSelectedFiles.current = fileList;
-                dispatch(fileSystemActions.openCreateFolderModalWindow(fileList[0].name.slice(0, fileList[0].name.lastIndexOf('.'))));
+        if(fileList.length>0){
+            if(!filesExtension){
+                if(!params.folderId){
+                    currentSelectedFiles.current = fileList;
+                    dispatch(fileSystemActions.openCreateFolderModalWindow(fileList[0].name.slice(0, fileList[0].name.lastIndexOf('.'))));
+                }
+                else {
+                    dispatch(uploadFilesInFolder(fileList, +params.folderId, userName));
+                }
             }
             else {
-                dispatch(uploadFilesInFolder(fileList, +params.folderId, userName));
+                dispatch(notificationActions.createNotification({notificationMessage: `File ${filesExtension?.name} has invalid extension`, notificationType: 'warning'}));
             }
-        }
-        else {
-            dispatch(notificationActions.createNotification({notificationMessage: `File ${filesExtension?.name} has invalid extension`, notificationType: 'warning'}));
         }
     }
     const getCurrentSelectedFiles = (): FileList => {

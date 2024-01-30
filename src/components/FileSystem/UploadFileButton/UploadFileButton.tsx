@@ -12,7 +12,7 @@ const UploadFileButton = () => {
 
     return (
         <>
-            <input type={"file"} multiple={true} ref={filePicker} onChange={onChange} className={classes.uploadFileInputHidden}/>
+            <input type={"file"} multiple={true} ref={filePicker} onChange={onChange} className={classes.uploadFileInputHidden} accept={'.csv,.txt,.sql,.xlsx,.zip,.rar,.7z,.tar'}/>
             <button onClick={() => filePicker.current?.click()} className={classes.uploadFileButton}>Upload file
                 <span className="material-symbols-outlined">
                     upload
