@@ -1,9 +1,10 @@
 import React, {FC, useEffect, useMemo, useRef, useState} from 'react';
-import type { IFile, keyForSelect} from "@/entities/fileSystem";
+import {fileStatusDisplayName, IFile, keyForSelect} from "@/entities/fileSystem";
 import classes from "./FileSystemFile.module.scss";
 import {useAppDispatch, useAppSelector} from "@/hooks";
 import {CSSTransition} from "react-transition-group";
 import {fileSystemActions} from "@/store/slices/fileSystemSlice/fileSystemSlice";
+import {fileSizeToString} from "@/helpers/fileSystemHelper";
 interface IFileSystemFileProps{
     file: IFile,
     onClickHandler: (keyForSelect: keyForSelect, fileId: number, fileIndex: number) => void,
@@ -23,11 +24,7 @@ const FileSystemFile: FC<IFileSystemFileProps> = ({file, onClickHandler, onDoubl
     const dispatch = useAppDispatch();
 
     const fileSize: string = useMemo(() => {
-        if(file.size === null) return 'Undefined';
-        if(file.size<1024) return file.size + " B";
-        else if(file.size<1024*1024) return (file.size/1024).toFixed(2) + " KB";
-        else if(file.size<1024*1024*1024) return (file.size/1024/1024).toFixed(2) + " MB";
-        return (file.size/1024/1024/1024).toFixed(2) + " GB";
+        return fileSizeToString(file.size);
     }, [file.size])
     const onMouseEnterHandler = (event: React.MouseEvent<HTMLDivElement>) => {
         setInfoIsVisible(true);
@@ -108,7 +105,7 @@ const FileSystemFile: FC<IFileSystemFileProps> = ({file, onClickHandler, onDoubl
                     <br/>
                     {`Size: ${fileSize}`}
                     <br/>
-                    {`Status: ${file.status}`}
+                    {`Status: ${fileStatusDisplayName[file.status]}`}
                 </span>
             </CSSTransition>
         </div>

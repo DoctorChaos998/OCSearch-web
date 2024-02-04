@@ -52,6 +52,14 @@ const MobileHelper = () => {
                             delete
                         </span>
                     </button>
+                    <button className={classes.button} onClick={(event) => {
+                        event.stopPropagation();
+                        dispatch(fileSystemActions.deselectAllItems());
+                    }}>
+                        <span className="material-icons">
+                            close
+                        </span>
+                    </button>
                 </div>
             </div>
         </CSSTransition>

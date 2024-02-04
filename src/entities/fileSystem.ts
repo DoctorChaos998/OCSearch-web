@@ -1,5 +1,13 @@
 export const validFileExtensions  = ['csv', 'txt', 'sql', 'xlsx', 'zip', 'rar', '7z', 'tar']
 export type fileStatus = 'uploading'|'uploaded'|'unzipping'|'recoding'|'ready_for_parsing'|'parsing'
+export const fileStatusDisplayName:{[key in fileStatus]: string} = {
+    uploading: 'Uploading',
+    uploaded: 'Uploaded',
+    unzipping: 'Unzipping',
+    recoding: 'Recording',
+    ready_for_parsing: 'Ready for parsing',
+    parsing: 'Parsing'
+}
 export type keyForSelect = 'shift'|'ctrl'|null
 export interface IFile extends IFileSystemItem{
     size: number|null,

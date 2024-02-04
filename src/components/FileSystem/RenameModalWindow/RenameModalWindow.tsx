@@ -12,7 +12,7 @@ const RenameModalWindow = () => {
     const dispatch = useAppDispatch();
     const renamingModalWindow = useAppSelector(state => state.fileSystemReducer.renameModalWindow);
     const [newItemName, setNewItemName] = useState(renamingModalWindow.initialName);
-    const [buttonIsDisabled, setButtonIsDisabled] = useState(false);
+    const [buttonIsDisabled, setButtonIsDisabled] = useState(true);
     const ref = useRef<HTMLInputElement>(null);
     useEffect(() => {
         if(renamingModalWindow.renameItem === 'file'){
@@ -47,14 +47,13 @@ const RenameModalWindow = () => {
                         <label className={`${classes.inputLabel} ${renamingModalWindow.status==='error'?classes.inputLabelError:''}`}>
                             <input value={newItemName} className={classes.input} maxLength={64} ref={ref}
                                    onChange={(event) => {
-                                       if(!event.target.value.trim() || event.target.value.length<3){
+                                       if(!event.target.value.trim() || event.target.value.length<3 || event.target.value === renamingModalWindow.initialName){
                                            setButtonIsDisabled(true);
-                                           setNewItemName(event.target.value);
                                        }
                                        else {
-                                               setButtonIsDisabled(false);
-                                               setNewItemName(event.target.value);
-                                           }
+                                           setButtonIsDisabled(false);
+                                       }
+                                       setNewItemName(event.target.value);
                                    }}
                                    autoFocus={true}
                             />

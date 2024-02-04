@@ -7,19 +7,6 @@
     width: 100%;
     padding: 28px 0;
     user-select: none;
-
-    &:hover{
-        background-color: $colorMainContentBg;
-    }
-
-    &:hover + .tooltip{
-        z-index: 1000;
-        visibility: visible;
-        opacity: 1;
-    }
-    &:hover .sideBarButtonUnActive{
-        color: $colorRed;
-    }
 }
 
 .sideBarButtonIcon {
@@ -68,6 +55,26 @@
     }
     .tooltip{
         display: none;
+    }
+}
+@media (hover: none) {
+    .sideBarButton:active{
+        background-color: $colorMainContentBg;
+    }
+}
+@media (hover: hover) {
+    .sideBarButton{
+        &:hover{
+            background-color: $colorMainContentBg;
+        }
+        &:hover + .tooltip{
+            z-index: 1000;
+            visibility: visible;
+            opacity: 1;
+        }
+        &:hover .sideBarButtonUnActive{
+            color: $colorRed;
+        }
     }
 }
 

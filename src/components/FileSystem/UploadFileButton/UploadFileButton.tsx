@@ -8,6 +8,7 @@ const UploadFileButton = () => {
     const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         if(event.target.files !== null)
             selectFilesToUpload(event.target.files);
+        filePicker.current!.value = '';
     }
 
     return (

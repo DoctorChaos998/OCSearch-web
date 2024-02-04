@@ -24,7 +24,7 @@ const DeleteModalWindow = () => {
                     <div className={classes.container} onClick={(event: React.MouseEvent<HTMLDivElement>) => {event.stopPropagation()}}>
                         <form className={classes.form} onSubmit={onFormSubmitHandler}>
                             <h2 className={classes.header}>
-                                {`Are you sure in delete this ${selectedFileSystemItemIds.length} ${deleteModalWindow.deleteItem === 'file'?"files":"folders"}?`}
+                                {`Do you really want to erase these ${selectedFileSystemItemIds.length} ${deleteModalWindow.deleteItem === 'file'?"files":"folders"}?`}
                             </h2>
                             <div className={classes.buttonsContainer}>
                                 <button  type={'button'} onClick={() => dispatch(fileSystemActions.closeDeleteModalWindow())} className={classes.cancelButton}>

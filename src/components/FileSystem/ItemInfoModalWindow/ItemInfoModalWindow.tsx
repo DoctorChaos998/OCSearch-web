@@ -5,6 +5,8 @@ import {useAppDispatch, useAppSelector} from "@/hooks";
 import {createPortal} from "react-dom";
 import ModalWindow from "@/ui/modals/ModalWindow/ModalWindow";
 import {fileSystemActions} from "@/store/slices/fileSystemSlice/fileSystemSlice";
+import {fileStatusDisplayName} from "@/entities/fileSystem";
+import {fileSizeToString} from "@/helpers/fileSystemHelper";
 
 const ItemInfoModalWindow = () => {
     const {item, isVisible, itemType} = useAppSelector(state => state.fileSystemReducer.itemInfoModalWindow);
@@ -19,8 +21,8 @@ const ItemInfoModalWindow = () => {
                         <>
                             <span>Upload date: {item.uploadDate}</span>
                             <span>Uploaded by: {item.uploadedBy}</span>
-                            <span>Status: {item.status}</span>
-                            <span>Size: {item.size}</span>
+                            <span>Status: {fileStatusDisplayName[item.status]}</span>
+                            <span>Size: {fileSizeToString(item.size)}</span>
                         </>
                         :
                         <>
