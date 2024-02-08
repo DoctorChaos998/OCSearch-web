@@ -53,7 +53,7 @@
     color: $colorWhite;
 
     &:hover{
-        background-color: #686868;
+        background-color: $colorItemHover;
     }
 }
 .dropDownIcon{

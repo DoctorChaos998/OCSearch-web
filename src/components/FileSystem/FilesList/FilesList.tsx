@@ -5,6 +5,7 @@ import {useSelectFileSystemItems} from "@/hooks/selectFileSystemItems";
 import {useAppDispatch} from "@/hooks";
 import {fileSystemActions} from "@/store/slices/fileSystemSlice/fileSystemSlice";
 import classes from "./FileList.module.scss";
+import {notificationActions} from "@/store/slices/notificationSlice/notificationSlice";
 interface IFileListProps{
     fileList: IFile[]
 }
@@ -20,7 +21,11 @@ const FilesList: FC<IFileListProps> = ({fileList}) => {
             fileList.map((file, index) => <FileSystemFile key={file.id} file={file}
                                                            onClickHandler={onFileClickHandler}
                                                            onDoubleClickHandler={() => {
-                                                               dispatch(fileSystemActions.openPreviewModalWindow({fileExtension: file.name.substring(file.name.lastIndexOf('.')) as 'txt'|'sql'|'csv'|'xlsx', fileId: file.id}));
+                                                               if(file.status === 'ready_for_parsing') dispatch(fileSystemActions.openPreviewModalWindow({
+                                                                   fileExtension: file.name.substring(file.name.lastIndexOf('.')) as 'txt'|'sql'|'csv'|'xlsx',
+                                                                   fileId: file.id}));
+                                                               else dispatch(notificationActions.createNotification({notificationMessage: 'File is being processed', notificationType: 'warning'}))
+
                                                            }}
                                                            index={index}/>)
     );

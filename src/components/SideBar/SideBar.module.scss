@@ -6,11 +6,12 @@
 
 .sideBarContainer {
     display: flex;
-    height: 100vh;
+    //flex: 1;
+    //height: 100vh;
     background-color: $colorSideBarBg;
     width: 80px;
-    position: sticky;
-    top: 0;
+    //position: sticky;
+    //top: 0;
     z-index: 2;
     flex-direction: column;
     justify-content: space-between;
@@ -19,6 +20,11 @@
 .sideBarBottom {
     position: sticky;
     bottom: 0;
+}
+
+.sideBarTop{
+    position: sticky;
+    top: 0;
 }
 
 @media (max-width: 767px) {

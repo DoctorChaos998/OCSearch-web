@@ -30,12 +30,6 @@ const Sessions = () => {
                     <SessionsSkeletonLoading></SessionsSkeletonLoading>
                     <SessionsSkeletonLoading></SessionsSkeletonLoading>
                     <SessionsSkeletonLoading></SessionsSkeletonLoading>
-                    {/*<button className={classes.buttonChangePassword} onClick={() => setChangePasswordModalIsVisible(true)}>*/}
-                    {/*    <span className="material-icons">*/}
-                    {/*        manage_accounts*/}
-                    {/*    </span>*/}
-                    {/*        Change password*/}
-                    {/*</button>*/}
                 </>
                 :
                 <>

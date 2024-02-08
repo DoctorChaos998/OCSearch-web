@@ -162,9 +162,32 @@ export default class FileSystemService{
             throw error
         }
     }
-    static async getFileLength(fileId: number): Promise<number>{
+    static async getFileRowsNumber(fileId: number): Promise<number>{
         try {
-            const response = await api.get<number>(`${FileSystemService.serviceUrl}/files/length/${fileId}`);
+            const response = await api.get<{rowsNumber: number}>(`${FileSystemService.serviceUrl}/file_rows_number/${fileId}`);
+            return Promise.resolve(response.data.rowsNumber);
+        } catch (error){
+            if(axios.isAxiosError<{error: string}>(error)){
+                const responseError: AxiosError<{error: string}> = error;
+                if(responseError.response){
+                    return Promise.reject({
+                        status: responseError.response.status,
+                        error: responseError.response.data.error
+                    });
+                }
+            }
+            throw error
+        }
+    }
+
+    static async getFileRows (fileId: number, fromRowNumber: number, rowsNumber: number): Promise<string[]>{
+        try {
+            const response = await api.get<string[]>(`${FileSystemService.serviceUrl}/files/${fileId}`, {
+                params:{
+                    fromRowNumber,
+                    rowsNumber
+                }
+            });
             return Promise.resolve(response.data);
         } catch (error){
             if(axios.isAxiosError<{error: string}>(error)){

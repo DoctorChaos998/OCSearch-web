@@ -2,12 +2,14 @@ import {combineReducers, configureStore} from '@reduxjs/toolkit'
 import {fileSystemReducer} from "@/store/slices/fileSystemSlice/fileSystemSlice";
 import {userReducer} from "@/store/slices/userSlice/userSlice";
 import {notificationReducer} from "@/store/slices/notificationSlice/notificationSlice";
+import {parsingReducer} from "@/store/slices/parsingSlice/parsingSlice";
 
 
 const rootReducer = combineReducers({
     fileSystemReducer,
     userReducer,
-    notificationReducer
+    notificationReducer,
+    parsingReducer
 })
 export const store = configureStore({
     reducer: rootReducer,
@@ -17,3 +19,4 @@ export const store = configureStore({
 
 export type RootState = ReturnType<typeof rootReducer>
 export type AppDispatch = typeof store.dispatch
+export type status = 'loading'|'error'|'success'|'initial'

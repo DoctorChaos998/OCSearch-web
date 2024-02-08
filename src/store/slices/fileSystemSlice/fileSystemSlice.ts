@@ -1,4 +1,5 @@
 import {createSlice, type PayloadAction} from "@reduxjs/toolkit";
+import {status} from "@/store";
 import type {
     fileSorterTarget,
     fileSystemSortingOrder,
@@ -7,7 +8,7 @@ import type {
     IFolder
 } from "@/entities/fileSystem";
 
-type status = 'loading'|'error'|'success'|'initial'
+
 interface IFileSystemSlice{
     status: status,
     fileSystemItems: {

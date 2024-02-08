@@ -4,6 +4,7 @@
     display: flex;
     justify-content: left;
     align-items: center;
+    height: 75px;
     @media (max-width: 767px) {
         display: none;
     }

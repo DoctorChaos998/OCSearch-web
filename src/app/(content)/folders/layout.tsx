@@ -22,7 +22,6 @@ export default function ContentLayout({children,}: {
         <FileProvider>
             <div className={classes.container}>
                 <FileSystemHelper/>
-
                 <FileSystemBreadCrumbs/>
                 {children}
                 <DragAndDropFilesArea/>
