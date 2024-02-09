@@ -102,16 +102,12 @@ export default class FileSystemService{
             throw error
         }
     }
-    static async uploadFiles(formData: FormData, folderId: number, setPercent: () => void): Promise<void> {
+    static async uploadFiles(formData: FormData, folderId: number): Promise<void> {
         try{
             await api.post(`${FileSystemService.serviceUrl}/files`, formData, {
                 params:{
                     folderId
                 },
-                onUploadProgress: function(progressEvent) {
-                    // var percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent?.total)
-                    // console.log(percentCompleted)
-                }
             });
             return Promise.resolve();
         } catch (error){
