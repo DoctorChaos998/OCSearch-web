@@ -14,7 +14,7 @@ export default function ContentLayout({children,}: {
 }) {
     return (
         <CheckAuth>
-            <Header></Header>
+            <Header/>
             <main>
                 <div className={classes.flexContainerWithContent}>
                     <SideBar></SideBar>

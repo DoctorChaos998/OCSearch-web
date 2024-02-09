@@ -5,6 +5,7 @@ import React from "react";
 import {Providers} from "@/store/providers";
 import Auth from "@/components/User/Auth/Auth";
 import Notification from "@/components/Notification/Notification";
+import UploadingProcess from "@/components/UploadingProcess/UploadingProcess";
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -16,15 +17,16 @@ export const metadata: Metadata = {
 export default function RootLayout({children,}: { children: React.ReactNode }) {
   return (
       <Providers>
-        <html lang="en">
-            <body className={inter.className}>
-                <Auth>
-                    <Notification/>
-                    {children}
-                </Auth>
-                <div id={"modalsContainer"}></div>
-            </body>
-        </html>
+            <html lang="en">
+                <body className={inter.className}>
+                    <Auth>
+                        <Notification/>
+                        <UploadingProcess/>
+                        {children}
+                    </Auth>
+                    <div id={"modalsContainer"}></div>
+                </body>
+            </html>
       </Providers>
   )
 }

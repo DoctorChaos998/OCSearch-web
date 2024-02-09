@@ -10,8 +10,8 @@ import {notificationActions} from "@/store/slices/notificationSlice/notification
 import Skeleton from "react-loading-skeleton";
 import 'react-loading-skeleton/dist/skeleton.css'
 
-const overScan = 0;
-const containerHeight = 900;
+const overScan = 10;
+const containerHeight = window.innerWidth>767?900:500;
 const listItemHeight = 40;
 const PreviewModalWindow = () => {
     const [scrollTop, setScrollTop] = useState(0);
@@ -25,10 +25,8 @@ const PreviewModalWindow = () => {
     const previewModalWindow = useAppSelector(state => state.fileSystemReducer.previewModalWindow);
 
     useLayoutEffect(() => {
-        //setIsLoading(true);
         FileSystemService.getFileRowsNumber(previewModalWindow.fileId).then(value => {
             setTotalListLength(value);
-            //setIsLoading(false);
         }).catch((reason: {error: string, status: number}) => {
             dispatch(notificationActions.createNotificationWithTimer({notificationType: "error", notificationMessage: reason.error}));
             dispatch(fileSystemActions.closePreviewModalWindow());
@@ -51,7 +49,7 @@ const PreviewModalWindow = () => {
         }
         return [startIndex, endIndex, virtualItems];
     },[scrollTop, listToRender, totalListLength])
-    const fetchListToRender = async (startIndex: number, endIndex: number) => {
+    const fetchListToRender = async (startIndex: number) => {
         if(isLoading === 'loading') return;
         setIsLoading('loading');
         let computedStartIndex = Math.floor(startIndex/1000) * 1000;
@@ -69,16 +67,13 @@ const PreviewModalWindow = () => {
     }
 
     useEffect(() => {
-        let timer : NodeJS.Timeout;
-        if(endIndex>fetchIndexes.current.endIndex&&previousScrollTop.current<scrollTop){
+        if((endIndex>fetchIndexes.current.endIndex&&previousScrollTop.current<scrollTop)||
+            (startIndex<fetchIndexes.current.startIndex&&previousScrollTop.current>scrollTop)){
+            let timer : NodeJS.Timeout;
             setIsLoading('initial');
-            timer = setTimeout(() => fetchListToRender(startIndex, endIndex).then(), 1000);
+            timer = setTimeout(() => fetchListToRender(startIndex).then(), 1000);
+            return () => clearTimeout(timer);
         }
-        else if(startIndex<fetchIndexes.current.startIndex&&previousScrollTop.current>scrollTop){
-            setIsLoading('initial');
-            timer = setTimeout(() => fetchListToRender(startIndex, endIndex).then(), 1000);
-        }
-        return () => clearTimeout(timer);
     }, [startIndex, endIndex]);
 
     return (
@@ -93,7 +88,7 @@ const PreviewModalWindow = () => {
                                         {virtualItems.map((value) =>{
                                                 const item: string = value.index>=fetchIndexes.current.endIndex?'Scroll down to load content':
                                                     value.index<fetchIndexes.current.startIndex?'Scroll up to load content':listToRender[value.index%1000];
-                                                return <div style={{height: listItemHeight, whiteSpace: 'nowrap', padding: 12, position: 'absolute', top: 0, transform: `translateY(${value.offsetTop}px)`, width: '100%'}}
+                                                return <div style={{height: listItemHeight, whiteSpace: 'pre', padding: 12, position: 'absolute', top: 0, transform: `translateY(${value.offsetTop}px)`, width: '100%'}}
                                                             key={value.index} onClick={(event) => {
                                                     event.stopPropagation();
                                                 }}>

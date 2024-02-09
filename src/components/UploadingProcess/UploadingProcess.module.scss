@@ -1,0 +1,88 @@
+@import "../../assets/stylesheets/abstracts/variables";
+
+.button{
+  position: fixed;
+  right: 45px;
+  bottom: 45px;
+  border-radius: 50%;
+  height: 50px;
+  width: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  background-color: $colorLiteGray;
+  transition: opacity 0.1s linear, box-shadow 0.5s ease-out;
+  opacity: 0;
+  z-index: 2;
+
+  &:hover{
+    //border: $colorLiteGray 2px solid;
+    box-shadow: 0 0 40px 10px $colorLiteGray;
+    color: $colorWhite;
+  }
+
+  &:after{
+    position: absolute;
+    border-radius: 50%;
+    content: '';
+    background-color: rgba($colorLiteGray, 0.1);
+    height: 50px;
+    width: 50px;
+    animation: increase linear 1.5s infinite;
+  }
+}
+@keyframes increase {
+  0%{
+    height: 100%;
+    width: 100%;
+  }
+  50%{
+    height: 200%;
+    width: 200%;
+  }
+  100%{
+    height: 100%;
+    width: 100%;
+  }
+}
+
+.buttonActive{
+  opacity: 1;
+}
+.container{
+  display: flex;
+  align-items: center;
+  background-color: $colorBlackGray;
+  position: absolute;
+  bottom: 80px;
+  right: 0;
+  height: 100px;
+  width: 300px;
+  color: $colorWhite;
+  flex-direction: column;
+  justify-content: space-around;
+  border-radius: 10px;
+  border: 1px #23D5ABFF solid;
+  padding: 10px 0;
+  opacity: 0;
+  transform: translateY(10%);
+  transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+}
+.containerActive{
+  transform: translateY(0);
+  opacity: 1;
+}
+.name{
+  //color: $colorBlack;
+  font-size: 1.3em;
+}
+.loader{
+  width: 90%;
+  height: 15px;
+  border: 1px $colorBlack solid;
+}
+.process{
+  height: 100%;
+  background: linear-gradient(-45deg, #23D5ABFF 0%, #807dde 100%);
+}

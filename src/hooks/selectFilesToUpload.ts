@@ -1,4 +1,4 @@
-import {useRef} from "react";
+import {useRef, useState} from "react";
 import {checkFilesExtension} from "@/helpers/fileSystemHelper";
 import {fileSystemActions} from "@/store/slices/fileSystemSlice/fileSystemSlice";
 import {
@@ -11,10 +11,11 @@ import {notificationActions} from "@/store/slices/notificationSlice/notification
 
 export function useSelectFilesToUpload() {
     const userName = useAppSelector(state => state.userReducer.nickname);
-    const currentSelectedFiles = useRef<FileList>({} as FileList);
     const dispatch = useAppDispatch();
     const params = useParams<{folderId: string}>();
-    const selectFilesToUpload = (fileList: FileList) => {
+    const currentSelectedFiles = useRef<FileList>({} as FileList);
+    const clearFilesTrigger = useRef<boolean>(false);
+    const selectFilesToUpload = async (fileList: FileList) => {
         const filesExtension = checkFilesExtension(fileList);
         if(fileList.length>0){
             if(!filesExtension){
@@ -23,6 +24,7 @@ export function useSelectFilesToUpload() {
                     dispatch(fileSystemActions.openCreateFolderModalWindow(fileList[0].name.slice(0, fileList[0].name.lastIndexOf('.'))));
                 }
                 else {
+                    clearFilesTrigger.current = !clearFilesTrigger.current;
                     dispatch(uploadFilesInFolder(fileList, +params.folderId, userName));
                 }
             }
@@ -35,7 +37,8 @@ export function useSelectFilesToUpload() {
         return currentSelectedFiles.current;
     }
     const uploadFilesInNewFolder = (folderName: string) => {
+        clearFilesTrigger.current = !clearFilesTrigger.current;
         dispatch(uploadFiles(currentSelectedFiles.current, folderName));
     }
-    return {selectFilesToUpload, getCurrentSelectedFiles, uploadFilesInNewFolder};
+    return {selectFilesToUpload, getCurrentSelectedFiles, uploadFilesInNewFolder, clearFilesTrigger: clearFilesTrigger.current};
 }

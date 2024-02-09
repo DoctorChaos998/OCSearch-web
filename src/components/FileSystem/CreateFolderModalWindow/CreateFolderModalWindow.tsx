@@ -1,12 +1,12 @@
 'use client'
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useContext, useEffect, useRef, useState} from 'react';
 import ModalWindow from "@/ui/modals/ModalWindow/ModalWindow";
 import {useAppDispatch, useAppSelector} from "@/hooks";
 import {createPortal} from "react-dom";
 import {fileSystemActions} from "@/store/slices/fileSystemSlice/fileSystemSlice";
 import classes from "./CreateFolderModalWindow.module.scss";
 import FileSystemModalWindowButton from "@/ui/buttons/FileSystemModalWindowButton/FileSystemModalWindowButton";
-import {useFileContext} from "@/components/FileSystem/FileContext/FileContext";
+import {FileContext, useFileContext} from "@/components/FileSystem/FileContext/FileContext";
 
 const CreateFolderModalWindow = () => {
     const dispatch = useAppDispatch();

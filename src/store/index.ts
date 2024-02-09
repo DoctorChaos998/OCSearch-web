@@ -3,13 +3,15 @@ import {fileSystemReducer} from "@/store/slices/fileSystemSlice/fileSystemSlice"
 import {userReducer} from "@/store/slices/userSlice/userSlice";
 import {notificationReducer} from "@/store/slices/notificationSlice/notificationSlice";
 import {parsingReducer} from "@/store/slices/parsingSlice/parsingSlice";
+import {uploadingProcessReducer} from "@/store/slices/uploadingProcessSlice/uploadingProcessSlice";
 
 
 const rootReducer = combineReducers({
     fileSystemReducer,
     userReducer,
     notificationReducer,
-    parsingReducer
+    parsingReducer,
+    uploadingProcessReducer
 })
 export const store = configureStore({
     reducer: rootReducer,
