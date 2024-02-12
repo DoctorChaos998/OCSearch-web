@@ -7,7 +7,7 @@ import Auth from "@/components/User/Auth/Auth";
 import Notification from "@/components/Notification/Notification";
 import UploadingProcess from "@/components/UploadingProcess/UploadingProcess";
 
-const inter = Inter({ subsets: ['latin'] })
+const inter = Inter({subsets: ['latin'], style:'normal' })
 
 export const metadata: Metadata = {
   title: 'OCSearch',

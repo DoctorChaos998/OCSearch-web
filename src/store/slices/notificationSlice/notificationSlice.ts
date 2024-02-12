@@ -1,7 +1,6 @@
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {notificationPayload, type notificationType} from "@/entities/notification";
 
-
 let currentNotificationId = 0;
 const getId = () => currentNotificationId++;
 

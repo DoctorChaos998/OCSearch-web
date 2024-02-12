@@ -10,7 +10,7 @@ import {notificationActions} from "@/store/slices/notificationSlice/notification
 import Skeleton from "react-loading-skeleton";
 import 'react-loading-skeleton/dist/skeleton.css'
 
-const overScan = 10;
+const overScan = 0;
 const containerHeight = window.innerWidth>767?900:500;
 const listItemHeight = 40;
 const PreviewModalWindow = () => {
@@ -69,10 +69,12 @@ const PreviewModalWindow = () => {
     useEffect(() => {
         if((endIndex>fetchIndexes.current.endIndex&&previousScrollTop.current<scrollTop)||
             (startIndex<fetchIndexes.current.startIndex&&previousScrollTop.current>scrollTop)){
-            let timer : NodeJS.Timeout;
             setIsLoading('initial');
-            timer = setTimeout(() => fetchListToRender(startIndex).then(), 1000);
-            return () => clearTimeout(timer);
+            let timer = setTimeout(() => fetchListToRender(startIndex).then(), 1000);
+            return () => {
+                clearTimeout(timer);
+                setIsLoading('success');
+            }
         }
     }, [startIndex, endIndex]);
 
@@ -84,22 +86,29 @@ const PreviewModalWindow = () => {
                     }} onScroll={(event => {
                         setScrollTop(event.currentTarget.scrollTop);
                     })}>
-                            <div style={{height: totalListLength * listItemHeight}}>
-                                        {virtualItems.map((value) =>{
-                                                const item: string = value.index>=fetchIndexes.current.endIndex?'Scroll down to load content':
-                                                    value.index<fetchIndexes.current.startIndex?'Scroll up to load content':listToRender[value.index%1000];
-                                                return <div style={{height: listItemHeight, whiteSpace: 'pre', padding: 12, position: 'absolute', top: 0, transform: `translateY(${value.offsetTop}px)`, width: '100%'}}
-                                                            key={value.index} onClick={(event) => {
-                                                    event.stopPropagation();
-                                                }}>
-                                                    {isLoading !== 'success'?
-                                                        <Skeleton  baseColor="#202020" highlightColor="#833ab4" width={'100%'} height={'100%'} borderRadius={40}/>:
-                                                        item
-                                                    }
-                                                </div>
-                                            }
-                                        )}
+                        {isLoading!=="success" &&
+                            <div className={classes.loadingContainer}>
+                                {Array(17).fill(true).map((_, index) => <Skeleton
+                                    key={index}
+                                    baseColor="#202020"
+                                    highlightColor="#833ab4"
+                                    width={'100%'}
+                                    height={40}
+                                    borderRadius={40}/>)}
                             </div>
+                        }
+                        <div style={{height: totalListLength * listItemHeight}}>
+                        {virtualItems.map((value) =>{
+                            const item: string = value.index>=fetchIndexes.current.endIndex?'Scroll down to load content':
+                                value.index<fetchIndexes.current.startIndex?'Scroll up to load content':listToRender[value.index%1000];
+                            return <div style={{height: listItemHeight, whiteSpace: 'pre', padding: 12, position: 'absolute', top: 0, transform: `translateY(${value.offsetTop}px)`, width: '100%'}}
+                                        key={value.index} onClick={(event) => {
+                                event.stopPropagation();
+                            }}>
+                                {item}
+                            </div>
+                        })}
+                        </div>
                     </div>
             </ModalWindow>, document.getElementById('modalsContainer')!)
     );

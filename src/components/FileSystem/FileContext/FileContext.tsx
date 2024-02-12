@@ -13,7 +13,6 @@ interface IFileContext {
     selectFilesToUpload: (fileList: FileList) => void;
     getCurrentSelectedFiles: () => FileList;
     uploadFilesInNewFolder: (folderName: string) => void;
-    clearFilesTrigger: boolean;
 }
 export const FileContext = createContext<IFileContext|undefined>(undefined);
 const FileProvider: FC<PropsWithChildren> = ({children}) => {

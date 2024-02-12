@@ -4,6 +4,7 @@ import classes from "./SideBar.module.scss";
 import {useAppDispatch, useAppSelector} from "@/hooks";
 import SideBarButton from "@/ui/buttons/SideBarButton/SideBarButton";
 import {logout} from "@/store/slices/userSlice/userActions";
+import {uploadingProcessActions} from "@/store/slices/uploadingProcessSlice/uploadingProcessSlice";
 
 
 const SideBar: FC = () => {

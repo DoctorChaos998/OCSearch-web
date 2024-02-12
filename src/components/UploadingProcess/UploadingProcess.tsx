@@ -2,34 +2,61 @@
 import React, {useState} from 'react';
 import classes from "./UploadingProcess.module.scss";
 import {CSSTransition} from "react-transition-group";
-import {useAppSelector} from "@/hooks";
+import {useAppDispatch, useAppSelector} from "@/hooks";
+import {uploadingProcessActions} from "@/store/slices/uploadingProcessSlice/uploadingProcessSlice";
 const UploadingProcess = () => {
     const [isActive, setIsActive] = useState(false);
     const uploadingProcess = useAppSelector(state => state.uploadingProcessReducer);
+    const dispatch = useAppDispatch();
     return (
-        <CSSTransition timeout={100} in={false} classNames={{
-            enterDone: classes.buttonActive
+        <CSSTransition timeout={200} in={uploadingProcess.isActive} classNames={{
+            enterDone: classes.mainContainerActive
         }} unmountOnExit={true}>
-            <button className={classes.button} onClick={() => setIsActive(!isActive)} >
+            <div className={classes.mainContainer}>
+                <button className={classes.button} onClick={() => {
+                    if (isActive) {
+                        dispatch(uploadingProcessActions.trySetInactive());
+                    }
+                    setIsActive(!isActive);
+                }}>
                 <span className="material-icons">
                     file_upload
                 </span>
+                </button>
                 <CSSTransition in={isActive} timeout={{
                     enter: 100,
                     exit: 300
                 }} unmountOnExit={true} classNames={{
-                    enterDone: classes.containerActive
+                    enterDone: classes.uploadingListContainerActive
                 }}>
-                    <div className={classes.container} onClick={(event) => event.stopPropagation()}>
-                        <p className={classes.name}>
-                            Sample download process: 50%
-                        </p>
-                        <div className={classes.loader}>
-                            <div className={classes.process} style={{width: 50}}/>
-                        </div>
+                    <div className={classes.uploadingListContainer} onClick={(event) => event.stopPropagation()}>
+                        {uploadingProcess.uploadingList.map(uploading => <div key={uploading.id}
+                                                                              className={classes.uploadingContainer}>
+                            <span className={`material-symbols-outlined ${classes.icon}`}>
+                                note_stack
+                            </span>
+                            <div className={classes.uploadInfoContainer}>
+                                <span>
+                                    {uploading.firstFileName}
+                                </span>
+                                <span>
+                                    {uploading.uploadingSize}
+                                </span>
+                                <span>
+                                    {`Files number: ${uploading.filesNumber}`}
+                                </span>
+                            </div>
+                            <span className={classes.icon}>
+                                {uploading.progress}%
+                            </span>
+                            <div className={classes.process} style={{
+                                width: `${uploading.progress}%`, background: `${uploading.status === 'loading' ?
+                                    'deepskyblue' : uploading.status === 'success' ? 'forestgreen' : 'firebrick'}`
+                            }}/>
+                        </div>)}
                     </div>
                 </CSSTransition>
-            </button>
+            </div>
         </CSSTransition>
     );
 };

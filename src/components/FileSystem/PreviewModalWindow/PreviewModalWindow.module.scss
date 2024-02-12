@@ -8,10 +8,23 @@
     position: relative;
     color: $colorWhite;
     font-size: 1em;
+    border-radius: 10px;
 }
 @media (max-width: 767px) {
     .previewFileModalContainer{
         height: 500px;
         width: 95vw;
     }
+}
+.loadingContainer{
+    padding: 12px;
+    position: sticky;
+    top: 0;
+    height: 100%;
+    width: 100%;
+    background-color: $colorLightGray;
+    z-index: 3;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
 }

@@ -4,17 +4,12 @@ import classes from "./UploadFileButton.module.scss";
 import {useFileContext} from "@/components/FileSystem/FileContext/FileContext";
 const UploadFileButton = () => {
     const filePicker = useRef<HTMLInputElement>(null);
-    const {selectFilesToUpload, clearFilesTrigger} = useFileContext();
+    const {selectFilesToUpload} = useFileContext();
     const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         if(event.target.files !== null){
             selectFilesToUpload(event.target.files);
         }
     }
-    useEffect(() => {
-        if(filePicker.current!.files !== null){
-            filePicker.current!.value = '';
-        }
-    }, [clearFilesTrigger]);
 
     return (
         <>
