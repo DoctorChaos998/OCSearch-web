@@ -1,28 +1,39 @@
-import React from "react";
+'use client'
+import React, {useEffect} from "react";
 import classes from "./layout.module.scss";
-import {Metadata} from "next";
-import CheckAuth from "@/components/User/CheckAuth/CheckAuth";
 import Header from "@/components/Header/Header";
 import SideBar from "@/components/SideBar/SideBar";
+import {useAppSelector} from "@/lib/hooks";
+import LoaderForCheckAuth from "@/ui/loaders/LoaderForCheckAuth/LoaderForCheckAuth";
+import {useRouter} from "next/navigation";
+import UploadingProcess from "@/components/UploadingProcess/UploadingProcess";
+import UsagePolicy from "@/components/UsagePolicy/UsagePolicy";
 
-export const metadata: Metadata = {
-    title: 'OCSearch',
-    description: 'Power',
-}
 export default function ContentLayout({children,}: {
     children: React.ReactNode
 }) {
+    const isAuth = useAppSelector(state => state.userReducer.isAuth);
+    const router = useRouter();
+
+    useEffect(() => {
+        if(!isAuth) router.push('/login');
+    }, []);
+
     return (
-        <CheckAuth>
-            <Header/>
-            <main>
-                <div className={classes.flexContainerWithContent}>
-                    <SideBar></SideBar>
-                    <div className={classes.mainContainer}>
-                        {children}
+        isAuth?
+            <>
+                <Header/>
+                <main>
+                    <div className={classes.flexContainerWithContent}>
+                        <SideBar></SideBar>
+                        <div className={classes.mainContainer}>
+                            {children}
+                        </div>
                     </div>
-                </div>
-            </main>
-        </CheckAuth>
+                </main>
+                <UploadingProcess/>
+                <UsagePolicy/>
+            </>:
+            <LoaderForCheckAuth/>
     )
 }

@@ -1,7 +1,8 @@
 import React, {useEffect, useRef, useState} from 'react';
 import classes from "./FileSelector.module.scss";
 import {CSSTransition} from "react-transition-group";
-import {useAppSelector} from "@/hooks";
+import {useAppSelector} from "@/lib/hooks";
+
 
 const FileSelector = () => {
     const [isActive, setIsActive] = useState(false);

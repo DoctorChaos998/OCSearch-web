@@ -40,38 +40,7 @@
     margin-bottom: 50px;
     flex-direction: column;
 }
-@keyframes gradient {
-    0% {
-        background-position: 0 50%;
-    }
-    50% {
-        background-position: 100% 50%;
-    }
-    100% {
-        background-position: 0 50%;
-    }
-}
 
-.buttonChangePassword{
-    margin-top: 20px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 300px;
-    border-radius: 40px;
-    font-size: 1.2em;
-    background: $colorPink;
-    background: linear-gradient(50deg, $colorPink 0%, $colorAquamarine 50%, $colorGreen 100%);
-    background-size: 400% 400%;
-    animation: gradient 15s ease infinite;
-    height: 40px;
-    color: $colorBlack;
-    border: none;
-
-    &:hover{
-        border: $colorBlack 2px solid;
-    }
-}
 
 @media (max-width: 767px) {
     .sessionsButtonShowMore{

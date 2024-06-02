@@ -1,15 +1,24 @@
 'use client'
 import React, {FC} from 'react';
 import classes from "./SideBar.module.scss";
-import {useAppDispatch, useAppSelector} from "@/hooks";
 import SideBarButton from "@/ui/buttons/SideBarButton/SideBarButton";
-import {logout} from "@/store/slices/userSlice/userActions";
-import {uploadingProcessActions} from "@/store/slices/uploadingProcessSlice/uploadingProcessSlice";
+import {useAppDispatch, useAppSelector} from "@/lib/hooks";
+import UserService from "@/http/userService";
+import {userActions} from "@/lib/features/userSlice/userSlice";
 
 
 const SideBar: FC = () => {
     const dispatch = useAppDispatch();
     const parsingIsActive = useAppSelector(state => state.parsingReducer.isActive);
+
+    const logoutHandler = () => {
+        UserService.logout().then(() => {
+            dispatch(userActions.userLogoutSuccess());
+        }).catch(() => {
+            dispatch(userActions.userLogoutSuccess());
+        })
+    };
+
     return (
         <aside className={classes.sideBarContainer}>
             <nav className={classes.sideBarTop}>
@@ -23,7 +32,7 @@ const SideBar: FC = () => {
             </nav>
             <nav className={classes.sideBarBottom}>
                 <ul className={classes.sideBarItemsList}>
-                    <SideBarButton href={'/login'} toolTipInscription='Logout' icon='logout' onClick={() => dispatch(logout())}/>
+                    <SideBarButton href={'/login'} toolTipInscription='Logout' icon='logout' onClick={() => logoutHandler()}/>
                 </ul>
             </nav>
         </aside>

@@ -1,11 +1,11 @@
 'use client'
 import React from 'react';
-import {useAppSelector} from "@/hooks";
 import {useParams} from "next/navigation";
 import FileSystemExitButton from "@/components/FileSystem/ExitButton/FileSystemExitButton";
 import Skeleton from "react-loading-skeleton";
 import 'react-loading-skeleton/dist/skeleton.css'
 import classes from "./FileSystemBreadCrumbs.module.scss";
+import {useAppSelector} from "@/lib/hooks";
 
 const FileSystemBreadCrumbs = () => {
     const status = useAppSelector(state => state.fileSystemReducer.status);

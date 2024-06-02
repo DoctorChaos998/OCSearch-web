@@ -1,0 +1,80 @@
+@import "@/assets/stylesheets/abstracts/variables";
+
+.fileSystemItemContainer{
+  display: flex;
+  flex-direction: column;
+  width: 200px;
+  height: 200px;
+  border-radius: 15px;
+  padding: 10px;
+  justify-content: center;
+  align-items: center;
+  margin: 5px;
+  cursor: pointer;
+  user-select: none;
+  position: relative;
+  @media (min-width: 767px) {
+    &:hover{
+      background: $hoveredFileSystemItemColor;
+    }
+  }
+
+  @media (max-width: 767px) {
+    width: 150px;
+    height: 150px;
+  }
+}
+
+.fileSystemItemContainerActive{
+  background: $selectedFileSystemItemColor;
+}
+
+.fileSystemItemName{
+  font-size: 1em;
+  text-align: center;
+  color: $colorWhite;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 100%;
+}
+
+.fileSystemFolderIcon{
+  color: $folderIconColor;
+  font-size: 10em;
+}
+
+.fileSystemFileIcon{
+  color: $colorWhite;
+  font-size: 10em;
+}
+
+@media (max-width: 767px) {
+  .fileSystemItemIcon, .fileSystemFileIcon{
+    font-size: 5em;
+  }
+}
+
+.fileSystemItemTooltipContainer{
+  transition: all ease-out 120ms;
+  color: $colorBlack;
+  padding: 8px 15px;
+  border-radius: 13px;
+  opacity: 0;
+  visibility: hidden;
+  font-size: 14px;
+  letter-spacing: 1px;
+  position: fixed;
+  border: $colorOrange 2px solid;
+  background-color: $colorIvory;
+
+  @media (max-width: 767px) {
+    display: none;
+  }
+}
+
+.fileSystemItemTooltipContainerActive{
+  z-index: 1000;
+  visibility: visible;
+  opacity: 1;
+}

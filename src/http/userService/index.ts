@@ -1,13 +1,48 @@
 import api from "@/http";
-import axios, {AxiosError} from "axios";
-import {ISessionsInfo} from "@/http/userService/dataTransferObjects";
-
+import axios, {AxiosError, InternalAxiosRequestConfig} from "axios";
+import type {ISessionsInfo} from "@/types/sessions";
 
 export default class UserService {
     private static serviceUrl = '/user';
-    static async login(nickname: string, password: string, rememberMe: boolean): Promise<{nickname: string, accessToken: string}>{
+    private static accessToken: string;
+
+    static createRequestInterceptor(){
+        api.interceptors.request.clear();
+        api.interceptors.request.use((config:InternalAxiosRequestConfig) => {
+            config.headers.Authorization = `Bearer ${this.accessToken}`
+            return config
+        });
+    }
+    static createResponseInterceptor(logoutFunction: () => void){
+        let isRetry = false;
+        api.interceptors.response.use((config) => {
+            return config
+        }, async (error) => {
+            const originalRequest = error.config;
+            if (error.response.status === 401 && error.config && !isRetry) {
+                try {
+                    isRetry = true;
+                    await UserService.refreshTokens();
+                    isRetry = false;
+                    this.createRequestInterceptor();
+                    return api.request(originalRequest);
+                } catch (error: any) {
+                    this.clearAllInterceptor();
+                    logoutFunction();
+                }
+            }
+            throw error
+        });
+    }
+    static clearAllInterceptor(){
+        api.interceptors.request.clear();
+        api.interceptors.response.clear();
+    }
+
+    static async login(nickname: string, password: string, rememberMe: boolean): Promise<{nickname: string}>{
         try {
             const response  =  await api.post<{nickname: string, accessToken: string}>(`${UserService.serviceUrl}/login`, {nickname, password, rememberMe});
+            this.accessToken = response.data.accessToken;
             return Promise.resolve(response.data);
         } catch(error){
             if(axios.isAxiosError(error)){
@@ -26,6 +61,7 @@ export default class UserService {
     static async logout(): Promise<void>{
         try {
             await api.post(`${UserService.serviceUrl}/logout`);
+            this.clearAllInterceptor();
             return Promise.resolve();
         } catch(error){
             if(axios.isAxiosError(error)){
@@ -41,9 +77,10 @@ export default class UserService {
         }
     }
 
-    static async refreshTokens(): Promise<{nickname: string, accessToken: string}>{
+    static async refreshTokens(): Promise<{nickname: string}>{
         try {
-            const response  =  await api.put(`${UserService.serviceUrl}/tokens`);
+            const response  =  await api.put<{nickname: string, accessToken: string}>(`${UserService.serviceUrl}/tokens`);
+            this.accessToken = response.data.accessToken;
             return Promise.resolve(response.data);
         } catch(error){
             if(axios.isAxiosError(error)){

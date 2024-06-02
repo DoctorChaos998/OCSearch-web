@@ -1,9 +1,10 @@
 import React, {FC, HTMLAttributes} from 'react';
-import type {inactiveSession, session, sessionType} from "@/entities/user";
 import {UAParser} from "ua-parser-js";
 import classes from "./SessionCard.module.scss";
+import {IInactiveSession, ISession, sessionType} from "@/types/sessions";
+
 interface ISessionCard extends HTMLAttributes<HTMLDivElement>{
-    session: session|inactiveSession,
+    session: ISession|IInactiveSession,
     sessionType: sessionType
 }
 const SessionCard: FC<ISessionCard> = ({session, sessionType, ...props}) => {

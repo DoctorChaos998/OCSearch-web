@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import classes from "./CloseAllSessionButton.module.scss"
-import {useAppDispatch} from "@/hooks";
-import {closeAllSessions} from "@/store/slices/userSlice/userActions";
+import {useAppDispatch} from "@/lib/hooks";
+import {closeAllSessions} from "@/lib/features/userSlice/userActions";
 
 const CloseAllSessionButton = () => {
     const dispatch = useAppDispatch();

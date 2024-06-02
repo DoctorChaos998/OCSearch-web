@@ -44,23 +44,15 @@
     inset: 5px;
     z-index: 2;
     background-color: $colorMainContentBg;
-    //background: #22252E;
     border-radius: 16px;
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
+    padding: 40px;
 }
 
 .loginFormHeader{
     color: $colorLilac;
     font-size: 2em;
-}
-.loginForm{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    height: 80%;
-    width: 85%;
 }

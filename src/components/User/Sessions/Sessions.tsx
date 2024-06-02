@@ -1,17 +1,20 @@
 'use client'
 import React, {useEffect, useState} from 'react';
-import {useAppDispatch, useAppSelector} from "@/hooks";
-import {loadingAllSessions} from "@/store/slices/userSlice/userActions";
 import classes from "./Sessions.module.scss";
 import SessionsSkeletonLoading from "@/ui/loaders/SessionsSkeletonLoading/SessionsSkeletonLoading";
 import SessionCard from "@/ui/cards/SessionCard/SessionCard";
 import CloseAllSessionButton from "@/components/User/CloseAllSessionButton/CloseAllSessionButton";
-import {userActions} from "@/store/slices/userSlice/userSlice";
+import {userActions} from "@/lib/features/userSlice/userSlice";
+import {useAppDispatch, useAppSelector} from "@/lib/hooks";
+import {loadingAllSessions} from "@/lib/features/userSlice/userActions";
+import ChangePasswordButton from "@/components/User/ChangePasswordButton/ChangePasswordButton";
+import SessionsLoader from "@/ui/loaders/SessionsLoader/SessionsLoader";
 
 const Sessions = () => {
     const sessions = useAppSelector(state => state.userReducer.sessions);
     const [lastIndexVisibleInactiveSessions, setLastIndexVisibleInactiveSessions] = useState(5);
     const dispatch = useAppDispatch();
+    
     useEffect(() => {
         dispatch(loadingAllSessions());
     }, [])
@@ -19,18 +22,7 @@ const Sessions = () => {
     return (
         <div className={classes.sessionsContainer}>
             {sessions.isLoading?
-                <>
-                    <h2 className={classes.sessionsTextHeader}>Current session</h2>
-                    <SessionsSkeletonLoading></SessionsSkeletonLoading>
-                    <h2 className={classes.sessionsTextHeader}>Active sessions</h2>
-                    <SessionsSkeletonLoading></SessionsSkeletonLoading>
-                    <SessionsSkeletonLoading></SessionsSkeletonLoading>
-                    <SessionsSkeletonLoading></SessionsSkeletonLoading>
-                    <h2 className={classes.sessionsTextHeader}>Inactive sessions</h2>
-                    <SessionsSkeletonLoading></SessionsSkeletonLoading>
-                    <SessionsSkeletonLoading></SessionsSkeletonLoading>
-                    <SessionsSkeletonLoading></SessionsSkeletonLoading>
-                </>
+                <SessionsLoader/>
                 :
                 <>
                     <h2 className={classes.sessionsTextHeader}>Current session</h2>
@@ -49,12 +41,7 @@ const Sessions = () => {
                             </span>
                             Show more
                         </button>}
-                    <button className={classes.buttonChangePassword} onClick={() => dispatch(userActions.openChangePasswordModalWindow())}>
-                    <span className="material-icons">
-                        manage_accounts
-                    </span>
-                        Change password
-                    </button>
+                    <ChangePasswordButton/>
                 </>
             }
         </div>

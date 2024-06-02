@@ -1,15 +1,17 @@
 'use client'
-import React, {FC, PropsWithChildren, useEffect} from 'react';
-import {useAppDispatch, useAppSelector} from "@/hooks";
-import {checkAuth} from "@/store/slices/userSlice/userActions";
+import React, {useEffect} from 'react';
 import LoaderForCheckAuth from "@/ui/loaders/LoaderForCheckAuth/LoaderForCheckAuth";
+import {checkAuth} from "@/lib/features/userSlice/userActions";
+import {useAppDispatch, useAppSelector} from "@/lib/hooks";
 
-const Auth: FC<PropsWithChildren> = ({children}) => {
+const Auth = ({children}: { children: React.ReactNode }) => {
     const dispatch = useAppDispatch();
     const status = useAppSelector(state => state.userReducer.status);
+
     useEffect(() => {
-        dispatch(checkAuth())
-    }, [])
+        dispatch(checkAuth());
+    }, []);
+
     return (
         status === 'initial' || status === 'loading'?
             <LoaderForCheckAuth/>

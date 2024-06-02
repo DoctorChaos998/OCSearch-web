@@ -1,31 +1,32 @@
-import React, {useRef} from "react";
-import {useAppDispatch, useAppSelector} from "@/hooks/index";
-import {fileSystemActions} from "@/store/slices/fileSystemSlice/fileSystemSlice";
-import type {IFile, IFolder, keyForSelect} from "@/entities/fileSystem";
+import {useCallback, useRef} from "react";
+import {fileSystemActions} from "@/lib/features/fileSystemSlice/fileSystemSlice";
+import {useAppDispatch, useAppSelector} from "@/lib/hooks";
+import type {keyForSelect} from "@/types/fileSystem";
 
-export function useSelectFileSystemItems(fileSystemItemsList: (IFile|IFolder)[]){
-    const selectedFileSystemItemIds = useAppSelector(state => state.fileSystemReducer.selectedFileSystemItemIds);
+export function useSelectFileSystemItems(fileSystemItemIdsList: number[]){
+    const selectedFileSystemItemIds = useAppSelector(state => state.fileSystemReducer.selectedFileSystemItemIds.length);
     const mobileHelperIsActive = useAppSelector(state => state.fileSystemReducer.mobileHelper.isActive);
     const dispatch = useAppDispatch();
-    const selectedFileIndex = useRef<number>(0);
+    const indexOfThePreviousSelectedItem = useRef<number>(0);
+
     return (keyForSelect: keyForSelect, fileSystemItemId: number, fileSystemItemIndex: number) => {
-        if(selectedFileSystemItemIds.length === 0){
-            selectedFileIndex.current = 0;
+        if(!selectedFileSystemItemIds){
+            indexOfThePreviousSelectedItem.current = 0;
         }
         if(keyForSelect === 'ctrl'){
-            selectedFileIndex.current = fileSystemItemIndex;
+            indexOfThePreviousSelectedItem.current = fileSystemItemIndex;
             dispatch(fileSystemActions.addSelectItem(fileSystemItemId));
         }
         else if(keyForSelect === 'shift'){
             const tempArray: number[] = [];
-            if(fileSystemItemIndex > selectedFileIndex.current){
-                for(let i: number = selectedFileIndex.current;i<=fileSystemItemIndex;i++){
-                    tempArray.push(fileSystemItemsList[i].id);
+            if(fileSystemItemIndex > indexOfThePreviousSelectedItem.current){
+                for(let i: number = indexOfThePreviousSelectedItem.current;i<=fileSystemItemIndex;i++){
+                    tempArray.push(fileSystemItemIdsList[i]);
                 }
             }
             else {
-                for(let i: number = fileSystemItemIndex;i<=selectedFileIndex.current;i++){
-                    tempArray.push(fileSystemItemsList[i].id);
+                for(let i: number = fileSystemItemIndex;i<=indexOfThePreviousSelectedItem.current;i++){
+                    tempArray.push(fileSystemItemIdsList[i]);
                 }
             }
             dispatch(fileSystemActions.deselectAllItems());
@@ -33,13 +34,13 @@ export function useSelectFileSystemItems(fileSystemItemsList: (IFile|IFolder)[])
         }
         else {
             if(mobileHelperIsActive){
-                selectedFileIndex.current = fileSystemItemIndex;
+                indexOfThePreviousSelectedItem.current = fileSystemItemIndex;
                 dispatch(fileSystemActions.addSelectItem(fileSystemItemId));
             }
             else {
-                selectedFileIndex.current = fileSystemItemIndex;
+                indexOfThePreviousSelectedItem.current = fileSystemItemIndex;
                 dispatch(fileSystemActions.selectItemOnce(fileSystemItemId));
             }
         }
-    }
+    };
 }

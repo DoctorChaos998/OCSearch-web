@@ -2,12 +2,13 @@
 import React, {useState} from 'react';
 import classes from "./UploadingProcess.module.scss";
 import {CSSTransition} from "react-transition-group";
-import {useAppDispatch, useAppSelector} from "@/hooks";
-import {uploadingProcessActions} from "@/store/slices/uploadingProcessSlice/uploadingProcessSlice";
+import {uploadingProcessActions} from "@/lib/features/uploadingProcessSlice/uploadingProcessSlice";
+import {useAppDispatch, useAppSelector} from "@/lib/hooks";
 const UploadingProcess = () => {
     const [isActive, setIsActive] = useState(false);
     const uploadingProcess = useAppSelector(state => state.uploadingProcessReducer);
     const dispatch = useAppDispatch();
+
     return (
         <CSSTransition timeout={200} in={uploadingProcess.isActive} classNames={{
             enterDone: classes.mainContainerActive
@@ -19,9 +20,9 @@ const UploadingProcess = () => {
                     }
                     setIsActive(!isActive);
                 }}>
-                <span className="material-icons">
-                    file_upload
-                </span>
+                    <span className="material-icons">
+                        file_upload
+                    </span>
                 </button>
                 <CSSTransition in={isActive} timeout={{
                     enter: 100,

@@ -1,7 +1,7 @@
 'use client'
 import React from 'react';
 import classes from "./UserCard.module.scss";
-import {useAppSelector} from "@/hooks";
+import {useAppSelector} from "@/lib/hooks";
 
 const UserCard = () => {
     const userName = useAppSelector(state => state.userReducer.nickname);

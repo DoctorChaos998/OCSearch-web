@@ -1,0 +1,17 @@
+.container{
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  height: 40px;
+}
+.item{
+  height: 100%;
+  text-align: center;
+  border: 1px solid darkslategray;
+  border-radius: 5px;
+}
+.dropArea{
+  height: 100px;
+  min-width: 100px;
+  border: 1px solid yellow;
+}

@@ -1,42 +1,45 @@
 import axios, {AxiosError} from "axios";
 import {api} from "@/http";
 import {
-    type IGetFolderResponse,
-    type IGetFileResponse,
-    type IErrorCreateFolder,
     type IErrorDeleteFolders,
-    type IErrorRenameFolder,
-    type IErrorDeleteFiles
-} from './dataTransferObjects'
+    type IErrorDeleteFiles, IFolder, IFile
+} from '@/types/fileSystem'
+import {IApiError} from "@/types/api";
 
 
 export default class FileSystemService{
     private static serviceUrl = '/file_system';
-    static async getFolders(): Promise<IGetFolderResponse[]>{
+    static async getFolders(): Promise<Omit<IFolder, "isSelected">[]>{
         try {
-            const response =  await api.get<IGetFolderResponse[]>(`${FileSystemService.serviceUrl}/folders`);
+            const response =  await api.get<Omit<IFolder, "isSelected">[]>(`${FileSystemService.serviceUrl}/folders`);
             return Promise.resolve(response.data);
         } catch (error){
             if(axios.isAxiosError(error)){
-                return Promise.reject();
+                const responseError: AxiosError<{error: string}> = error;
+                if(responseError.response){
+                    return Promise.reject({
+                        status: responseError.response.status,
+                        error: responseError.response.data.error
+                    });
+                }
             }
             throw error
         }
 
     }
-    static async createFolder(folderName: string): Promise<IGetFolderResponse>{
+    static async createFolder(folderName: string): Promise<Omit<IFolder, "isSelected">>{
         try {
-            const response = await api.post<IGetFolderResponse>(`${FileSystemService.serviceUrl}/folders`, {
+            const response = await api.post<Omit<IFolder, "isSelected">>(`${FileSystemService.serviceUrl}/folders`, {
                 folderName
             });
             return Promise.resolve(response.data);
         } catch (error){
-            if(axios.isAxiosError<IErrorCreateFolder>(error)){
-                const responseError: AxiosError<IErrorCreateFolder> = error;
-                if(responseError.response?.status === 409){
+            if(axios.isAxiosError<{error: string}>(error)){
+                const responseError: AxiosError<{error: string}> = error;
+                if(responseError.response){
                     return Promise.reject({
-                        status: 409,
-                        error: responseError.response?.data.error
+                        status: responseError.response.status,
+                        error: responseError.response.data.error
                     });
                 }
             }
@@ -53,12 +56,11 @@ export default class FileSystemService{
         } catch (error){
             if(axios.isAxiosError<IErrorDeleteFolders>(error)){
                 const responseError: AxiosError<IErrorDeleteFolders> = error;
-                if(responseError.response?.status === 422){
+                if(responseError.response){
                     return Promise.reject({
-                        status: 422,
-                        error: responseError.response.data.error,
-                        deletedFolderIds: responseError.response.data.deletedFolderIds
-                    })
+                        status: responseError.response.status,
+                        error: responseError.response.data.error
+                    });
                 }
             }
             throw error
@@ -71,8 +73,8 @@ export default class FileSystemService{
             });
             return Promise.resolve();
         } catch (error){
-            if(axios.isAxiosError<IErrorRenameFolder>(error)){
-                const responseError: AxiosError<IErrorRenameFolder> = error;
+            if(axios.isAxiosError<{error: string}>(error)){
+                const responseError: AxiosError<{error: string}> = error;
                 if(responseError.response){
                     return Promise.reject({
                         status: responseError.response.status,
@@ -83,9 +85,9 @@ export default class FileSystemService{
             throw error
         }
     }
-    static async getFiles(folderId: number): Promise<{folderName: string, files: IGetFileResponse[]}>{
+    static async getFiles(folderId: number): Promise<{folderName: string, files: Omit<IFile, "isSelected">[]}>{
         try{
-            const response = await api.get<{folderName: string, files: IGetFileResponse[]}>(`${FileSystemService.serviceUrl}/files`, {params: {
+            const response = await api.get<{folderName: string, files: Omit<IFile, "isSelected">[]}>(`${FileSystemService.serviceUrl}/files`, {params: {
                     folderId
                 }});
             return Promise.resolve(response.data);
@@ -168,7 +170,7 @@ export default class FileSystemService{
     }
     static async getFileRowsNumber(fileId: number): Promise<number>{
         try {
-            const response = await api.get<{rowsNumber: number}>(`${FileSystemService.serviceUrl}/file_rows_number/${fileId}`);
+            const response = await api.get<{rowsNumber: number}>(`${FileSystemService.serviceUrl}/files/${fileId}/rows_number`);
             return Promise.resolve(response.data.rowsNumber);
         } catch (error){
             if(axios.isAxiosError<{error: string}>(error)){
@@ -186,7 +188,7 @@ export default class FileSystemService{
 
     static async getFileRows (fileId: number, fromRowNumber: number, rowsNumber: number): Promise<string[]>{
         try {
-            const response = await api.get<string[]>(`${FileSystemService.serviceUrl}/files/${fileId}`, {
+            const response = await api.get<string[]>(`${FileSystemService.serviceUrl}/files/${fileId}/preview/raw`, {
                 params:{
                     fromRowNumber,
                     rowsNumber

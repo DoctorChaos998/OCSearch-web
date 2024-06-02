@@ -1,13 +1,13 @@
-import {useRef, useState} from "react";
+import {useRef} from "react";
 import {checkFilesExtension} from "@/helpers/fileSystemHelper";
-import {fileSystemActions} from "@/store/slices/fileSystemSlice/fileSystemSlice";
+import {fileSystemActions} from "@/lib/features/fileSystemSlice/fileSystemSlice";
 import {
     uploadFiles,
     uploadFilesInFolder,
-} from "@/store/slices/fileSystemSlice/fileSystemActions";
-import {useAppDispatch, useAppSelector} from "@/hooks/index";
+} from "@/lib/features/fileSystemSlice/fileSystemActions";
 import {useParams} from "next/navigation";
-import {notificationActions} from "@/store/slices/notificationSlice/notificationSlice";
+import {notificationActions} from "@/lib/features/notificationSlice/notificationSlice";
+import {useAppDispatch, useAppSelector} from "@/lib/hooks";
 
 export function useSelectFilesToUpload() {
     const userName = useAppSelector(state => state.userReducer.nickname);

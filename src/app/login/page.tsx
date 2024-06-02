@@ -2,9 +2,9 @@
 import React, {useEffect} from 'react';
 import classes from "./LoginPage.module.scss";
 import {useRouter} from "next/navigation";
-import {useAppSelector} from "@/hooks";
 import LoaderForCheckAuth from "@/ui/loaders/LoaderForCheckAuth/LoaderForCheckAuth";
 import LoginForm from "@/components/LoginForm/LoginForm";
+import {useAppSelector} from "@/lib/hooks";
 const LoginPage = () => {
     const router = useRouter();
     const isAuth = useAppSelector(state => state.userReducer.isAuth);

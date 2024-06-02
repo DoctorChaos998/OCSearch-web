@@ -2,8 +2,8 @@
 import React, {createRef} from 'react';
 import classes from "./Notification.module.scss";
 import {CSSTransition, TransitionGroup} from "react-transition-group";
-import {useAppDispatch, useAppSelector} from "@/hooks";
-import {notificationActions} from "@/store/slices/notificationSlice/notificationSlice";
+import {notificationActions} from "@/lib/features/notificationSlice/notificationSlice";
+import {useAppDispatch, useAppSelector} from "@/lib/hooks";
 
 const Notification = () => {
     const dispatch = useAppDispatch()

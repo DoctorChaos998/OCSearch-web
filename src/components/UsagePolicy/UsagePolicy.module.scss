@@ -1,0 +1,49 @@
+@import "@/assets/stylesheets/abstracts/variables";
+
+.wrapper{
+  position: fixed;
+  bottom: 20px;
+  left: 0;
+  z-index: 4;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  pointer-events: none;
+
+  @media screen and (max-width: 767px) {
+    display: none;
+  }
+}
+
+.container{
+  display: flex;
+  gap: 10px;
+  color: $colorWhite;
+  border-radius: 20px;
+  background-color: $colorBlack;
+  padding: 20px;
+  font-size: 1.3em;
+  max-width: 800px;
+  pointer-events: auto;
+  opacity: 0;
+  transform: translateY(100%);
+  animation: makeVisible ease 0.5s forwards;
+}
+
+@keyframes makeVisible {
+  to{
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.button{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  padding: 5px 10px;
+  cursor: pointer;
+  width: 180px;
+}
