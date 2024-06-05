@@ -4,9 +4,9 @@ import FileSystemSearcher from "@/components/FileSystem/Helpers/Searcher/FileSys
 import UploadFileButton from "@/components/FileSystem/Helpers/UploadFileButton/UploadFileButton";
 import FileSystemRenameButton from "@/components/FileSystem/Helpers/RenameButton/FileSystemRenameButton";
 import FileSystemDeleteButton from "@/components/FileSystem/Helpers/DeleteButton/FileSystemDeleteButton";
-import FileSystemReloadingButton from "@/components/FileSystem/Helpers/ReloadingButton/FileSystemReloadingButton";
 import FileSystemSorter from "@/components/FileSystem/Helpers/Sorter/FileSystemSorter";
 import MobileHelper from "@/components/FileSystem/Helpers/MobileHelper/MobileHelper";
+import ParsingButton from "@/components/FileSystem/Helpers/ParsingButton/ParsingButton";
 
 const FileSystemHelper = () => {
     return (
@@ -16,10 +16,10 @@ const FileSystemHelper = () => {
                     <FileSystemSearcher/>
                     <UploadFileButton/>
                 </div>
+                <ParsingButton/>
                 <div className={classes.rightHelperContainer}>
                     <FileSystemRenameButton/>
                     <FileSystemDeleteButton/>
-                    <FileSystemReloadingButton/>
                     <FileSystemSorter/>
                 </div>
                 <MobileHelper/>

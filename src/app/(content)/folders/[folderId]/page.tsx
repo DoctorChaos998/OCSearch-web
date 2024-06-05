@@ -1,7 +1,7 @@
 'use client'
 import React, {useEffect} from 'react';
 import {useParams, useRouter} from "next/navigation";
-import {loadingFileList} from "@/lib/features/fileSystemSlice/fileSystemActions";
+import {loadingFileList, loadingFolderList} from "@/lib/features/fileSystemSlice/fileSystemActions";
 import {fileSystemActions} from "@/lib/features/fileSystemSlice/fileSystemSlice";
 import FileSystemLoader from "@/components/FileSystem/FileSystemLoader/FileSystemLoader";
 import {useAppDispatch, useAppSelector} from "@/lib/hooks";
@@ -14,9 +14,15 @@ const Page = () => {
     const router = useRouter();
 
     useEffect(() => {
-        dispatch(fileSystemActions.resetFilters());
+        dispatch(fileSystemActions.loadingFileSystemItems());
         if(+params.folderId === +params.folderId){
             dispatch(loadingFileList(+params.folderId));
+            const interval = setInterval(() => {
+                dispatch(loadingFileList(+params.folderId));
+            }, 7000);
+            return () => {
+                clearInterval(interval);
+            }
         }
         else{
             router.push('/folders');

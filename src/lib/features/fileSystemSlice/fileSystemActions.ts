@@ -6,29 +6,30 @@ import {uploadingProcessActions} from "@/lib/features/uploadingProcessSlice/uplo
 import {fileSizeToString} from "@/helpers/fileSystemHelper";
 import {AppDispatch} from "@/lib/store";
 import {IApiError} from "@/types/api";
-export const loadingFolderList = () => async (dispatch: AppDispatch) => {
-    dispatch(fileSystemActions.loadingFileSystemItems());
-    await FileSystemService.getFolders().then(value => {
+
+export const loadingFolderList = () => (dispatch: AppDispatch) => {
+    FileSystemService.getFolders().then(value => {
         dispatch(fileSystemActions.loadingFileSystemItemsSuccess({currentFolderName: 'All folders', fileSystemItems: value.map(item => ({...item, isSelected: false}))}));
     }).catch((reason: IApiError) => {
         dispatch(notificationActions.createNotification({notificationMessage: reason.error, notificationType: 'error'}));
     });
 }
-export const loadingFileList = (folderId: number) => async (dispatch: AppDispatch)=> {
-    dispatch(fileSystemActions.loadingFileSystemItems());
-    await FileSystemService.getFiles(folderId).then(value => {
+
+export const loadingFileList = (folderId: number) => (dispatch: AppDispatch)=> {
+    FileSystemService.getFiles(folderId).then(value => {
         dispatch(fileSystemActions.loadingFileSystemItemsSuccess({currentFolderName: value.folderName, fileSystemItems: value.files.map(item => ({...item, isSelected: false}))}));
-    }).catch((reason: {status: number, error: string}) => {
+    }).catch((reason: IApiError) => {
         if(reason.status === 404){
             dispatch(fileSystemActions.loadingFileSystemItemsError());
             dispatch(notificationActions.createNotificationWithTimer({notificationMessage: reason.error, notificationType: "warning"}));
         }
     })
 }
+
 export const uploadFiles = (fileList: FileList, folderName: string) => async (dispatch: AppDispatch) => {
     await FileSystemService.createFolder(folderName).then(async value => {
         dispatch(fileSystemActions.createItem({...value, isSelected: false}));
-        dispatch(fileSystemActions.closeCreateFolderModalWindow());
+        dispatch(fileSystemActions.closeFolderCreationPopup());
         dispatch(notificationActions.createNotificationWithTimer({notificationMessage: 'Uploading has been started', notificationType: "info"}));
         const formData = new FormData();
         Array.prototype.forEach.call(fileList, (file: File) => {
@@ -54,7 +55,7 @@ export const uploadFiles = (fileList: FileList, folderName: string) => async (di
             dispatch(uploadingProcessActions.setStatusUploading({id: uploadId, status:'error'}));
         });
     }).catch((reason: IApiError) => {
-        dispatch(fileSystemActions.setCreateFolderModalWindowStatus('error'));
+        dispatch(fileSystemActions.setFolderCreationPopupError(true));
         dispatch(notificationActions.createNotificationWithTimer({notificationMessage: reason.error, notificationType: "warning"}));
     })
 }
@@ -84,15 +85,15 @@ export const uploadFilesInFolder = (fileList: FileList, folderId: number, userNa
 export const renameFolder = (folderId: number, newFolderName: string) => async (dispatch: AppDispatch) => {
     await FileSystemService.renameFolder(folderId, newFolderName).then(() => {
         dispatch(fileSystemActions.renameFileSystemItem({itemId: folderId, newItemName: newFolderName, itemType: 'folder'}));
-        dispatch(fileSystemActions.closeRenameModalWindow());
+        dispatch(fileSystemActions.closeItemRenamingPopup());
     }).catch((reason: {status: number, error: string}) => {
         if(reason.status === 404){
             dispatch(fileSystemActions.deleteItems([folderId]));
-            dispatch(fileSystemActions.closeRenameModalWindow());
+            dispatch(fileSystemActions.closeItemRenamingPopup());
             dispatch(notificationActions.createNotificationWithTimer({notificationMessage: reason.error, notificationType: "error"}));
         }
         if(reason.status === 409){
-            dispatch(fileSystemActions.setRenameModalWindowStatus('error'));
+            dispatch(fileSystemActions.setItemRenamingPopupError(true));
             dispatch(notificationActions.createNotificationWithTimer({notificationMessage: reason.error, notificationType: "warning"}));
         }
     })
@@ -101,15 +102,15 @@ export const renameFolder = (folderId: number, newFolderName: string) => async (
 export const renameFile = (fileId: number, newFileName: string) => async (dispatch: AppDispatch) => {
     await FileSystemService.renameFile(fileId, newFileName).then(() => {
         dispatch(fileSystemActions.renameFileSystemItem({itemId: fileId, newItemName: newFileName, itemType: 'file'}));
-        dispatch(fileSystemActions.closeRenameModalWindow());
+        dispatch(fileSystemActions.closeItemRenamingPopup());
     }).catch((reason: {status: number, error: string}) => {
         if(reason.status === 404){
             dispatch(fileSystemActions.deleteItems([fileId]));
-            dispatch(fileSystemActions.closeRenameModalWindow());
+            dispatch(fileSystemActions.closeItemRenamingPopup());
             dispatch(notificationActions.createNotificationWithTimer({notificationMessage: reason.error, notificationType: "error"}));
         }
         if(reason.status === 409){
-            dispatch(fileSystemActions.setRenameModalWindowStatus('error'));
+            dispatch(fileSystemActions.setItemRenamingPopupError(true));
             dispatch(notificationActions.createNotificationWithTimer({notificationMessage: reason.error, notificationType: "warning"}));
         }
     })

@@ -16,7 +16,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 10px 80px;
+  padding: 10px 40px;
 }
 
 @media (max-width: 767px) {
@@ -33,14 +33,14 @@
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  gap: 10px;
+  gap: 20px;
 }
 .rightHelperContainer{
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  gap: 10px;
+  gap: 20px;
 }
 
 .separatingLine{

@@ -9,11 +9,11 @@ import {
 import {fileSystemActions} from "@/lib/features/fileSystemSlice/fileSystemSlice";
 import {useParams} from "next/navigation";
 import {useAppDispatch, useAppSelector} from "@/lib/hooks";
-import {fileSystemSortingOrder, fileSystemSortingTarget} from "@/types/fileSystem";
+import {fileSystemSortingOrder, fileSystemSortingType} from "@/types/fileSystem";
 
 const FileSystemSorter = () => {
     const [sorterIsOpen, setSorterIsOpen] = useState<boolean>(false);
-    const sorter = useAppSelector(state => state.fileSystemReducer.sorter);
+    const sorting = useAppSelector(state => state.fileSystemReducer.sorting);
     const ref = useRef(null);
     const dispatch = useAppDispatch();
     const params = useParams<{folderId: string}>();
@@ -31,19 +31,19 @@ const FileSystemSorter = () => {
         event.stopPropagation();
         setSorterIsOpen((prevState) => !prevState);
     }
-    const onSorterItemTargetHandler = (target: fileSystemSortingTarget) => {
-        dispatch(fileSystemActions.setSorterTarget(target));
+    const onSorterItemTargetHandler = (target: fileSystemSortingType) => {
+        dispatch(fileSystemActions.setSortingType(target));
     }
     const onSorterOrderClickHandler = (order: fileSystemSortingOrder) => {
-        dispatch(fileSystemActions.setSorterOrder(order));
+        dispatch(fileSystemActions.setSortingOrder(order));
     }
     return (
         <div className={classes.dropDownContainer}>
             <button className={classes.sorterButtonContainer} onClick={onClickDropDownButton}>
-                <span className="material-icons" style={{rotate: sorter.order==='byDescending'?'0deg':'180deg', marginRight: 7}}>
+                <span className="material-icons" style={{rotate: sorting.order==='byDescending'?'0deg':'180deg', marginRight: 7}}>
                     sort
                 </span>
-                {allSorterTarget[sorter.target]}
+                {allSorterTarget[sorting.type]}
             </button>
             <CSSTransition nodeRef={ref} in={sorterIsOpen} timeout={100} classNames={{
                 enterDone: classes.dropDownContentOpen
@@ -53,7 +53,7 @@ const FileSystemSorter = () => {
                         fileSorterTargets.map((value) =>
                             <div key={value.sorterTarget} onClick={() => onSorterItemTargetHandler(value.sorterTarget)} className={classes.dropDownItem}>
                                 {value.targetName}
-                                {value.sorterTarget === sorter.target&&
+                                {value.sorterTarget === sorting.type&&
                                     <span className={`material-icons ${classes.dropDownIcon}`}>
                                         check
                                     </span>}
@@ -62,7 +62,7 @@ const FileSystemSorter = () => {
                         folderSorterMethods.map((value) =>
                             <div key={value.sorterTarget} onClick={() => onSorterItemTargetHandler(value.sorterTarget)} className={classes.dropDownItem}>
                                 {value.targetName}
-                                {value.sorterTarget === sorter.target&&
+                                {value.sorterTarget === sorting.type&&
                                     <span className={`material-icons ${classes.dropDownIcon}`}>
                                         check
                                     </span>}
@@ -70,14 +70,14 @@ const FileSystemSorter = () => {
                     <hr className={classes.dropDownHr}/>
                     <div className={classes.dropDownItem} onClick={() => onSorterOrderClickHandler('byDescending')}>
                         Descending
-                        {(sorter.order === 'byDescending')&&
+                        {(sorting.order === 'byDescending')&&
                             <span className={`material-icons ${classes.dropDownIcon}`}>
                                 check
                             </span>}
                     </div>
                     <div className={classes.dropDownItem} onClick={() => onSorterOrderClickHandler("byAscending")}>
                         Ascending
-                        {(sorter.order === 'byAscending')&&
+                        {(sorting.order === 'byAscending')&&
                             <span className={`material-icons ${classes.dropDownIcon}`}>
                                 check
                             </span>}

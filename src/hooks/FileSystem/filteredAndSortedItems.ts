@@ -10,8 +10,8 @@ import {IFile, IFolder} from "@/types/fileSystem";
 
 export const useFilteredAndSortedItems = () => {
     const fileSystemItems = useAppSelector(state => state.fileSystemReducer.fileSystemItems);
-    const sortingType = useAppSelector(state => state.fileSystemReducer.sorter.target);
-    const sortingOrder = useAppSelector(state => state.fileSystemReducer.sorter.order);
+    const sortingType = useAppSelector(state => state.fileSystemReducer.sorting.type);
+    const sortingOrder = useAppSelector(state => state.fileSystemReducer.sorting.order);
     const searchQuery = useAppSelector(state => state.fileSystemReducer.searchQuery);
 
     const filteredItems = useMemo(() => {

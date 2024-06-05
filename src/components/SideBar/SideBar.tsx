@@ -23,7 +23,7 @@ const SideBar: FC = () => {
         <aside className={classes.sideBarContainer}>
             <nav className={classes.sideBarTop}>
                 <ul className={classes.sideBarItemsList}>
-                    <SideBarButton href={'/profile'} toolTipInscription='Profile' icon='account_circle'/>
+                    <SideBarButton href={'/profile'} toolTipInscription='Profile' icon='account_circle' scroll={false}/>
                     <SideBarButton href={'/search'} toolTipInscription='Search' icon='search'/>
                     <SideBarButton href={'/databases'} toolTipInscription='Data bases' icon='storage'/>
                     <SideBarButton href={'/folders'} toolTipInscription='File browser' icon='folder_open'/>

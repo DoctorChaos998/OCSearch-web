@@ -1,4 +1,4 @@
-import {useCallback, useRef} from "react";
+import {useRef} from "react";
 import {fileSystemActions} from "@/lib/features/fileSystemSlice/fileSystemSlice";
 import {useAppDispatch, useAppSelector} from "@/lib/hooks";
 import type {keyForSelect} from "@/types/fileSystem";

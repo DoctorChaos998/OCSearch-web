@@ -11,8 +11,14 @@ const FoldersPage = () => {
     const dispatch = useAppDispatch();
 
     useEffect(() => {
-        dispatch(fileSystemActions.resetFilters());
+        dispatch(fileSystemActions.loadingFileSystemItems());
         dispatch(loadingFolderList());
+        const interval = setInterval(() => {
+            dispatch(loadingFolderList());
+        }, 15000);
+        return () => {
+            clearInterval(interval);
+        }
     }, []);
 
     return (

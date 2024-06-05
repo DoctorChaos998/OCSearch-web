@@ -19,7 +19,7 @@ const FileSystemRenameButton = () => {
     }, [selectedFileSystemItemIds]);
     const onRenameButtonClick = (event: React.MouseEvent<HTMLButtonElement>) => {
         event.stopPropagation();
-        dispatch(fileSystemActions.openRenameModalWindow({itemType: params.folderId?'file':'folder', itemId: selectedFileSystemItemIds[0]}));
+        dispatch(fileSystemActions.openItemRenamingPopup({itemType: params.folderId?'file':'folder', itemId: selectedFileSystemItemIds[0]}));
     }
 
     return (

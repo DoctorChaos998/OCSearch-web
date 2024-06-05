@@ -1,4 +1,4 @@
-@import "../../../assets/stylesheets/abstracts/variables";
+@import "@/assets/stylesheets/abstracts/variables";
 
 .container{
   display: flex;
@@ -6,6 +6,7 @@
   align-items: center;
   gap: 20px;
   margin-left: 50px;
+  margin-top: 20px;
 }
 .header{
   color: $colorWhite;

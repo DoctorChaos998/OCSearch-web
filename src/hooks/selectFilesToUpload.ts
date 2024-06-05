@@ -20,7 +20,7 @@ export function useSelectFilesToUpload() {
             if(!filesExtension){
                 if(!params.folderId){
                     currentSelectedFiles.current = fileList;
-                    dispatch(fileSystemActions.openCreateFolderModalWindow(fileList[0].name.slice(0, fileList[0].name.lastIndexOf('.'))));
+                    dispatch(fileSystemActions.openFolderCreationPopup(fileList[0].name.slice(0, fileList[0].name.lastIndexOf('.'))));
                 }
                 else {
                     dispatch(uploadFilesInFolder(fileList, +params.folderId, userName));

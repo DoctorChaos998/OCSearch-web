@@ -9,18 +9,18 @@ import CreateFolderModalWindow
 import ItemInfoModalWindow from "@/components/FileSystem/ModalWindows/ItemInfoModalWindow/ItemInfoModalWindow";
 
 const FileSystemMWWrapper = () => {
-    const deleteMWIsVisible = useAppSelector(state => state.fileSystemReducer.deleteModalWindow.isVisible);
-    const previewMWIsVisible = useAppSelector(state => state.fileSystemReducer.previewModalWindow.isVisible);
-    const renameMWIsVisible = useAppSelector(state => state.fileSystemReducer.renameModalWindow.isVisible);
-    const createMWIsVisible = useAppSelector(state => state.fileSystemReducer.createFolderModalWindow.isVisible);
-    const itemInfoMWIsVisible = useAppSelector(state => state.fileSystemReducer.itemInfoModalWindow.isVisible);
+    const itemDeletionPopupIsVisible = useAppSelector(state => state.fileSystemReducer.itemDeletionPopup.isVisible);
+    const previewPopupIsVisible = useAppSelector(state => state.fileSystemReducer.previewPopup.isVisible);
+    const itemRenamingPopupIsVisible = useAppSelector(state => state.fileSystemReducer.itemRenamingPopup.isVisible);
+    const folderCreationPopupIsVisible = useAppSelector(state => state.fileSystemReducer.folderCreationPopup.isVisible);
+    const itemInfoPopupIsVisible = useAppSelector(state => state.fileSystemReducer.itemInfoPopup.isVisible);
     return (
         <>
-            {deleteMWIsVisible&&<DeleteModalWindow></DeleteModalWindow>}
-            {previewMWIsVisible&&<PreviewModalWindow></PreviewModalWindow>}
-            {renameMWIsVisible&&<RenameModalWindow></RenameModalWindow>}
-            {createMWIsVisible&&<CreateFolderModalWindow></CreateFolderModalWindow>}
-            {itemInfoMWIsVisible&&<ItemInfoModalWindow></ItemInfoModalWindow>}
+            {itemDeletionPopupIsVisible&&<DeleteModalWindow></DeleteModalWindow>}
+            {previewPopupIsVisible&&<PreviewModalWindow></PreviewModalWindow>}
+            {itemRenamingPopupIsVisible&&<RenameModalWindow></RenameModalWindow>}
+            {folderCreationPopupIsVisible&&<CreateFolderModalWindow></CreateFolderModalWindow>}
+            {itemInfoPopupIsVisible&&<ItemInfoModalWindow></ItemInfoModalWindow>}
         </>
     );
 };

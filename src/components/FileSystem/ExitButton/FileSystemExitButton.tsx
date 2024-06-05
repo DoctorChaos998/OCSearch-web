@@ -6,7 +6,7 @@ const FileSystemExitButton = () => {
     const router = useRouter();
 
     return (
-        <button onClick={() => router.push('/folders')} className={classes.goOutFromFolderButton}>
+        <button onClick={() => router.push('/folders', {scroll: false})} className={classes.goOutFromFolderButton}>
             <span className="material-icons">
                 arrow_back
             </span>

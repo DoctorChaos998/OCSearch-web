@@ -1,7 +1,8 @@
 import {createSlice, type PayloadAction} from "@reduxjs/toolkit";
-import type {
+import {
+    fileSystemItemType,
     fileSystemSortingOrder,
-    fileSystemSortingTarget,
+    fileSystemSortingType,
     IFile,
     IFolder
 } from "@/types/fileSystem";
@@ -12,80 +13,78 @@ interface IFileSystemSlice{
     fileSystemItems: (IFile|IFolder)[],
     selectedFileSystemItemIds: number[],
     currentFolderName: string,
-    createFolderModalWindow: {
-        isVisible: boolean,
-        initialName: string,
-        status: 'success'|'error'
-    },
-    renameModalWindow: {
-        isVisible: boolean,
-        initialName: string,
-        status: 'success'|'error',
-        renameItem: 'folder'|'file',
-        renameItemId: number
-    },
-    deleteModalWindow: {
-        isVisible: boolean,
-        deleteItem: 'folder'|'file'
-    },
-    previewModalWindow: {
-        isVisible: boolean,
-        fileExtension: 'txt'|'csv'|'xlsx'|'sql'|null,
-        fileId: number
-    },
-    sorter: {
-        order: fileSystemSortingOrder,
-        target: fileSystemSortingTarget
-    },
-    searchQuery: string,
     mobileHelper: {
         isActive: boolean
     }
-    itemInfoModalWindow: {
+    folderCreationPopup: {
+        isVisible: boolean,
+        initialName: string,
+        isError: boolean
+    },
+    itemRenamingPopup: {
+        isVisible: boolean,
+        initialName: string,
+        isError: boolean,
+        renameItem: fileSystemItemType,
+        renameItemId: number
+    },
+    itemDeletionPopup: {
+        isVisible: boolean,
+        deleteItem: fileSystemItemType
+    },
+    previewPopup: {
+        isVisible: boolean,
+        fileId: number
+    },
+    itemInfoPopup: {
         isVisible: boolean,
         item: IFile|IFolder|null,
-        itemType: 'folder'|'file'|null
+        itemType: fileSystemItemType
     }
+    sorting: {
+        order: fileSystemSortingOrder,
+        type: fileSystemSortingType
+    },
+    searchQuery: string,
 }
 const initialState: IFileSystemSlice = {
     status: "initial",
     fileSystemItems: [],
     selectedFileSystemItemIds: [],
     currentFolderName: 'All folders',
-    createFolderModalWindow: {
-        isVisible: false,
-        initialName: '',
-        status: 'success'
-    },
-    renameModalWindow: {
-        isVisible: false,
-        initialName: '',
-        status: 'success',
-        renameItem: 'folder',
-        renameItemId: 0
-    },
-    deleteModalWindow: {
-        isVisible: false,
-        deleteItem: "folder"
-    },
-    previewModalWindow: {
-        isVisible: false,
-        fileExtension: null,
-        fileId: 0
-    },
-    sorter: {
-        order: 'byDescending',
-        target: 'uploadDate',
-    },
-    searchQuery: '',
     mobileHelper: {
         isActive: false
     },
-    itemInfoModalWindow: {
+    folderCreationPopup: {
+        isVisible: false,
+        initialName: '',
+        isError: false
+    },
+    itemRenamingPopup: {
+        isVisible: false,
+        initialName: '',
+        renameItem: null,
+        renameItemId: 0,
+        isError: false
+    },
+    itemDeletionPopup: {
+        isVisible: false,
+        deleteItem: null
+    },
+    previewPopup: {
+        isVisible: false,
+        fileId: 0
+    },
+    itemInfoPopup: {
         isVisible: false,
         item: null,
         itemType: null
-    }
+    },
+    sorting: {
+        order: 'byDescending',
+        type: 'uploadDate',
+    },
+    searchQuery: '',
 }
 
 const fileSystemSlice = createSlice({
@@ -96,34 +95,46 @@ const fileSystemSlice = createSlice({
             state.status = 'loading';
             state.fileSystemItems = [];
             state.selectedFileSystemItemIds = [];
+            state.sorting = {order: 'byDescending', type: 'uploadDate'};
+            state.searchQuery = '';
+            state.mobileHelper.isActive = false;
         },
         loadingFileSystemItemsSuccess: (state, action: PayloadAction<{
             currentFolderName: string,
             fileSystemItems: IFolder[]|IFile[]}>) => {
             state.currentFolderName = action.payload.currentFolderName;
             state.status = 'success';
-            state.fileSystemItems = action.payload.fileSystemItems;
+            if(!state.selectedFileSystemItemIds.length) state.fileSystemItems = action.payload.fileSystemItems;
+            else {
+                const tempItemIds: number[] = [];
+                state.fileSystemItems = action.payload.fileSystemItems.map(item => {
+                    tempItemIds.push(item.id);
+                    if(state.selectedFileSystemItemIds.includes(item.id)) item.isSelected = true;
+                    return item;
+                });
+                state.selectedFileSystemItemIds = state.selectedFileSystemItemIds.filter(id => tempItemIds.includes(id));
+            }
         },
         loadingFileSystemItemsError: (state) => {
             state.status = 'error';
         },
-        openCreateFolderModalWindow: (state, action: PayloadAction<string>) => {
-            state.createFolderModalWindow = {isVisible: true, initialName: action.payload, status: 'success'};
+        openFolderCreationPopup: (state, action: PayloadAction<string>) => {
+            state.folderCreationPopup = {isVisible: true, initialName: action.payload, isError: false};
         },
-        setCreateFolderModalWindowStatus: (state, action: PayloadAction<'error'|'success'>) => {
-            state.createFolderModalWindow.status = action.payload;
+        setFolderCreationPopupError: (state, action: PayloadAction<boolean>) => {
+            state.folderCreationPopup.isError = action.payload;
         },
-        closeCreateFolderModalWindow: (state) => {
-            state.createFolderModalWindow = {isVisible: false, initialName: '', status: 'success'};
+        closeFolderCreationPopup: (state) => {
+            state.folderCreationPopup = {isVisible: false, initialName: '', isError: false};
         },
         setSearchQuery: (state, action: PayloadAction<string>) => {
             state.searchQuery = action.payload;
         },
-        setSorterOrder: (state, action: PayloadAction<fileSystemSortingOrder>) => {
-            state.sorter.order = action.payload;
+        setSortingOrder: (state, action: PayloadAction<fileSystemSortingOrder>) => {
+            state.sorting.order = action.payload;
         },
-        setSorterTarget: (state, action: PayloadAction<fileSystemSortingTarget>) => {
-            state.sorter.target = action.payload;
+        setSortingType: (state, action: PayloadAction<fileSystemSortingType>) => {
+            state.sorting.type = action.payload;
         },
         selectAllItems: (state) => {
             state.selectedFileSystemItemIds = state.fileSystemItems.map((item) => {
@@ -159,30 +170,23 @@ const fileSystemSlice = createSlice({
             state.mobileHelper.isActive = false;
             state.fileSystemItems.forEach(item => item.isSelected = false);
         },
-        resetFilters: (state) => {
-            state.sorter = {order: 'byDescending', target: 'uploadDate'};
-            state.searchQuery = '';
-            state.selectedFileSystemItemIds = [];
-            state.fileSystemItems = [];
-            state.mobileHelper.isActive = false;
-        },
         createItem: (state, action: PayloadAction<IFolder|IFile>) => {
             state.fileSystemItems.push(action.payload);
             state.selectedFileSystemItemIds.push(action.payload.id);
         },
-        openRenameModalWindow: (state, action: PayloadAction<{itemType: 'folder'|'file', itemId: number}>) => {
-            state.renameModalWindow = {isVisible: true,
+        openItemRenamingPopup: (state, action: PayloadAction<{itemType: 'folder'|'file', itemId: number}>) => {
+            state.itemRenamingPopup = {isVisible: true,
                 renameItem: action.payload.itemType,
                 initialName: state.fileSystemItems.find((item) => item.id === action.payload.itemId)!.name,
-                status: 'success',
-                renameItemId: action.payload.itemId
+                renameItemId: action.payload.itemId,
+                isError: false
             };
         },
-        setRenameModalWindowStatus: (state, action: PayloadAction<'error'|'success'>) => {
-            state.renameModalWindow.status = action.payload;
+        setItemRenamingPopupError: (state, action: PayloadAction<boolean>) => {
+            state.itemRenamingPopup.isError = action.payload;
         },
-        closeRenameModalWindow: (state) => {
-            state.renameModalWindow = {isVisible: false, initialName: '', status: 'success', renameItem: 'folder', renameItemId: 0};
+        closeItemRenamingPopup: (state) => {
+            state.itemRenamingPopup = {isVisible: false, initialName: '', isError: false, renameItem: null, renameItemId: 0};
         },
         renameFileSystemItem: (state, action: PayloadAction<{itemType: 'folder'|'file', itemId: number, newItemName: string}>) => {
             const item = state.fileSystemItems.find((folder) => folder.id === action.payload.itemId)!
@@ -197,30 +201,30 @@ const fileSystemSlice = createSlice({
             state.fileSystemItems = state.fileSystemItems.filter((item) => !action.payload.includes(item.id));
             state.selectedFileSystemItemIds = [];
         },
-        openDeleteModalWindow: (state, action: PayloadAction<'file'|'folder'>) => {
-            state.deleteModalWindow = {deleteItem: action.payload, isVisible: true};
+        openItemDeletionPopup: (state, action: PayloadAction<'file'|'folder'>) => {
+            state.itemDeletionPopup = {deleteItem: action.payload, isVisible: true};
         },
-        closeDeleteModalWindow: (state) => {
-            state.deleteModalWindow = {deleteItem: 'folder', isVisible: false};
+        closeItemDeletionPopup: (state) => {
+            state.itemDeletionPopup = {deleteItem: 'folder', isVisible: false};
         },
-        openPreviewModalWindow: (state, action: PayloadAction<{fileExtension: 'txt'|'csv'|'xlsx'|'sql', fileId: number}>) => {
-            state.previewModalWindow = {isVisible: true, fileId: action.payload.fileId, fileExtension: action.payload.fileExtension};
+        openPreviewPopup: (state, action: PayloadAction<number>) => {
+            state.previewPopup = {isVisible: true, fileId: action.payload};
         },
-        closePreviewModalWindow: (state) => {
-            state.previewModalWindow = {isVisible: false, fileExtension: null, fileId: 0};
+        closePreviewPopup: (state) => {
+            state.previewPopup = {isVisible: false, fileId: 0};
         },
         openMobileHelper: (state) => {
             state.mobileHelper.isActive = true;
         },
-        openItemInfoModalWindow: (state, action: PayloadAction<{itemType: 'folder'|'file', itemId: number}>) => {
-            state.itemInfoModalWindow = {
+        openItemInfoPopup: (state, action: PayloadAction<{itemType: 'folder'|'file', itemId: number}>) => {
+            state.itemInfoPopup = {
                 isVisible: true,
                 itemType: action.payload.itemType,
                 item: state.fileSystemItems.find(item => item.id === action.payload.itemId)!
             };
         },
-        closeItemInfoModalWindow: (state) => {
-            state.itemInfoModalWindow = {isVisible: false, item: null, itemType: null};
+        closeItemInfoPopup: (state) => {
+            state.itemInfoPopup = {isVisible: false, item: null, itemType: null};
         }
     }
 })

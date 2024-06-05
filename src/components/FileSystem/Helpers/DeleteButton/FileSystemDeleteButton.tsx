@@ -12,13 +12,14 @@ const FileSystemDeleteButton = () => {
     const [isActive, setIsActive] = useState(false);
     const params = useParams<{folderId: string}>();
     const ref = useRef<HTMLButtonElement>(null);
+
     useEffect(() => {
-        if(selectedFileSystemItemIds.length>0) setIsActive(true);
-        else setIsActive(false);
+        setIsActive(selectedFileSystemItemIds.length>0)
     }, [selectedFileSystemItemIds]);
+
     const onDeleteButtonClick = (event: React.MouseEvent<HTMLButtonElement>) => {
         event.stopPropagation();
-        dispatch(fileSystemActions.openDeleteModalWindow(params.folderId?'file':'folder'));
+        dispatch(fileSystemActions.openItemDeletionPopup(params.folderId?'file':'folder'));
     }
     return (
         <CSSTransition in={isActive} nodeRef={ref} timeout={{

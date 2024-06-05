@@ -1,8 +1,8 @@
 @import "@/assets/stylesheets/abstracts/variables";
 @import "@/assets/stylesheets/abstracts/mixins";
 
-.deleteButton{
-  @include helperButton($colorWhite, $colorRed, 2px);
+.parsingButton{
+  @include helperButton($colorLightGray, $colorPink, 10px);
   transform: translateY(-100%);
   opacity: 0;
 }
@@ -13,7 +13,7 @@
 }
 
 @media (max-width: 767px) {
-  .deleteButton{
+  .parsingButton{
     display: none;
   }
 }

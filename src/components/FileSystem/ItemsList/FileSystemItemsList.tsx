@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {useParams, useRouter} from "next/navigation";
 import {useSelectFileSystemItems} from "@/hooks/selectFileSystemItems";
 import FileSystemItem from "@/components/FileSystem/Item/FileSystemItem";
@@ -16,23 +16,29 @@ const FileSystemItemsList = () => {
     const dispatch = useAppDispatch();
     const router = useRouter();
 
-    const selectAllFoldersHandler = (event: React.KeyboardEvent<HTMLDivElement>) => {
-        event.preventDefault();
-        if(event.ctrlKey && event.code === 'KeyA'){
-            dispatch(fileSystemActions.selectAllItems());
+    useEffect(() => {
+        const selectAllItemsHandler = (event: KeyboardEvent) => {
+            event.preventDefault();
+            if(event.ctrlKey && event.code === 'KeyA'){
+                dispatch(fileSystemActions.selectAllItems());
+            }
+            if(event.code === 'Delete' && selectedFileSystemItemIds.length>0){
+                dispatch(fileSystemActions.openItemDeletionPopup(params.folderId?'file':'folder'));
+            }
+        };
+        window.addEventListener('keydown', selectAllItemsHandler);
+        return () => {
+            window.removeEventListener('keydown', selectAllItemsHandler);
         }
-        if(event.code === 'Delete' && selectedFileSystemItemIds.length>0){
-            dispatch(fileSystemActions.openDeleteModalWindow(params.folderId?'folder':'file'));
-        }
-    }
+    }, [selectedFileSystemItemIds.length]);
 
     return (
-        <div onKeyDown={selectAllFoldersHandler} tabIndex={1} className={classes.itemsListContainer}
+        <div className={classes.itemsListContainer}
              onClick={() => dispatch(fileSystemActions.deselectAllItems())}>
             {
                 sortedAndFilteredItems.length === 0 ?
                     <h1 className={classes.header}>
-                        Folders not exist
+                        {params.folderId?"Files":"Folders"} not exist
                     </h1>
                     :
                     sortedAndFilteredItems.map((item, index) => <FileSystemItem
@@ -40,11 +46,9 @@ const FileSystemItemsList = () => {
                         id={item.id}
                         onClickHandler={itemClickHandler}
                         onDoubleClickHandler={'status' in item?() => {
-                            if(item.status === 'ready_for_parsing') dispatch(fileSystemActions.openPreviewModalWindow({
-                                fileExtension: item.name.substring(item.name.lastIndexOf('.')) as 'txt'|'sql'|'csv'|'xlsx',
-                                fileId: item.id}));
+                            if(item.status === 'ready_for_parsing') dispatch(fileSystemActions.openPreviewPopup(item.id));
                             else dispatch(notificationActions.createNotification({notificationMessage: 'File is being processed', notificationType: 'warning'}));
-                        }:() => router.push(`/folders/${item.id}`)}
+                        }:() => router.push(`/folders/${item.id}`, {scroll: false})}
                         index={index}/>)
             }
         </div>

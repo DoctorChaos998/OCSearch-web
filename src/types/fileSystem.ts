@@ -27,7 +27,9 @@ export interface IFileSystemItem{
     isSelected: boolean
 }
 
-export type fileSorterTarget = 'name'|'size'|'uploadDate'
-export type folderSorterTarget = 'name'|'filesNumber'|'uploadDate'
+export type fileSystemItemType = 'file'|'folder'|null
+
+export type fileSortingType = 'name'|'size'|'uploadDate'
+export type folderSortingType= 'name'|'filesNumber'|'uploadDate'
 export type fileSystemSortingOrder = 'byDescending'|'byAscending'
-export type fileSystemSortingTarget = 'uploadDate'|'name'|'size'|'filesNumber'
+export type fileSystemSortingType = fileSortingType|folderSortingType

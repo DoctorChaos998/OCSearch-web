@@ -8,10 +8,10 @@ import {fileSizeToString} from "@/helpers/fileSystemHelper";
 import {useAppDispatch, useAppSelector} from "@/lib/hooks";
 
 const ItemInfoModalWindow = () => {
-    const {item, itemType} = useAppSelector(state => state.fileSystemReducer.itemInfoModalWindow);
+    const {item, itemType} = useAppSelector(state => state.fileSystemReducer.itemInfoPopup);
     const dispatch = useAppDispatch();
     return (
-        <ModalWindow onModalWindowClickHandler={() => dispatch(fileSystemActions.closeItemInfoModalWindow())}>
+        <ModalWindow onModalWindowClickHandler={() => dispatch(fileSystemActions.closeItemInfoPopup())}>
             <div className={classes.container} onClick={(event) => event.stopPropagation()}>
                 <h2 className={classes.header}>{itemType === 'folder'?"Folder":"File"} info</h2>
                 <span>Name: {item?.name}</span>

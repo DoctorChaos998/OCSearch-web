@@ -1,7 +1,7 @@
 import React, {FC, HTMLAttributes} from 'react';
 import {UAParser} from "ua-parser-js";
 import classes from "./SessionCard.module.scss";
-import {IInactiveSession, ISession, sessionType} from "@/types/sessions";
+import type {IInactiveSession, ISession, sessionType} from "@/types/sessions";
 
 interface ISessionCard extends HTMLAttributes<HTMLDivElement>{
     session: ISession|IInactiveSession,

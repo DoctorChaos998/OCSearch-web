@@ -26,7 +26,7 @@ const MobileHelper = () => {
         }} unmountOnExit={true}>
             <div className={classes.container} ref={ref} onClick={(event) => {event.stopPropagation()}}>
                 {selectedFileSystemItemIds.length === 1?
-                    <button className={classes.button} onClick={() => dispatch(fileSystemActions.openItemInfoModalWindow({itemType: params.folderId?'file':'folder', itemId: selectedFileSystemItemIds[0]}))}>
+                    <button className={classes.button} onClick={() => dispatch(fileSystemActions.openItemInfoPopup({itemType: params.folderId?'file':'folder', itemId: selectedFileSystemItemIds[0]}))}>
                         <span className={`material-icons ${classes.icon}`}>
                             info
                         </span>
@@ -37,7 +37,7 @@ const MobileHelper = () => {
                     {selectedFileSystemItemIds.length === 1 &&
                         <button className={classes.button} onClick={(event) => {
                             event.stopPropagation();
-                            dispatch(fileSystemActions.openRenameModalWindow({itemType: params.folderId?'file':'folder', itemId: selectedFileSystemItemIds[0]}));
+                            dispatch(fileSystemActions.openItemRenamingPopup({itemType: params.folderId?'file':'folder', itemId: selectedFileSystemItemIds[0]}));
                         }}>
                             <span className={`material-icons ${classes.icon}`}>
                                 drive_file_rename_outline
@@ -46,7 +46,7 @@ const MobileHelper = () => {
                     }
                     <button className={classes.button} onClick={(event) => {
                         event.stopPropagation();
-                        dispatch(fileSystemActions.openDeleteModalWindow(params.folderId?'file':'folder'));
+                        dispatch(fileSystemActions.openItemDeletionPopup(params.folderId?'file':'folder'));
                     }}>
                         <span className={`material-icons ${classes.icon}`}>
                             delete
