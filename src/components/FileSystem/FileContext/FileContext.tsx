@@ -1,6 +1,6 @@
 'use client'
 import React, {createContext, FC, PropsWithChildren, useContext} from 'react';
-import {useSelectFilesToUpload} from "@/hooks/selectFilesToUpload";
+import {useSelectFilesToUpload} from "@/hooks/FileSystem/selectFilesToUpload";
 
 
 interface IFileContext {

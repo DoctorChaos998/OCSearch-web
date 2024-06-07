@@ -19,7 +19,7 @@ const Page = () => {
             dispatch(loadingFileList(+params.folderId));
             const interval = setInterval(() => {
                 dispatch(loadingFileList(+params.folderId));
-            }, 7000);
+            }, 5000);
             return () => {
                 clearInterval(interval);
             }

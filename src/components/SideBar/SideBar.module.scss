@@ -6,13 +6,9 @@
 
 .sideBarContainer {
     display: flex;
-    //flex: 1;
-    //height: 100vh;
     background-color: $colorSideBarBg;
     width: 80px;
-    //position: sticky;
-    //top: 0;
-    z-index: 2;
+    z-index: 3;
     flex-direction: column;
     justify-content: space-between;
 }

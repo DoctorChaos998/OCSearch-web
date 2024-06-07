@@ -4,6 +4,7 @@ import classes from "./UploadingProcess.module.scss";
 import {CSSTransition} from "react-transition-group";
 import {uploadingProcessActions} from "@/lib/features/uploadingProcessSlice/uploadingProcessSlice";
 import {useAppDispatch, useAppSelector} from "@/lib/hooks";
+
 const UploadingProcess = () => {
     const [isActive, setIsActive] = useState(false);
     const uploadingProcess = useAppSelector(state => state.uploadingProcessReducer);
@@ -37,7 +38,7 @@ const UploadingProcess = () => {
                                 note_stack
                             </span>
                             <div className={classes.uploadInfoContainer}>
-                                <span>
+                                <span className={classes.text} title={uploading.firstFileName}>
                                     {uploading.firstFileName}
                                 </span>
                                 <span>

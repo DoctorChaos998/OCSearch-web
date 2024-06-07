@@ -15,7 +15,7 @@ const FoldersPage = () => {
         dispatch(loadingFolderList());
         const interval = setInterval(() => {
             dispatch(loadingFolderList());
-        }, 15000);
+        }, 5000);
         return () => {
             clearInterval(interval);
         }

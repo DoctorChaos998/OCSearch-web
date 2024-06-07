@@ -26,7 +26,7 @@ const SideBar: FC = () => {
                     <SideBarButton href={'/profile'} toolTipInscription='Profile' icon='account_circle' scroll={false}/>
                     <SideBarButton href={'/search'} toolTipInscription='Search' icon='search'/>
                     <SideBarButton href={'/databases'} toolTipInscription='Data bases' icon='storage'/>
-                    <SideBarButton href={'/folders'} toolTipInscription='File browser' icon='folder_open'/>
+                    <SideBarButton href={'/folders'} toolTipInscription='File system' icon='folder_open'/>
                     {(parsingIsActive && window.innerWidth>767)&&<SideBarButton toolTipInscription={'Parsing'} icon={'preview'} href={'/parsing'}/>}
                 </ul>
             </nav>

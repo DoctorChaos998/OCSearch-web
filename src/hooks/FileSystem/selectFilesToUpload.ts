@@ -10,7 +10,6 @@ import {notificationActions} from "@/lib/features/notificationSlice/notification
 import {useAppDispatch, useAppSelector} from "@/lib/hooks";
 
 export function useSelectFilesToUpload() {
-    const userName = useAppSelector(state => state.userReducer.nickname);
     const dispatch = useAppDispatch();
     const params = useParams<{folderId: string}>();
     const currentSelectedFiles = useRef<FileList>({} as FileList);
@@ -23,7 +22,7 @@ export function useSelectFilesToUpload() {
                     dispatch(fileSystemActions.openFolderCreationPopup(fileList[0].name.slice(0, fileList[0].name.lastIndexOf('.'))));
                 }
                 else {
-                    dispatch(uploadFilesInFolder(fileList, +params.folderId, userName));
+                    dispatch(uploadFilesInFolder(fileList, +params.folderId));
                 }
             }
             else {

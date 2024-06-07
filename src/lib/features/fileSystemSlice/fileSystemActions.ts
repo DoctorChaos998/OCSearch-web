@@ -26,46 +26,23 @@ export const loadingFileList = (folderId: number) => (dispatch: AppDispatch)=> {
     })
 }
 
-export const uploadFiles = (fileList: FileList, folderName: string) => async (dispatch: AppDispatch) => {
-    await FileSystemService.createFolder(folderName).then(async value => {
+export const uploadFiles = (fileList: FileList, folderName: string) => (dispatch: AppDispatch) => {
+    FileSystemService.createFolder(folderName).then(value => {
         dispatch(fileSystemActions.createItem({...value, isSelected: false}));
         dispatch(fileSystemActions.closeFolderCreationPopup());
-        dispatch(notificationActions.createNotificationWithTimer({notificationMessage: 'Uploading has been started', notificationType: "info"}));
-        const formData = new FormData();
-        Array.prototype.forEach.call(fileList, (file: File) => {
-            formData.append(file.name, file);
-        });
-        const uploadId = getId();
-        // const filesInfo = Array.prototype.reduce.call(fileList, (accumulator: {filesSize: number, filesNumber: number}, currentValue: File) => {
-        //     accumulator.filesNumber++;
-        //     accumulator.filesSize += currentValue.size;
-        //     return accumulator
-        // }, {filesSize: 0, filesNumber: 0});
-        const result = {filesSize: 0, filesNumber: 0};
-        Array.prototype.forEach.call(fileList, (file: File) => {
-            result.filesNumber++;
-            result.filesSize += file.size;
-        });
-        dispatch(uploadingProcessActions.addUploading({id: uploadId, firstFileName: fileList[0].name, uploadingSize: fileSizeToString(result.filesSize), filesNumber: result.filesNumber}));
-        await FileSystemService.uploadFiles(formData, value.id, (progress) => dispatch(uploadingProcessActions.setUploadingProgress({id: uploadId, progress}))).then(() => {
-            dispatch(notificationActions.createNotification({notificationMessage: 'Files have been successfully uploaded', notificationType: "info"}));
-            dispatch(uploadingProcessActions.setStatusUploading({id: uploadId, status:'success'}));
-        }).catch((reason: {error: string, status: number}) => {
-            dispatch(notificationActions.createNotification({notificationMessage: reason.error, notificationType: "error"}));
-            dispatch(uploadingProcessActions.setStatusUploading({id: uploadId, status:'error'}));
-        });
+        dispatch(uploadFilesInFolder(fileList, value.id));
     }).catch((reason: IApiError) => {
         dispatch(fileSystemActions.setFolderCreationPopupError(true));
         dispatch(notificationActions.createNotificationWithTimer({notificationMessage: reason.error, notificationType: "warning"}));
     })
 }
-export const uploadFilesInFolder = (fileList: FileList, folderId: number, userName: string) => async (dispatch: AppDispatch) => {
+
+export const uploadFilesInFolder = (fileList: FileList, folderId: number) => (dispatch: AppDispatch) => {
+    dispatch(notificationActions.createNotificationWithTimer({notificationMessage: 'Uploading has been started', notificationType: "info"}));
     const formData = new FormData();
     Array.prototype.forEach.call(fileList, (file: File) => {
         formData.append(file.name, file);
     });
-    dispatch(fileSystemActions.createItem({id: Date.now(), uploadedBy: userName, status: 'uploading', uploadDate: null, name: fileList[0].name, size: null, isSelected: false}));
-    dispatch(notificationActions.createNotificationWithTimer({notificationMessage: 'Uploading has been started', notificationType: "info"}));
     const uploadId = getId();
     const result = {filesSize: 0, filesNumber: 0};
     Array.prototype.forEach.call(fileList, (file: File) => {
@@ -73,7 +50,7 @@ export const uploadFilesInFolder = (fileList: FileList, folderId: number, userNa
         result.filesSize += file.size;
     });
     dispatch(uploadingProcessActions.addUploading({id: uploadId, firstFileName: fileList[0].name, uploadingSize: fileSizeToString(result.filesSize), filesNumber: result.filesNumber}));
-    await FileSystemService.uploadFiles(formData, folderId, (progress) => dispatch(uploadingProcessActions.setUploadingProgress({id: uploadId, progress}))).then(() => {
+    FileSystemService.uploadFiles(formData, folderId, (progress) => dispatch(uploadingProcessActions.setUploadingProgress({id: uploadId, progress}))).then(() => {
         dispatch(notificationActions.createNotification({notificationMessage: 'Files have been successfully uploaded', notificationType: "info"}));
         dispatch(uploadingProcessActions.setStatusUploading({id: uploadId, status:'success'}));
     }).catch((reason: {error: string, status: number}) => {

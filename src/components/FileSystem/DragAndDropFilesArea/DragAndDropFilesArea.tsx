@@ -6,6 +6,7 @@ import {useFileContext} from "@/components/FileSystem/FileContext/FileContext";
 const DragAndDropFilesArea = () => {
     const [isActive, setIsActive] = useState<boolean>(false);
     const {selectFilesToUpload} = useFileContext();
+
     useEffect(() => {
         const ev = (event: DragEvent) => {
             event.preventDefault();
@@ -16,7 +17,8 @@ const DragAndDropFilesArea = () => {
             window.removeEventListener('dragenter',ev);
             setIsActive(false);
         }
-    },[])
+    },[]);
+
     const onDragEnterHandler = (event: React.DragEvent<HTMLDivElement>) => {
         event.preventDefault();
     }
